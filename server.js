@@ -39,22 +39,27 @@ app.get("*", async (req, res) => {
     },
     insurers: {
       portoSeguro: {
+        color: "#63be7b",
         value: 10 ? `R$ ${10 ?? ""}` : "NEGADO",
         percentage: 10 ? `10%` : "0%",
       },
       portoSeguroEssencial: {
+        color: "#f8696b",
         value: 10 ? `R$ ${10 ?? ""}` : "NEGADO",
         percentage: 10 ? `10%` : "0%",
       },
       too: {
+        color: "#f8696b",
         value: 10 ? `R$ ${10 ?? ""}` : "NEGADO",
         percentage: 10 ? `10%` : "0%",
       },
       pottencial: {
+        color: "#ffeb84",
         value: 10 ? `R$ ${10 ?? ""}` : "NEGADO",
         percentage: 10 ? `10%` : "0%",
       },
       tokio: {
+        color: "#63be7b",
         value: 10 ? `R$ ${10 ?? ""}` : "NEGADO",
         percentage: 10 ? `10%` : "0%",
       },
@@ -154,13 +159,13 @@ app.get("*", async (req, res) => {
   // const browser = await puppeteer.launch({headless: false});
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
-  await page.emulateMediaType('screen');
+  await page.emulateMediaType("screen");
   await page.setContent(renderedFile, { waitUntil: "domcontentloaded" });
-  const pdfBuffer = await page.pdf({ 
+  const pdfBuffer = await page.pdf({
     format: "A4",
     // omitBackground: false,
-    printBackground: true
-   });
+    printBackground: true,
+  });
   const base64String = Buffer.from(pdfBuffer).toString("base64");
 
   res
