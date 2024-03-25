@@ -33,9 +33,10 @@ app.get("*", async (req, res) => {
       sla: "teste@teste.test.test",
     },
     income: {
-      reportedIncome: "pretendente.rendaBruta",
-      expense: "teste",
-      percentage: `10%`,
+      reportedIncome: "30,000.00",
+      expense: "12,000.00",
+      percentage: `40%`,
+      color:"#fe0000",
     },
     insurers: {
       portoSeguro: {
