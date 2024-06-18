@@ -485,7 +485,7 @@
         <div class="tablehead">
           <div class="tablecolumn uc s12">Decisão</div>
         </div>
-        <% if (Object.keys(data.consulta.resposta[0].decisao[0]).length === 0) { %>
+        <% if (!data.consulta.resposta[0].decisao[0] || Object.keys(data.consulta.resposta[0].decisao[0]).length === 0) { %>
           <div class="tableline">
             <div class="tablecolumn uc s12 tabletitle">Não contam informações na base consultada</div>
           </div>
@@ -508,7 +508,7 @@
         <div class="tablehead">
           <div class="tablecolumn uc s12">Síntese Cadastral</div>
         </div>
-        <% if (Object.keys(data.consulta.resposta[0].identificacao[0]).length === 0) { %>
+        <% if (!data.consulta.resposta[0].identificacao[0] || Object.keys(data.consulta.resposta[0].identificacao[0]).length === 0) { %>
           <div class="tableline">
             <div class="tablecolumn uc s12 tabletitle">Não contam informações na base consultada</div>
           </div>
@@ -562,7 +562,7 @@
         <div class="tablehead">
           <div class="tablecolumn uc s12">Localização</div>
         </div>
-        <% if (Object.keys(data.consulta.resposta[0].localizacao[0]).length === 0) { %>
+        <% if (!data.consulta.resposta[0].localizacao[0] || Object.keys(data.consulta.resposta[0].localizacao[0]).length === 0) { %>
           <div class="tableline">
             <div class="tablecolumn uc s12 tabletitle">Nada Consta</div>
           </div>
@@ -600,10 +600,10 @@
       <div class="page-break"></div>
       <!-- Ações -->
       <div class="tablebody avoid-break">
-        <div class="tablehead <%= (Object.keys(data.consulta.resposta[0].acoes[0]).length === 0) ? 'bg-02' : 'bg-03' %>">
+        <div class="tablehead <%= (!data.consulta.resposta[0].acoes[0] || Object.keys(data.consulta.resposta[0].acoes[0]).length === 0) ? 'bg-02' : 'bg-03' %>">
           <div class="tablecolumn uc s12">Ações</div>
         </div>
-        <% if (Object.keys(data.consulta.resposta[0].acoes[0]).length === 0) { %>
+        <% if (!data.consulta.resposta[0].acoes[0] || Object.keys(data.consulta.resposta[0].acoes[0]).length === 0) { %>
           <div class="tableline">
             <div class="tablecolumn uc s12 tabletitle">Nada Consta</div>
           </div>
@@ -633,7 +633,7 @@
         <div class="tablehead">
           <div class="tablecolumn uc s12">Alertas</div>
         </div>
-        <% if (Object.keys(data.consulta.resposta[0].alertas[0]).length === 0) { %>
+        <% if (!data.consulta.resposta[0].alertas[0] || Object.keys(data.consulta.resposta[0].alertas[0]).length === 0) { %>
           <div class="tableline">
             <div class="tablecolumn uc s12 tabletitle">Nada Consta</div>
           </div>
@@ -654,10 +654,10 @@
       </div>
       <!-- Débitos -->
       <div class="tablebody avoid-break">
-        <div class="tablehead <%= (Object.keys(data.consulta.resposta[0].debitos[0]).length === 0) ? 'bg-02' : 'bg-03' %>">
+        <div class="tablehead <%= (!data.consulta.resposta[0].debitos[0] || Object.keys(data.consulta.resposta[0].debitos[0]).length === 0) ? 'bg-02' : 'bg-03' %>">
           <div class="tablecolumn uc s12">Débitos no scpc</div>
         </div>
-        <% if (Object.keys(data.consulta.resposta[0].debitos[0]).length === 0) { %>
+        <% if (!data.consulta.resposta[0].debitos[0] || Object.keys(data.consulta.resposta[0].debitos[0]).length === 0) { %>
           <div class="tableline">
             <div class="tablecolumn uc s12 tabletitle">Nada Consta</div>
           </div>
@@ -684,10 +684,10 @@
       </div>
       <!-- Protestos -->
       <div class="tablebody avoid-break">
-        <div class="tablehead <%= (Object.keys(data.consulta.resposta[0].protestos[0]).length === 0) ? 'bg-02' : 'bg-03' %>">
+        <div class="tablehead <%= (!data.consulta.resposta[0].protestos[0] || Object.keys(data.consulta.resposta[0].protestos[0]).length === 0) ? 'bg-02' : 'bg-03' %>">
           <div class="tablecolumn uc s12">protestos</div>
         </div>
-        <% if (Object.keys(data.consulta.resposta[0].protestos[0]).length === 0) { %>
+        <% if (!data.consulta.resposta[0].protestos[0] || Object.keys(data.consulta.resposta[0].protestos[0]).length === 0) { %>
           <div class="tableline">
             <div class="tablecolumn uc s12 tabletitle">Nada Consta</div>
           </div>
@@ -715,7 +715,7 @@
         <div class="tablehead">
           <div class="tablecolumn uc s12">consultas Realizadas por segmento</div>
         </div>
-        <% if (Object.keys(data.consulta.resposta[0].consultas_por_segmento[0]).length === 0) { %>
+        <% if (!data.consulta.resposta[0].consultas_por_segmento[0] || Object.keys(data.consulta.resposta[0].consultas_por_segmento[0]).length === 0) { %>
           <div class="tableline">
             <div class="tablecolumn uc s12 tabletitle">Não contam informações na base consultada</div>
           </div>
@@ -744,10 +744,10 @@
       </div>
       <!-- Confirmação de telefone -->
       <div class="tablebody avoid-break">
-        <div class="tablehead <%= (Object.keys(data.consulta.resposta[0].telefones[0]).length === 0) ? 'bg-02' : 'bg-03' %>">
+        <div class="tablehead <%= (!data.consulta.resposta[0].telefones[0] || Object.keys(data.consulta.resposta[0].telefones[0]).length === 0) ? 'bg-02' : 'bg-03' %>">
           <div class="tablecolumn uc s12">Confirmação de telefone</div>
         </div>
-        <% if (Object.keys(data.consulta.resposta[0].telefones[0]).length === 0) { %>
+        <% if (!data.consulta.resposta[0].telefones[0] || Object.keys(data.consulta.resposta[0].telefones[0]).length === 0) { %>
           <div class="tableline">
             <div class="tablecolumn uc s12 tabletitle">Nada Consta</div>
           </div>
@@ -785,7 +785,7 @@
         <div class="tablehead">
           <div class="tablecolumn uc s12">Telefones Vinculados</div>
         </div>
-        <% if (Object.keys(data.consulta.resposta[0].telefones_vinculados[0]).length === 0) { %>
+        <% if (!data.consulta.resposta[0].telefones_vinculados[0] || Object.keys(data.consulta.resposta[0].telefones_vinculados[0]).length === 0) { %>
           <div class="tableline">
             <div class="tablecolumn uc s12 tabletitle">Não contam informações na base consultada</div>
           </div>
@@ -817,7 +817,7 @@
         <div class="tablehead">
           <div class="tablecolumn uc s12">Confirmação de CEP</div>
         </div>
-        <% if (Object.keys(data.consulta.resposta[0].confirmacao_cep[0]).length === 0) { %>
+        <% if (!data.consulta.resposta[0].confirmacao_cep[0] || Object.keys(data.consulta.resposta[0].confirmacao_cep[0]).length === 0) { %>
           <div class="tableline">
             <div class="tablecolumn uc s12 tabletitle">Não contam informações na base consultada</div>
           </div>
@@ -842,10 +842,10 @@
       </div>
       <!-- Cheques sem fundo - CCF -->
       <div class="tablebody">
-        <div class="tablehead <%= (Object.keys(data.consulta.resposta[0].ccf[0]).length === 0) ? 'bg-02' : 'bg-03' %>">
+        <div class="tablehead <%= (!data.consulta.resposta[0].ccf[0] || Object.keys(data.consulta.resposta[0].ccf[0]).length === 0) ? 'bg-02' : 'bg-03' %>">
           <div class="tablecolumn uc s12">Cheques sem fundo - CCF</div>
         </div>
-        <% if (Object.keys(data.consulta.resposta[0].ccf[0]).length === 0) { %>
+        <% if (!data.consulta.resposta[0].ccf[0] || Object.keys(data.consulta.resposta[0].ccf[0]).length === 0) { %>
           <div class="tableline">
             <div class="tablecolumn uc s12 tabletitle">Não contam informações na base consultada</div>
           </div>
@@ -896,7 +896,7 @@
         <div class="tablehead">
           <div class="tablecolumn uc s12">Cheque Motivo 21</div>
         </div>
-        <% if (Object.keys(data.consulta.resposta[0].cheque_motivo_21[0]).length === 0) { %>
+        <% if (!data.consulta.resposta[0].cheque_motivo_21[0] || Object.keys(data.consulta.resposta[0].cheque_motivo_21[0]).length === 0) { %>
           <div class="tableline">
             <div class="tablecolumn uc s12 tabletitle">Nada Consta</div>
           </div>
@@ -954,7 +954,7 @@
         <div class="tablehead">
           <div class="tablecolumn uc s12">Devolução Informada pelo Usuário</div>
         </div>
-        <% if (Object.keys(data.consulta.resposta[0].devolucao_informada_pelo_usuario[0]).length === 0) { %>
+        <% if (!data.consulta.resposta[0].devolucao_informada_pelo_usuario[0] || Object.keys(data.consulta.resposta[0].devolucao_informada_pelo_usuario[0]).length === 0) { %>
           <div class="tableline">
             <div class="tablecolumn uc s12 tabletitle">Nada Consta</div>
           </div>
@@ -1016,7 +1016,7 @@
         <div class="tablehead">
           <div class="tablecolumn uc s12">Cheque Talão Sustado</div>
         </div>
-        <% if (Object.keys(data.consulta.resposta[0].cheque_talao_sustado[0]).length === 0) { %>
+        <% if (!data.consulta.resposta[0].cheque_talao_sustado[0] || Object.keys(data.consulta.resposta[0].cheque_talao_sustado[0]).length === 0) { %>
           <div class="tableline">
             <div class="tablecolumn uc s12 tabletitle">Nada Consta</div>
           </div>
@@ -1072,7 +1072,7 @@
         <div class="tablehead">
           <div class="tablecolumn uc s12">Resumo Devoluções Informadas pelo CCF</div>
         </div>
-        <% if (Object.keys(data.consulta.resposta[0].resumo_devolucoes_informadas_pelo_ccf[0]).length === 0) { %>
+        <% if (!data.consulta.resposta[0].resumo_devolucoes_informadas_pelo_ccf[0] || Object.keys(data.consulta.resposta[0].resumo_devolucoes_informadas_pelo_ccf[0]).length === 0) { %>
           <div class="tableline">
             <div class="tablecolumn uc s12 tabletitle">Nada Consta</div>
           </div>
@@ -1114,7 +1114,7 @@
         <div class="tablehead">
           <div class="tablecolumn uc s12">Resumo Consultas Anteriores Cheque</div>
         </div>
-        <% if (Object.keys(data.consulta.resposta[0].resumo_consultas_anteriores_cheque[0]).length === 0) { %>
+        <% if (!data.consulta.resposta[0].resumo_consultas_anteriores_cheque[0] || Object.keys(data.consulta.resposta[0].resumo_consultas_anteriores_cheque[0]).length === 0) { %>
           <div class="tableline">
             <div class="tablecolumn uc s12 tabletitle">Nada Consta</div>
           </div>
@@ -1146,7 +1146,7 @@
         <div class="tablehead">
           <div class="tablecolumn uc s12">Histórico de Cheque Informado</div>
         </div>
-        <% if (Object.keys(data.consulta.resposta[0].historico_cheque_informado[0]).length === 0) { %>
+        <% if (!data.consulta.resposta[0].historico_cheque_informado[0] || Object.keys(data.consulta.resposta[0].historico_cheque_informado[0]).length === 0) { %>
           <div class="tableline">
             <div class="tablecolumn uc s12 tabletitle">Nada Consta</div>
           </div>
@@ -1188,7 +1188,7 @@
         <div class="tablehead">
           <div class="tablecolumn uc s12">Consultas Anteriores de Cheque</div>
         </div>
-        <% if (Object.keys(data.consulta.resposta[0].consultas_anteriores_cheque[0]).length === 0) { %>
+        <% if (!data.consulta.resposta[0].consultas_anteriores_cheque[0] || Object.keys(data.consulta.resposta[0].consultas_anteriores_cheque[0]).length === 0) { %>
           <div class="tableline">
             <div class="tablecolumn uc s12 tabletitle">Nada Consta</div>
           </div>
@@ -1226,7 +1226,7 @@
         <div class="tablehead">
           <div class="tablecolumn uc s12">Resumo de Devoluções Informadas pelo Usuário</div>
         </div>
-        <% if (Object.keys(data.consulta.resposta[0].resumo_devolucoes_informadas_pelo_usuario[0]).length === 0) { %>
+        <% if (!data.consulta.resposta[0].resumo_devolucoes_informadas_pelo_usuario[0] || Object.keys(data.consulta.resposta[0].resumo_devolucoes_informadas_pelo_usuario[0]).length === 0) { %>
           <div class="tableline">
             <div class="tablecolumn uc s12 tabletitle">Nada Consta</div>
           </div>
@@ -1259,7 +1259,7 @@
         <div class="tablehead">
           <div class="tablecolumn uc s12">resumo das devolucoes informadas pelo usuário</div>
         </div>
-        <% if (Object.keys(data.consulta.resposta[0].grafias[0]).length === 0) { %>
+        <% if (!data.consulta.resposta[0].grafias[0] || Object.keys(data.consulta.resposta[0].grafias[0]).length === 0) { %>
           <div class="tableline">
             <div class="tablecolumn uc s12 tabletitle">Não contam informações na base consultada</div>
           </div>
@@ -1321,7 +1321,7 @@
         <div class="tablehead">
           <div class="tablecolumn uc s12">Participações</div>
         </div>
-        <% if (Object.keys(data.consulta.resposta[0].participacoes[0]).length === 0) { %>
+        <% if (!data.consulta.resposta[0].participacoes[0] || Object.keys(data.consulta.resposta[0].participacoes[0]).length === 0) { %>
           <div class="tableline">
             <div class="tablecolumn uc s12 tabletitle">Não contam informações na base consultada</div>
           </div>
@@ -1368,10 +1368,10 @@
       </div>
       <!-- Falencias -->
       <div class="tablebody">
-        <div class="tablehead <%= (Object.keys(data.consulta.resposta[0].falencias[0]).length === 0) ? 'bg-02' : 'bg-03' %>">
+        <div class="tablehead <%= (!data.consulta.resposta[0].falencias[0] || Object.keys(data.consulta.resposta[0].falencias[0]).length === 0) ? 'bg-02' : 'bg-03' %>">
           <div class="tablecolumn uc s12">Falências</div>
         </div>
-        <% if (Object.keys(data.consulta.resposta[0].falencias[0]).length === 0) { %>
+        <% if (!data.consulta.resposta[0].falencias[0] || Object.keys(data.consulta.resposta[0].falencias[0]).length === 0) { %>
           <div class="tableline">
             <div class="tablecolumn uc s12 tabletitle">Não há registros de falências</div>
           </div>
@@ -1518,7 +1518,7 @@
         <div class="tablehead">
           <div class="tablecolumn uc s12">Decisão</div>
         </div>
-        <% if (Object.keys(data.consulta.resposta[0].decisao[0]).length === 0) { %>
+        <% if (!data.consulta.resposta[0].decisao[0] || Object.keys(data.consulta.resposta[0].decisao[0]).length === 0) { %>
           <div class="tableline">
             <div class="tablecolumn uc s12 tabletitle">Não contam informações na base consultada</div>
           </div>
@@ -1537,7 +1537,7 @@
         <div class="tablehead">
           <div class="tablecolumn uc s12">Síntese Cadastral</div>
         </div>
-        <% if (Object.keys(data.consulta.resposta[0].identificacao[0]).length === 0) { %>
+        <% if (!data.consulta.resposta[0].identificacao[0] || Object.keys(data.consulta.resposta[0].identificacao[0]).length === 0) { %>
           <div class="tableline">
             <div class="tablecolumn uc s12 tabletitle">Nada Consta</div>
           </div>
@@ -1647,7 +1647,7 @@
         <div class="tablehead">
           <div class="tablecolumn uc s12">Demais ramos de attividades</div>
         </div>
-        <% if (Object.keys(data.consulta.resposta[0].identificacao[0].outros_cnaes[0].registro).length === 0) { %>
+        <% if (!data.consulta.resposta[0].identificacao[0] || !data.consulta.resposta[0].identificacao[0].outros_cnaes[0] || Object.keys(data.consulta.resposta[0].identificacao[0].outros_cnaes[0].registro).length === 0) { %>
           <div class="tableline">
             <div class="tablecolumn uc s12 tabletitle">Não constam informações na base consultada</div>
           </div>
@@ -1667,7 +1667,7 @@
         <div class="tablehead">
           <div class="tablecolumn uc s12">Resumo das filiais</div>
         </div>
-        <% if (Object.keys(data.consulta.resposta[0].identificacao[0].filiais[0].registro).length === 0) { %>
+        <% if (!data.consulta.resposta[0].identificacao[0] || !data.consulta.resposta[0].identificacao[0].filiais[0] || Object.keys(data.consulta.resposta[0].identificacao[0].filiais[0].registro).length === 0) { %>
           <div class="tableline">
             <div class="tablecolumn uc s12 tabletitle">Não constam informações na base consultada</div>
           </div>
@@ -1685,7 +1685,7 @@
         <div class="tablehead">
           <div class="tablecolumn uc s12">Matriz</div>
         </div>
-        <% if (data.consulta.resposta[0].localizacao_completa[0].matrizes[0].registro.length === 0) { %>
+        <% if (!data.consulta.resposta[0].localizacao_completa[0] || !data.consulta.resposta[0].localizacao_completa[0].matrizes[0] || data.consulta.resposta[0].localizacao_completa[0].matrizes[0].registro.length === 0) { %>
           <div class="tableline">
             <div class="tablecolumn uc s12 tabletitle">Não constam informações na base consultada</div>
           </div>
@@ -1709,14 +1709,6 @@
               <div class="tablecolumn uc s1"><%= matriz.cep[0] %></div>
               <div class="tablecolumn uc s2"><%= matriz.codigo_ibge[0] %></div>
             </div>
-            <!-- <div class="tableline">
-              <div class="tablecolumn uc s2 tabletitle">Telefone 1</div>
-              <div class="tablecolumn uc s2 tabletitle">Telefone 2</div>
-            </div>
-            <div class="tableline <%= (index + 1) % 2 === 0 ? 'even' : '' %>">
-              <div class="tablecolumn uc s2"><%= matriz.telefones[0].registro[0].telefone[0] %></div>
-              <div class="tablecolumn uc s2"><%= matriz.telefones[0].registro[1].telefone[0] %></div>
-            </div> -->
           <% }); %>
         <% } %>
       </div>
@@ -1725,7 +1717,7 @@
         <div class="tablehead">
           <div class="tablecolumn uc s12">Filiais</div>
         </div>
-        <% if (data.consulta.resposta[0].localizacao_completa[0].filiais[0].registro.length === 0) { %>
+        <% if (!data.consulta.resposta[0].localizacao_completa[0] || !data.consulta.resposta[0].localizacao_completa[0].filiais[0] || data.consulta.resposta[0].localizacao_completa[0].filiais[0].registro.length === 0) { %>
           <div class="tableline">
             <div class="tablecolumn uc s12 tabletitle">Não constam informações na base consultada</div>
           </div>
@@ -1765,7 +1757,7 @@
         <div class="tablehead">
           <div class="tablecolumn uc s12">Telefones das matrizes</div>
         </div>
-        <% if (data.consulta.resposta[0].localizacao_completa[0].matrizes[0].registro.length === 0) { %>
+        <% if (!data.consulta.resposta[0].localizacao_completa[0] || !data.consulta.resposta[0].localizacao_completa[0].matrizes[0] || !data.consulta.resposta[0].localizacao_completa[0].matrizes[0].registro[0] || !data.consulta.resposta[0].localizacao_completa[0].matrizes[0].registro[0].telefones[0] || data.consulta.resposta[0].localizacao_completa[0].matrizes[0].registro[0].telefones[0].length === 0) { %>
           <div class="tableline">
             <div class="tablecolumn uc s12 tabletitle">Não constam informações na base consultada</div>
           </div>
@@ -1785,7 +1777,7 @@
         <div class="tablehead">
           <div class="tablecolumn uc s12">Telefones das Filiais</div>
         </div>
-        <% if (data.consulta.resposta[0].localizacao_completa[0].filiais[0].registro.length === 0) { %>
+        <% if (!data.consulta.resposta[0].localizacao_completa[0] || !data.consulta.resposta[0].localizacao_completa[0].filiais[0] || data.consulta.resposta[0].localizacao_completa[0].filiais[0].registro.length === 0) { %>
           <div class="tableline">
             <div class="tablecolumn uc s12 tabletitle">Não constam informações na base consultada</div>
           </div>
@@ -1805,7 +1797,7 @@
         <div class="tablehead">
           <div class="tablecolumn uc s12">Alerta de Fraudes</div>
         </div>
-        <% if (data.consulta.resposta[0].alerta_fraudes[0].registro.length === 0) { %>
+        <% if (!data.consulta.resposta[0].alerta_fraudes[0] || data.consulta.resposta[0].alerta_fraudes[0].registro.length === 0) { %>
           <div class="tableline">
             <div class="tablecolumn uc s12 tabletitle">Não constam informações na base consultada</div>
           </div>
@@ -1822,10 +1814,10 @@
       </div>
       <!-- Débitos -->
       <div class="tablebody avoid-break">
-        <div class="tablehead <%= (data.consulta.resposta[0].debitos.length === 0) ? 'bg-02' : 'bg-03' %>">
+        <div class="tablehead <%= (!data.consulta.resposta[0].debitos[0] || data.consulta.resposta[0].debitos.length === 0) ? 'bg-02' : 'bg-03' %>">
           <div class="tablecolumn uc s12">Débitos</div>
         </div>
-        <% if (data.consulta.resposta[0].debitos.length === 0) { %>
+        <% if (!data.consulta.resposta[0].debitos[0] || data.consulta.resposta[0].debitos.length === 0) { %>
           <div class="tableline">
             <div class="tablecolumn uc s12 tabletitle">Nada Consta</div>
           </div>
@@ -1895,10 +1887,10 @@
       </div>
       <!-- Protestos -->
       <div class="tablebody avoid-break">
-        <div class="tablehead <%= (data.consulta.resposta[0].protestos.length === 0) ? 'bg-02' : 'bg-03' %>">
+        <div class="tablehead <%= (!data.consulta.resposta[0].protestos[0] || data.consulta.resposta[0].protestos.length === 0) ? 'bg-02' : 'bg-03' %>">
           <div class="tablecolumn uc s12">Protestos</div>
         </div>
-        <% if (data.consulta.resposta[0].protestos.length === 0) { %>
+        <% if (!data.consulta.resposta[0].protestos[0] || data.consulta.resposta[0].protestos.length === 0) { %>
           <div class="tableline">
             <div class="tablecolumn uc s12 tabletitle">Não constam informações na base consultadaw</div>
           </div>
@@ -1962,10 +1954,10 @@
       </div>
       <!-- CCF -->
       <div class="tablebody avoid-break">
-        <div class="tablehead <%= (data.consulta.resposta[0].ccf.length === 0) ? 'bg-02' : 'bg-03' %>">
+        <div class="tablehead <%= (!data.consulta.resposta[0].ccf[0] || data.consulta.resposta[0].ccf.length === 0) ? 'bg-02' : 'bg-03' %>">
           <div class="tablecolumn uc s12">Cheques sem fundo - CCF</div>
         </div>
-        <% if (data.consulta.resposta[0].ccf.length === 0) { %>
+        <% if (!data.consulta.resposta[0].ccf[0] || data.consulta.resposta[0].ccf.length === 0) { %>
           <div class="tableline">
             <div class="tablecolumn uc s12 tabletitle">Nada Consta</div>
           </div>
@@ -2035,10 +2027,10 @@
       </div>
       <!-- Cheque Motivo 21 -->
       <div class="tablebody avoid-break">
-        <div class="tablehead <%= (data.consulta.resposta[0].cheque_motivo_21.length === 0) ? 'bg-02' : 'bg-03' %>">
+        <div class="tablehead <%= (!data.consulta.resposta[0].cheque_motivo_21[0] || data.consulta.resposta[0].cheque_motivo_21.length === 0) ? 'bg-02' : 'bg-03' %>">
           <div class="tablecolumn uc s12">Cheque Motivo 21</div>
         </div>
-        <% if (data.consulta.resposta[0].cheque_motivo_21.length === 0) { %>
+        <% if (!data.consulta.resposta[0].cheque_motivo_21[0] || data.consulta.resposta[0].cheque_motivo_21.length === 0) { %>
           <div class="tableline">
             <div class="tablecolumn uc s12 tabletitle">Nada Consta</div>
           </div>
@@ -2078,10 +2070,10 @@
       </div>
       <!-- Devolução Informada pelo Usuário -->
       <div class="tablebody avoid-break">
-        <div class="tablehead <%= (data.consulta.resposta[0].devolucao_informada_pelo_usuario.length === 0) ? 'bg-02' : 'bg-03' %>">
+        <div class="tablehead <%= (!data.consulta.resposta[0].devolucao_informada_pelo_usuario[0] || data.consulta.resposta[0].devolucao_informada_pelo_usuario.length === 0) ? 'bg-02' : 'bg-03' %>">
           <div class="tablecolumn uc s12">Devolução Informada pelo Usuário</div>
         </div>
-        <% if (data.consulta.resposta[0].devolucao_informada_pelo_usuario.length === 0) { %>
+        <% if (!data.consulta.resposta[0].devolucao_informada_pelo_usuario[0] || data.consulta.resposta[0].devolucao_informada_pelo_usuario.length === 0) { %>
           <div class="tableline">
             <div class="tablecolumn uc s12 tabletitle">Nada Consta</div>
           </div>
@@ -2136,7 +2128,7 @@
         <div class="tablehead">
           <div class="tablecolumn uc s12">Consultas Realizadas</div>
         </div>
-        <% if (data.consulta.resposta[0].consultas.length === 0) { %>
+        <% if (!data.consulta.resposta[0].consultas[0] || data.consulta.resposta[0].consultas.length === 0) { %>
           <div class="tableline">
             <div class="tablecolumn uc s12 tabletitle">Não constam informações na base consultada</div>
           </div>
@@ -2174,7 +2166,7 @@
         <div class="tablehead">
           <div class="tablecolumn uc s12">Resumo de Consultas realizadas por Meses</div>
         </div>
-        <% if (data.consulta.resposta[0].consultas[0].consultas_mes.length === 0) { %>
+        <% if (!data.consulta.resposta[0].consultas[0] || !data.consulta.resposta[0].consultas[0].consultas_mes[0] || data.consulta.resposta[0].consultas[0].consultas_mes[0].registro.length === 0) { %>
           <div class="tableline">
             <div class="tablecolumn uc s12 tabletitle">Nada Consta</div>
           </div>
@@ -2194,7 +2186,7 @@
         <div class="tablehead">
           <div class="tablecolumn uc s12 tabletitle">Sócios</div>
         </div>
-        <% if (data.consulta.resposta[0].socios[0].registro.length === 0) { %>
+        <% if (!data.consulta.resposta[0].socios[0] || data.consulta.resposta[0].socios[0].registro.length === 0) { %>
           <div class="tableline">
             <div class="tablecolumn uc s12">Nada Consta</div>
           </div>
@@ -2228,7 +2220,7 @@
         <div class="tablehead">
           <div class="tablecolumn uc s12 tabletitle">Informações sobre Administradores</div>
         </div>
-        <% if (data.consulta.resposta[0].administradores[0].registro.length === 0) { %>
+        <% if (!data.consulta.resposta[0].administradores[0] || data.consulta.resposta[0].administradores[0].registro.length === 0) { %>
           <div class="tableline">
             <div class="tablecolumn uc s12">Nada Consta</div>
           </div>
@@ -2266,7 +2258,7 @@
         <div class="tablehead">
           <div class="tablecolumn uc s12 tabletitle">Participações de Sócios E Administradores em Outras Empresas</div>
         </div>
-        <% if (data.consulta.resposta[0].participacoes_socios_adm_outras_empresas[0].registro.length === 0) { %>
+        <% if (!data.consulta.resposta[0].participacoes_socios_adm_outras_empresas[0] || data.consulta.resposta[0].participacoes_socios_adm_outras_empresas[0].registro.length === 0) { %>
           <div class="tableline">
             <div class="tablecolumn uc s12">Nada Consta</div>
           </div>
@@ -2405,7 +2397,7 @@
         <div class="tablehead">
           <div class="tablecolumn uc s12 tabletitle">Participações em Empresas Consultadas</div>
         </div>
-        <% if (data.consulta.resposta[0].participacoes_empresas_consultadas[0].registro.length === 0) { %>
+        <% if (!data.consulta.resposta[0].participacoes_empresas_consultadas[0] || data.consulta.resposta[0].participacoes_empresas_consultadas[0].registro.length === 0) { %>
           <div class="tableline">
             <div class="tablecolumn uc s12">Nada Consta</div>
           </div>
@@ -2528,7 +2520,7 @@
         <div class="tablehead">
           <div class="tablecolumn uc s12 tabletitle">Ações Cíveis</div>
         </div>
-        <% if (data.consulta.resposta[0].acoes_civeis[0].registro.length === 0) { %>
+        <% if (!data.consulta.resposta[0].acoes_civeis[0] || data.consulta.resposta[0].acoes_civeis[0].registro.length === 0) { %>
           <div class="tableline">
             <div class="tablecolumn uc s12">Nada Consta</div>
           </div>
@@ -2602,7 +2594,7 @@
         <div class="tablehead">
           <div class="tablecolumn uc s12 tabletitle">Falências</div>
         </div>
-        <% if (data.consulta.resposta[0].falencias[0].registro.length === 0) { %>
+        <% if (!data.consulta.resposta[0].falencias[0] || data.consulta.resposta[0].falencias[0].registro.length === 0) { %>
           <div class="tableline">
             <div class="tablecolumn uc s12">Nada Consta</div>
           </div>
