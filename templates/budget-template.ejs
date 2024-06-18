@@ -195,7 +195,7 @@
         box-shadow: 0px 0px 0px 1000px #5cbc67 inset;
       }
       .tablehead.bg-03 .tablecolumn{
-        box-shadow: 0px 0px 0px 1000px #5cbc67 inset;
+        box-shadow: 0px 0px 0px 1000px #f63c3c inset;
       }
       .tablecolumn.s2{
         width: calc(calc(100% / 12) * 2);
@@ -260,6 +260,10 @@
       else if(percent.length === 3)
         return percent.replace(/(\d{1})(\d{2})/, "$1.$2")+'%';
     }
+    function formatCurrency(value) {
+      let floatValue = parseFloat(value.replace(',', '.'));
+      return floatValue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+    }
   </script>
   <body>
     <div style="display:flex; justify-content: space-between;width: 90%;margin: 0 auto;">
@@ -277,1118 +281,2361 @@
       </svg>
       <div style="border:1px solid #000;padding: 10px 20px;display: flex;flex-direction: column;text-transform: uppercase;height: fit-content;width: fit-content; align-items: start;font-size: 14px;">
           <font style="font-size: 16px !important;font-weight: 600;">Análise Cadastral</font>
-          <font>Tipo de locação: <%= data.immobile.locationType %></font>
-          <font>valor aluguel: <%= data.itemsValues.rent.contractValue %></font>
-          <font>Condomínio: <%= data.itemsValues.condominium.contractValue %></font>
-          <font>IPTU: <%= data.itemsValues.iptu.contractValue %></font>
       </div>
     </div>
 
-    <div style="display: flex">
-      <ul class="client-info">
-        <li>
-          <span>Cliente: <%= data.client.name %></span>
-        </li>
-        <li>
-          <span>CPF: <%= data.client.document %></span>
-        </li>
-        <li>
-          <span>Email: <%= data.client.email %></span>
-        </li>
-        <li>
-          <span>Celular: <%= data.client.phone %></span>
-        </li>
-        <li>
-          <span>Endereço: <%= data.client.address.place %>, <%= data.client.address.number %>, <%= data.client.address.complement %> - <%= data.client.address.city %>/<%= data.client.address.state %> - <%= data.client.address.CEP %></span>
-        </li>
-      </ul>
-    </div>
-    <div class="tablebody" style="border-right: 0;">
-      <div class="tablehead">
-        <div class="tablecolumn uc s12" style="min-height: 36px; font-size: 20px; box-shadow: 0px 0px 0px 1000px #ffffff inset; color: #143491; border-left: 0;border-right: 0;border-top: 1px solid #143491;">ACERTA COMPLETO</div>
+    <% if(data.consulta.cabecalho[0].documento_consultado[0].length <= 11){ %> 
+      <div style="display: flex">
+        <ul class="client-info">
+          <li>
+            <span>Cliente: <%= data.consulta.resposta[0].identificacao[0].nome[0] %></span>
+          </li>
+          <li>
+            <span>CPF: <%= data.consulta.resposta[0].identificacao[0].documento[0] %></span>
+          </li>
+        </ul>
       </div>
-    </div>
-    <div class="tablebody avoid-break">
-      <div class="tablehead">
-        <div class="tablecolumn uc s12">Status da Consulta</div>
+    <% } else { %>
+      <div style="display: flex">
+        <ul class="client-info">
+          <li>
+            <span>Cliente: <%= data.consulta.resposta[0].identificacao[0].razao_social[0] %></span>
+          </li>
+          <li>
+            <span>CNPJ: <%= data.consulta.resposta[0].identificacao[0].cnpj[0] %></span>
+          </li>
+        </ul>
       </div>
-      <div class="tableline ">
-        <div class="tablecolumn uc s4" style="display: flex; justify-content: center; height: 160px; flex-direction: column; margin-bottom: -26px;">
-          <svg xmlns="http://www.w3.org/2000/svg" style="transform: scale(4.4); padding:24px 0 30px 0;" width="365" height="365" viewbox="0 0 365 365" style="shape-rendering:geometricPrecision;text-rendering:geometricPrecision;image-rendering:optimizeQuality;fill-rule:evenodd;clip-rule:evenodd">
-            <% if (Object.keys(data.consulta.resposta[0].acoes[0]).length === 0 && Object.keys(data.consulta.resposta[0].protestos[0]).length === 0 && Object.keys(data.consulta.resposta[0].debitos[0]).length === 0) { %>
-              <path style="opacity:.999" fill="#4fc041" d="M356.5 181.5q-34.071-33.573-68-67-11.594-15.768-29-6.5L157 210.5 103.5 159q-20.563-8.652-29.5 11.5-1.743 9.085 3 17a1568 1568 0 0 0 70.5 70 11244 11244 0 0 0 89 89.5q-1.374.417-2 1.5-104.913 29.074-181.5-48-71.04-84.19-32-188Q76.174 1.76 200.5 8 305.22 23.254 346 120.5q11.033 29.475 10.5 61"/>
-              <path style="opacity:1" fill="#fdfefd" d="M288.5 114.5q5.244 13.095-3.5 24A9514 9514 0 0 0 169.5 255q-10.322 7.282-22 2.5a1568 1568 0 0 1-70.5-70q-4.743-7.915-3-17 8.937-20.152 29.5-11.5l53.5 51.5L259.5 108q17.406-9.268 29 6.5"/>
-              <path style="opacity:.998" fill="#3d9f30" d="M288.5 114.5q33.929 33.427 68 67-1.413 92.085-76 145.5-21.309 14.405-46 21.5.626-1.083 2-1.5a11244 11244 0 0 1-89-89.5q11.678 4.782 22-2.5A9514 9514 0 0 1 285 138.5q8.744-10.905 3.5-24"/>
-            <% } else { %>
-              <path style="opacity:.998" fill="#fe5953" d="M356.5 184.5a9659 9659 0 0 1-83-82.5 2.43 2.43 0 0 0-2-.5q-10.077-16.773-28-8.5a2628 2628 0 0 0-61.5 60.5L123.5 95q-21.37-12.78-32.5 9.5-2.193 10.396 4 19l58.5 58.5A2628 2628 0 0 0 93 243.5q-8.21 17.96 8.5 28a2.43 2.43 0 0 0 .5 2 9650 9650 0 0 1 82.5 83q-99.301-.798-152.5-84-41.183-72.638-14-152Q58.793 23.239 163.5 8 266.382 1.08 327 83.5q30.328 45.735 29.5 101"/>
-              <path style="opacity:1" fill="#fefcfc" d="M271.5 101.5q5.113 12.459-3.5 23L210.5 182l58.5 58.5q12.226 21.815-10.5 32.5-7.902 1.602-15-2a2628 2628 0 0 1-61.5-60.5L123.5 269q-10.428 7.242-22 2.5-16.71-10.04-8.5-28a2628 2628 0 0 1 60.5-61.5L95 123.5q-6.193-8.604-4-19 11.13-22.28 32.5-9.5l58.5 58.5A2628 2628 0 0 1 243.5 93q17.923-8.273 28 8.5"/>
-              <path style="opacity:.999" fill="#da3a3c" d="M271.5 101.5a2.43 2.43 0 0 1 2 .5 9659 9659 0 0 0 83 82.5q-5.376 110.51-105 158.5-32.106 13.651-67 13.5a9650 9650 0 0 0-82.5-83 2.43 2.43 0 0 1-.5-2q11.572 4.742 22-2.5l58.5-58.5a2628 2628 0 0 0 61.5 60.5q7.098 3.602 15 2 22.726-10.685 10.5-32.5L210.5 182l57.5-57.5q8.613-10.541 3.5-23"/>
-            <% } %>
-          </svg>
-          <div class="tablecolumn uc s12 tabletitle" style="display: flex; align-items: center; text-align: center; font-size: 18px; width: fit-content;">
-            <% if (Object.keys(data.consulta.resposta[0].acoes[0]).length === 0 && Object.keys(data.consulta.resposta[0].protestos[0]).length === 0 && Object.keys(data.consulta.resposta[0].debitos[0]).length === 0) { %>
+    <% } %>
+    <% if(data.consulta.cabecalho[0].documento_consultado[0].length <= 11){ %> 
+      <div class="tablebody" style="border-right: 0;">
+        <div class="tablehead">
+          <div class="tablecolumn uc s12" style="min-height: 36px; font-size: 20px; box-shadow: 0px 0px 0px 1000px #ffffff inset; color: #143491; border-left: 0;border-right: 0;border-top: 1px solid #143491;">ACERTA COMPLETO</div>
+        </div>
+      </div>
+      <div class="tablebody avoid-break">
+        <div class="tablehead">
+          <div class="tablecolumn uc s12">Status da Consulta</div>
+        </div>
+        <div class="tableline ">
+          <div class="tablecolumn uc s4" style="display: flex; justify-content: center; height: 160px; flex-direction: column; margin-bottom: -26px;">
+            <svg xmlns="http://www.w3.org/2000/svg" style="transform: scale(4.4); padding:24px 0 30px 0;" width="365" height="365" viewbox="0 0 365 365" style="shape-rendering:geometricPrecision;text-rendering:geometricPrecision;image-rendering:optimizeQuality;fill-rule:evenodd;clip-rule:evenodd">
+              <% if (Object.keys(data.consulta.resposta[0].acoes[0]).length === 0 && Object.keys(data.consulta.resposta[0].protestos[0]).length === 0 && Object.keys(data.consulta.resposta[0].debitos[0]).length === 0) { %>
+                <path style="opacity:.999" fill="#4fc041" d="M356.5 181.5q-34.071-33.573-68-67-11.594-15.768-29-6.5L157 210.5 103.5 159q-20.563-8.652-29.5 11.5-1.743 9.085 3 17a1568 1568 0 0 0 70.5 70 11244 11244 0 0 0 89 89.5q-1.374.417-2 1.5-104.913 29.074-181.5-48-71.04-84.19-32-188Q76.174 1.76 200.5 8 305.22 23.254 346 120.5q11.033 29.475 10.5 61"/>
+                <path style="opacity:1" fill="#fdfefd" d="M288.5 114.5q5.244 13.095-3.5 24A9514 9514 0 0 0 169.5 255q-10.322 7.282-22 2.5a1568 1568 0 0 1-70.5-70q-4.743-7.915-3-17 8.937-20.152 29.5-11.5l53.5 51.5L259.5 108q17.406-9.268 29 6.5"/>
+                <path style="opacity:.998" fill="#3d9f30" d="M288.5 114.5q33.929 33.427 68 67-1.413 92.085-76 145.5-21.309 14.405-46 21.5.626-1.083 2-1.5a11244 11244 0 0 1-89-89.5q11.678 4.782 22-2.5A9514 9514 0 0 1 285 138.5q8.744-10.905 3.5-24"/>
+              <% } else { %>
+                <path style="opacity:.998" fill="#fe5953" d="M356.5 184.5a9659 9659 0 0 1-83-82.5 2.43 2.43 0 0 0-2-.5q-10.077-16.773-28-8.5a2628 2628 0 0 0-61.5 60.5L123.5 95q-21.37-12.78-32.5 9.5-2.193 10.396 4 19l58.5 58.5A2628 2628 0 0 0 93 243.5q-8.21 17.96 8.5 28a2.43 2.43 0 0 0 .5 2 9650 9650 0 0 1 82.5 83q-99.301-.798-152.5-84-41.183-72.638-14-152Q58.793 23.239 163.5 8 266.382 1.08 327 83.5q30.328 45.735 29.5 101"/>
+                <path style="opacity:1" fill="#fefcfc" d="M271.5 101.5q5.113 12.459-3.5 23L210.5 182l58.5 58.5q12.226 21.815-10.5 32.5-7.902 1.602-15-2a2628 2628 0 0 1-61.5-60.5L123.5 269q-10.428 7.242-22 2.5-16.71-10.04-8.5-28a2628 2628 0 0 1 60.5-61.5L95 123.5q-6.193-8.604-4-19 11.13-22.28 32.5-9.5l58.5 58.5A2628 2628 0 0 1 243.5 93q17.923-8.273 28 8.5"/>
+                <path style="opacity:.999" fill="#da3a3c" d="M271.5 101.5a2.43 2.43 0 0 1 2 .5 9659 9659 0 0 0 83 82.5q-5.376 110.51-105 158.5-32.106 13.651-67 13.5a9650 9650 0 0 0-82.5-83 2.43 2.43 0 0 1-.5-2q11.572 4.742 22-2.5l58.5-58.5a2628 2628 0 0 0 61.5 60.5q7.098 3.602 15 2 22.726-10.685 10.5-32.5L210.5 182l57.5-57.5q8.613-10.541 3.5-23"/>
+              <% } %>
+            </svg>
+            <div class="tablecolumn uc s12 tabletitle" style="display: flex; align-items: center; text-align: center; font-size: 18px; width: fit-content;">
+              <% if (Object.keys(data.consulta.resposta[0].acoes[0]).length === 0 && Object.keys(data.consulta.resposta[0].protestos[0]).length === 0 && Object.keys(data.consulta.resposta[0].debitos[0]).length === 0) { %>
+                Nada consta
+              <% } else { %>
+                Constam Restrições
+              <% } %>
+            </div>
+          </div>
+          <div class="tablecolumn uc s6 tabletitle" style="line-height: 13px;font-size: 10px;">
+            Ações:<br>
+            Alertas:<br>
+            SCPC:<br>
+            FALENCIAS:<br>
+            Protestos:<br>
+            Cheques sem fundos - ccf:<br>
+            Cheques sustados motivo 21:<br>
+            Devoluções informadas pelo usuário:<br>
+          </div>
+          <div class="tablecolumn uc s6 tabletitle" style="line-height: 13px;font-size: 10px;">
+            <% if (Object.keys(data.consulta.resposta[0].acoes[0]).length === 0) { %>
               Nada consta
             <% } else { %>
-              Constam Restrições
+              <%= data.consulta.resposta[0].acoes[0].resumo[0].total[0] %>
+            <% } %>
+            <br>
+            <% if (Object.keys(data.consulta.resposta[0].alertas[0]).length === 0) { %>
+              Não constam informações na base consultada
+            <% } else { %>
+              <%= Object.keys(data.consulta.resposta[0].alertas[0]).length %>
+            <% } %>
+            <br>
+            <% if (Object.keys(data.consulta.resposta[0].debitos[0]).length === 0) { %>
+              Não constam informações na base consultada
+            <% } else { %>
+              <%= Object.keys(data.consulta.resposta[0].debitos[0]).length %>
+            <% } %>
+            <br>
+            <% if (Object.keys(data.consulta.resposta[0].falencias[0]).length === 0) { %>
+              Nada consta
+            <% } else { %>
+              <%= Object.keys(data.consulta.resposta[0].falencias[0].registro[0]).length %>
+            <% } %>
+            <br>
+            <% if (Object.keys(data.consulta.resposta[0].protestos[0]).length === 0) { %>
+              Não constam informações na base consultada
+            <% } else { %>
+              <%= Object.keys(data.consulta.resposta[0].protestos[0].registro[0]).length %>
+            <% } %>
+            <br>
+            <% if (Object.keys(data.consulta.resposta[0].ccf[0]).length === 0) { %>
+              Nada consta
+            <% } else { %>
+              <%= Object.keys(data.consulta.resposta[0].ccf[0].registro[0]).length %>
+            <% } %>
+            <br>
+            <% if (Object.keys(data.consulta.resposta[0].cheque_motivo_21[0]).length === 0) { %>
+              Nada consta
+            <% } else { %>
+              <%= Object.keys(data.consulta.resposta[0].cheque_motivo_21[0].registro[0]).length %>
+            <% } %>
+            <br>
+            <% if (Object.keys(data.consulta.resposta[0].devolucao_informada_pelo_usuario[0]).length === 0) { %>
+              Nada consta
+            <% } else { %>
+              <%= Object.keys(data.consulta.resposta[0].devolucao_informada_pelo_usuario[0].registro[0]).length %>
             <% } %>
           </div>
         </div>
-        <div class="tablecolumn uc s6 tabletitle" style="line-height: 13px;font-size: 10px;">
-          Ações:<br>
-          Alertas:<br>
-          SCPC:<br>
-          FALENCIAS:<br>
-          Protestos:<br>
-          Cheques sem fundos - ccf:<br>
-          Cheques sustados motivo 21:<br>
-          Devoluções informadas pelo usuário:<br>
+        <div class="tableline even">
+          <div class="tablecolumn uc s4 tabletitle">Data Consulta</div>
+          <div class="tablecolumn uc s12"><%= data.consulta.cabecalho[0].data_consulta[0] %></div>
         </div>
-        <div class="tablecolumn uc s6 tabletitle" style="line-height: 13px;font-size: 10px;">
-          <% if (Object.keys(data.consulta.resposta[0].acoes[0]).length === 0) { %>
-            Nada consta
-          <% } else { %>
-            <%= data.consulta.resposta[0].acoes[0].resumo[0].total[0] %>
-          <% } %>
-          <br>
-          <% if (Object.keys(data.consulta.resposta[0].alertas[0]).length === 0) { %>
-            Não constam informações na base consultada
-          <% } else { %>
-            <%= Object.keys(data.consulta.resposta[0].alertas[0]).length %>
-          <% } %>
-          <br>
-          <% if (Object.keys(data.consulta.resposta[0].debitos[0]).length === 0) { %>
-            Não constam informações na base consultada
-          <% } else { %>
-            <%= Object.keys(data.consulta.resposta[0].debitos[0]).length %>
-          <% } %>
-          <br>
-          <% if (Object.keys(data.consulta.resposta[0].falencias[0]).length === 0) { %>
-            Nada consta
-          <% } else { %>
-            <%= Object.keys(data.consulta.resposta[0].falencias[0].registro[0]).length %>
-          <% } %>
-          <br>
-          <% if (Object.keys(data.consulta.resposta[0].protestos[0]).length === 0) { %>
-            Não constam informações na base consultada
-          <% } else { %>
-            <%= Object.keys(data.consulta.resposta[0].protestos[0].registro[0]).length %>
-          <% } %>
-          <br>
-          <% if (Object.keys(data.consulta.resposta[0].ccf[0]).length === 0) { %>
-            Nada consta
-          <% } else { %>
-            <%= Object.keys(data.consulta.resposta[0].ccf[0].registro[0]).length %>
-          <% } %>
-          <br>
-          <% if (Object.keys(data.consulta.resposta[0].cheque_motivo_21[0]).length === 0) { %>
-            Nada consta
-          <% } else { %>
-            <%= Object.keys(data.consulta.resposta[0].cheque_motivo_21[0].registro[0]).length %>
-          <% } %>
-          <br>
-          <% if (Object.keys(data.consulta.resposta[0].devolucao_informada_pelo_usuario[0]).length === 0) { %>
-            Nada consta
-          <% } else { %>
-            <%= Object.keys(data.consulta.resposta[0].devolucao_informada_pelo_usuario[0].registro[0]).length %>
-          <% } %>
+        <!-- <div class="tableline ">
+          <div class="tablecolumn uc s4 tabletitle">Protocolo</div>
+          <div class="tablecolumn uc s12"><%= data.consulta.cabecalho[0].ip_solicitante[0] %></div>
+        </div> -->
+        <div class="tableline even">
+          <div class="tablecolumn uc s4 tabletitle">Parâmetro de busca</div>
+          <div class="tablecolumn uc s12"><%= data.consulta.cabecalho[0].documento_consultado[0] %></div>
         </div>
-      </div>
-      <div class="tableline even">
-        <div class="tablecolumn uc s4 tabletitle">Data Consulta</div>
-        <div class="tablecolumn uc s12"><%= data.consulta.cabecalho[0].data_consulta[0] %></div>
-      </div>
-      <div class="tableline ">
-        <div class="tablecolumn uc s4 tabletitle">Protocolo</div>
-        <div class="tablecolumn uc s12"><%= data.consulta.cabecalho[0].ip_solicitante[0] %></div>
-      </div>
-      <div class="tableline even">
-        <div class="tablecolumn uc s4 tabletitle">Parâmetro de busca</div>
-        <div class="tablecolumn uc s12"><%= data.consulta.cabecalho[0].documento_consultado[0] %></div>
-      </div>
-      <%
-        const score = parseInt(data.consulta.resposta[0].score[0].registro[0].score[0], 10);
-        let scoreClass = '';
+        <%
+          const score = parseInt(data.consulta.resposta[0].score[0].registro[0].score[0], 10);
+          let scoreClass = '';
 
-        if (score >= 0 && score <= 200) {
-          scoreClass = 'score-red';
-        } else if (score >= 201 && score <= 400) {
-          scoreClass = 'score-orange';
-        } else if (score >= 401 && score <= 600) {
-          scoreClass = 'score-yellow';
-        } else if (score >= 601 && score <= 800) {
-          scoreClass = 'score-light-green';
-        } else if (score >= 801 && score <= 1000) {
-          scoreClass = 'score-dark-green';
-        }
-      %>
-      <div class="tableline">
-        <div class="tablecolumn uc s12 tabletitle" style="padding: 14px;">
-          <div class="scoreSquare <%= scoreClass %>">
-            Score<br>
-            <%= score %>
-            <div class="scoreSquareDetail"></div>
-          </div>
-          <div class="scoreSquareText">
-            <%= data.consulta.resposta[0].score[0].registro[0].texto[0] %>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- Renda Presumida -->
-    <div class="tablebody avoid-break">
-      <div class="tablehead">
-        <div class="tablecolumn uc s12">Renda Presumida</div>
-      </div>
-      <div class="tableline even">
-        <div class="tablecolumn uc s6 tabletitle">Faixa / Classe de renda</div>
-        <div class="tablecolumn uc s6"><%= data.consulta.resposta[0].score[0].registro[1].classificacao_numerico[0] %></div>
-      </div>
-      <div class="tableline ">
-        <div class="tablecolumn uc s6 tabletitle">Renda Mensal</div>
-        <div class="tablecolumn uc s6">de <%= data.consulta.resposta[0].score[0].registro[1].texto[0] %></div>
-      </div>
-      <div class="tableline even">
-        <div class="tablecolumn s12">*A Renda Mensal é estimada a partir de informações comportamentais e cadastrais do consumidor.</div>
-      </div>
-    </div>
-    <!-- Limite de parcela -->
-    <div class="tablebody avoid-break">
-      <div class="tablehead">
-        <div class="tablecolumn uc s12">Limite de parcela</div>
-      </div>
-      <div class="tableline even">
-        <div class="tablecolumn uc s6 tabletitle">Descrição</div>
-        <div class="tablecolumn uc s6">limite de parcela</div>
-      </div>
-      <div class="tableline ">
-        <div class="tablecolumn uc s6 tabletitle">VALOR (R$)*</div>
-        <div class="tablecolumn uc s6">0,00</div>
-      </div>
-      <div class="tableline even">
-        <div class="tablecolumn uc s6 tabletitle">TEXTO</div>
-        <div class="tablecolumn uc s6"><%= data.consulta.resposta[0].score[0].registro[2].texto[0] %></div>
-      </div>
-      <div class="tableline">
-        <div class="tablecolumn s12">*O valor da parcela é estimado a partir da combinação de informações cadastrais, comportamentais, e IBGE.</div>
-      </div>
-      <div class="tableline even">
-        <div class="tablecolumn s12">IMPORTANTE: A definição do valor do limite de crédito efetivamente concedido é de total responsabilidade da empresa cedente e deve estar alinhado a sua politica interna de concessão de crédito.</div>
-      </div>
-    </div>
-    <!-- Decisão -->
-    <div class="tablebody avoid-break">
-      <div class="tablehead">
-        <div class="tablecolumn uc s12">Decisão</div>
-      </div>
-      <% if (Object.keys(data.consulta.resposta[0].decisao[0]).length === 0) { %>
+          if (score >= 0 && score <= 200) {
+            scoreClass = 'score-red';
+          } else if (score >= 201 && score <= 400) {
+            scoreClass = 'score-orange';
+          } else if (score >= 401 && score <= 600) {
+            scoreClass = 'score-yellow';
+          } else if (score >= 601 && score <= 800) {
+            scoreClass = 'score-light-green';
+          } else if (score >= 801 && score <= 1000) {
+            scoreClass = 'score-dark-green';
+          }
+        %>
         <div class="tableline">
-          <div class="tablecolumn uc s12 tabletitle">Não contam informações na base consultada</div>
+          <div class="tablecolumn uc s12 tabletitle" style="padding: 14px;">
+            <div class="scoreSquare <%= scoreClass %>">
+              Score<br>
+              <%= score %>
+              <div class="scoreSquareDetail"></div>
+            </div>
+            <div class="scoreSquareText">
+              <%= data.consulta.resposta[0].score[0].registro[0].texto[0] %>
+            </div>
+          </div>
         </div>
-      <% } else { %>
+      </div>
+      <!-- Renda Presumida -->
+      <div class="tablebody avoid-break">
+        <div class="tablehead">
+          <div class="tablecolumn uc s12">Renda Presumida</div>
+        </div>
         <div class="tableline even">
-          <div class="tablecolumn uc s6 tabletitle">Aprovação</div>
-          <div class="tablecolumn uc s6"><%= data.consulta.resposta[0].decisao[0].aprovacao[0] || "Não informado" %></div>
+          <div class="tablecolumn uc s6 tabletitle">Faixa / Classe de renda</div>
+          <div class="tablecolumn uc s6"><%= data.consulta.resposta[0].score[0].registro[1].classificacao_numerico[0] %></div>
         </div>
-        <div class="tableline">
+        <div class="tableline ">
+          <div class="tablecolumn uc s6 tabletitle">Renda Mensal</div>
+          <div class="tablecolumn uc s6">de <%= data.consulta.resposta[0].score[0].registro[1].texto[0] %></div>
+        </div>
+        <div class="tableline even">
+          <div class="tablecolumn s12">*A Renda Mensal é estimada a partir de informações comportamentais e cadastrais do consumidor.</div>
+        </div>
+      </div>
+      <!-- Limite de parcela -->
+      <div class="tablebody avoid-break">
+        <div class="tablehead">
+          <div class="tablecolumn uc s12">Limite de parcela</div>
+        </div>
+        <div class="tableline even">
+          <div class="tablecolumn uc s6 tabletitle">Descrição</div>
+          <div class="tablecolumn uc s6">limite de parcela</div>
+        </div>
+        <div class="tableline ">
+          <div class="tablecolumn uc s6 tabletitle">VALOR (R$)*</div>
+          <div class="tablecolumn uc s6">0,00</div>
+        </div>
+        <div class="tableline even">
           <div class="tablecolumn uc s6 tabletitle">TEXTO</div>
-          <div class="tablecolumn uc s6"><%= data.consulta.resposta[0].decisao[0].texto[0] || "Não informado" %></div>
+          <div class="tablecolumn uc s6"><%= data.consulta.resposta[0].score[0].registro[2].texto[0] %></div>
+        </div>
+        <div class="tableline">
+          <div class="tablecolumn s12">*O valor da parcela é estimado a partir da combinação de informações cadastrais, comportamentais, e IBGE.</div>
         </div>
         <div class="tableline even">
-          <div class="tablecolumn s12">AVISO: Esta análise foi baseada na validação de informações existentes no Bureau de Crédito e é de inteira responsabilidade do usuário e da empresa a decisão de aprovar/reprovar a negociação. As informações são confidenciais e é proibida a sua reprodução total ou parcial, bem como quaquer forma de divulgação.</div>
-        </div> 
-      <% } %>
-    </div>
-    <!-- Síntese Cadastral -->
-    <div class="tablebody avoid-break">
-      <div class="tablehead">
-        <div class="tablecolumn uc s12">Síntese Cadastral</div>
+          <div class="tablecolumn s12">IMPORTANTE: A definição do valor do limite de crédito efetivamente concedido é de total responsabilidade da empresa cedente e deve estar alinhado a sua politica interna de concessão de crédito.</div>
+        </div>
       </div>
-      <% if (Object.keys(data.consulta.resposta[0].identificacao[0]).length === 0) { %>
-        <div class="tableline">
-          <div class="tablecolumn uc s12 tabletitle">Não contam informações na base consultada</div>
+      <!-- Decisão -->
+      <div class="tablebody avoid-break">
+        <div class="tablehead">
+          <div class="tablecolumn uc s12">Decisão</div>
         </div>
-      <% } else { %>
-        <div class="tableline">
-          <div class="tablecolumn uc s2 tabletitle">Nome</div>
-          <div class="tablecolumn uc s2"><%= data.consulta.resposta[0].identificacao[0].nome[0] || "Não informado" %></div>
-          <div class="tablecolumn uc s2 tabletitle">Nascimento</div>
-          <div class="tablecolumn uc s2"><%= data.consulta.resposta[0].identificacao[0].data_nascimento[0] || "Não informado" %></div>
-          <div class="tablecolumn uc s2 tabletitle">Nome da mãe</div>
-          <div class="tablecolumn uc s2"><%= data.consulta.resposta[0].identificacao[0].nome_mae[0] || "Não informado" %></div>
-        </div>
-        <div class="tableline even">
-          <div class="tablecolumn uc s2 tabletitle">Documento</div>
-          <div class="tablecolumn uc s2">
-            <script>
-              document.write(formatCPF("<%= data.consulta.resposta[0].identificacao[0].documento[0] %>", "<%= data.consulta.resposta[0].identificacao[0].pessoa[0] %>"));
-            </script>
+        <% if (Object.keys(data.consulta.resposta[0].decisao[0]).length === 0) { %>
+          <div class="tableline">
+            <div class="tablecolumn uc s12 tabletitle">Não contam informações na base consultada</div>
           </div>
-          <div class="tablecolumn uc s2 tabletitle">Região do cpf</div>
-          <div class="tablecolumn uc s2"><%= data.consulta.resposta[0].identificacao[0].regiao_cpf[0] || "Não informado" %></div>
-          <div class="tablecolumn uc s2 tabletitle">Situação da receita</div>
-          <div class="tablecolumn uc s2"><%= data.consulta.resposta[0].identificacao[0].situacao_receita[0] || "Não informado" %></div>
-        </div>
-        <div class="tableline">
-          <div class="tablecolumn uc s2 tabletitle">Sexo</div>
-          <div class="tablecolumn uc s2"><%= data.consulta.resposta[0].identificacao[0].sexo[0] || "Não informado" %></div>
-          <div class="tablecolumn uc s2 tabletitle">Estado civil</div>
-          <div class="tablecolumn uc s2"><%= data.consulta.resposta[0].identificacao[0].estado_civil[0] || "Não informado" %></div>
-          <div class="tablecolumn uc s2 tabletitle">Numero de dependentes</div>
-          <div class="tablecolumn uc s2"><%= data.consulta.resposta[0].identificacao[0].numero_dependentes[0] || "Não informado" %></div>
-        </div>
-        <div class="tableline even">
-          <div class="tablecolumn uc s2 tabletitle">Escolaridade</div>
-          <div class="tablecolumn uc s2"><%= data.consulta.resposta[0].identificacao[0].escolaridade[0] || "Não informado" %></div>
-          <div class="tablecolumn uc s2 tabletitle">Data de atualização</div>
-          <div class="tablecolumn uc s2"><%= data.consulta.resposta[0].identificacao[0].data_atualizacao[0] || "Não informado" %></div>
-          <div class="tablecolumn uc s2 tabletitle">Nacionalidade</div>
-          <div class="tablecolumn uc s2"><%= data.consulta.resposta[0].identificacao[0].nacionalidade[0] || "Não informado" %></div>
-        </div>
-        <div class="tableline">
-          <div class="tablecolumn uc s2 tabletitle">Título de eleitor</div>
-          <div class="tablecolumn uc s2"><%= data.consulta.resposta[0].identificacao[0].titulo_eleitor[0] || "Não informado" %></div>
-          <div class="tablecolumn uc s2 tabletitle">Óbito</div>
-          <div class="tablecolumn uc s2"><%= data.consulta.resposta[0].identificacao[0].obito[0] || "Não informado" %></div>
-        </div>
-      <% } %>
-    </div>
-    <!-- Localização -->
-    <div class="tablebody avoid-break">
-      <div class="tablehead">
-        <div class="tablecolumn uc s12">Localização</div>
-      </div>
-      <% if (Object.keys(data.consulta.resposta[0].localizacao[0]).length === 0) { %>
-        <div class="tableline">
-          <div class="tablecolumn uc s12 tabletitle">Nada Consta</div>
-        </div>
-      <% } else { %>
-        <div class="tableline even">
-          <div class="tablecolumn uc s3 tabletitle">Endereço</div>
-          <div class="tablecolumn uc s2 tabletitle">Bairro</div>
-          <div class="tablecolumn uc s2 tabletitle">Cidade</div>
-          <div class="tablecolumn uc s1 tabletitle">UF</div>
-          <div class="tablecolumn uc s2 tabletitle">CEP</div>
-          <div class="tablecolumn uc s3 tabletitle">Telefones</div>
-        </div>
-        <div class="tableline">
-          <div class="tablecolumn uc s3"><%= data.consulta.resposta[0].localizacao[0].tipo[0] %> <%= data.consulta.resposta[0].localizacao[0].endereco[0] %> <%= data.consulta.resposta[0].localizacao[0].numero[0] %> <%= data.consulta.resposta[0].localizacao[0].complemento[0] %></div>
-          <div class="tablecolumn uc s2"><%= data.consulta.resposta[0].localizacao[0].bairro[0] %></div>
-          <div class="tablecolumn uc s2"><%= data.consulta.resposta[0].localizacao[0].cidade[0] %></div>
-          <div class="tablecolumn uc s1"><%= data.consulta.resposta[0].localizacao[0].uf[0] %></div>
-          <div class="tablecolumn uc s2"><%= data.consulta.resposta[0].localizacao[0].cep[0] %></div>
-          <div class="tablecolumn uc s3">
-            <script>
-              document.write(formatarTelefone("<%= data.consulta.resposta[0].localizacao.ddd1 %>", "<%= data.consulta.resposta[0].localizacao.telefone1 %>"));
-            </script>
-            / 
-            <script>
-              document.write(formatarTelefone("<%= data.consulta.resposta[0].localizacao.ddd2 %>", "<%= data.consulta.resposta[0].localizacao.telefone2 %>"));
-            </script>
-            / 
-            <script>
-              document.write(formatarTelefone("<%= data.consulta.resposta[0].localizacao.ddd3 %>", "<%= data.consulta.resposta[0].localizacao.telefone3 %>"));
-            </script> 
+        <% } else { %>
+          <div class="tableline even">
+            <div class="tablecolumn uc s6 tabletitle">Aprovação</div>
+            <div class="tablecolumn uc s6"><%= data.consulta.resposta[0].decisao[0].aprovacao[0] || "Não informado" %></div>
           </div>
-        </div>
-      <% } %>
-    </div>
-    <div class="page-break"></div>
-    <!-- Ações -->
-    <div class="tablebody avoid-break">
-      <div class="tablehead bg-02">
-        <div class="tablecolumn uc s12">Ações</div>
+          <div class="tableline">
+            <div class="tablecolumn uc s6 tabletitle">TEXTO</div>
+            <div class="tablecolumn uc s6"><%= data.consulta.resposta[0].decisao[0].texto[0] || "Não informado" %></div>
+          </div>
+          <div class="tableline even">
+            <div class="tablecolumn s12">AVISO: Esta análise foi baseada na validação de informações existentes no Bureau de Crédito e é de inteira responsabilidade do usuário e da empresa a decisão de aprovar/reprovar a negociação. As informações são confidenciais e é proibida a sua reprodução total ou parcial, bem como quaquer forma de divulgação.</div>
+          </div> 
+        <% } %>
       </div>
-      <% if (Object.keys(data.consulta.resposta[0].acoes[0]).length === 0) { %>
-        <div class="tableline">
-          <div class="tablecolumn uc s12 tabletitle">Nada Consta</div>
+      <!-- Síntese Cadastral -->
+      <div class="tablebody avoid-break">
+        <div class="tablehead">
+          <div class="tablecolumn uc s12">Síntese Cadastral</div>
         </div>
-      <% } else { %>
-        <div class="tableline even">
-          <div class="tablecolumn uc s1 tabletitle">Processo</div>
-          <div class="tablecolumn uc s2 tabletitle">Tipo</div>
-          <div class="tablecolumn uc s3 tabletitle">Autor</div>
-          <div class="tablecolumn uc s2 tabletitle">Valor</div>
-          <div class="tablecolumn uc s2 tabletitle">Praça</div>
-          <div class="tablecolumn uc s2 tabletitle">Data</div>
-        </div>
-          <% data.consulta.resposta[0].acoes[0].registro.forEach(function(res,index) { %>
-            <div class="tableline <%= index % 2 === 0 ? '' : 'even' %>">
-              <div class="tablecolumn uc s1 tabletitle"><%= res.processo[0] %></div>
-              <div class="tablecolumn uc s2 tabletitle"><%= res.acao[0] %></div>
-              <div class="tablecolumn uc s3 tabletitle"><%= res.autor[0] %></div>
-              <div class="tablecolumn uc s2 tabletitle"><%= res.valor[0] %></div>
-              <div class="tablecolumn uc s2 tabletitle"><%= res.praca[0] %>/<%= res.uf[0] %></div>
-              <div class="tablecolumn uc s2 tabletitle"><%= res.data[0] %></div>
-            </div>
-          <% }); %>
-      <% } %>
-    </div>
-    <!-- Alertas -->
-    <div class="tablebody avoid-break">
-      <div class="tablehead">
-        <div class="tablecolumn uc s12">Alertas</div>
-      </div>
-      <% if (Object.keys(data.consulta.resposta[0].alertas[0]).length === 0) { %>
-        <div class="tableline">
-          <div class="tablecolumn uc s12 tabletitle">Nada Consta</div>
-        </div>
-      <% } else { %>
-        <div class="tableline even">
-          <div class="tablecolumn uc s1 tabletitle">Tipo</div>
-          <div class="tablecolumn uc s2 tabletitle">Origem</div>
-          <div class="tablecolumn uc s3 tabletitle">mensagem</div>
-        </div>
-          <% data.consulta.resposta[0].alertas[0].registro.forEach(function(res,index) { %>
-            <div class="tableline <%= index % 2 === 0 ? '' : 'even' %>">
-              <div class="tablecolumn uc s1 tabletitle"><%= res.tipo[0] %></div>
-              <div class="tablecolumn uc s2 tabletitle"><%= res.origem[0] %></div>
-              <div class="tablecolumn uc s3 tabletitle"><%= res.mensagem[0] %></div>
-            </div>
-          <% }); %>
-      <% } %>
-    </div>
-    <!-- Débitos -->
-    <div class="tablebody avoid-break">
-      <div class="tablehead bg-02">
-        <div class="tablecolumn uc s12">Débitos no scpc</div>
-      </div>
-      <% if (Object.keys(data.consulta.resposta[0].debitos[0]).length === 0) { %>
-        <div class="tableline">
-          <div class="tablecolumn uc s12 tabletitle">Nada Consta</div>
-        </div>
-      <% } else { %>
-        <div class="tableline even">
-          <div class="tablecolumn uc s4 tabletitle">Contrato</div>
-          <div class="tablecolumn uc s2 tabletitle">Valor</div>
-          <div class="tablecolumn uc s4 tabletitle">informante</div>
-          <div class="tablecolumn uc s2 tabletitle">Local</div>
-          <div class="tablecolumn uc s2 tabletitle">Data da ocorrência</div>
-          <div class="tablecolumn uc s2 tabletitle">Data da exibição</div>
-        </div>
-          <% data.consulta.resposta[0].debitos[0].registro.forEach(function(res,index) { %>
-            <div class="tableline <%= index % 2 === 0 ? '' : 'even' %>">
-              <div class="tablecolumn uc s4 tabletitle"><%= res.contrato[0] %></div>
-              <div class="tablecolumn uc s2 tabletitle"><%= res.moeda[0] %> <%= res.valor %></div>
-              <div class="tablecolumn uc s4 tabletitle"><%= res.informante[0] %></div>
-              <div class="tablecolumn uc s2 tabletitle"><%= res.cidade[0] %>/<%= res.uf %></div>
-              <div class="tablecolumn uc s2 tabletitle"><%= res.data_ocorrencia[0] %></div>
-              <div class="tablecolumn uc s2 tabletitle"><%= res.data_exibicao[0] %></div>
-            </div>
-          <% }); %>
-      <% } %>
-    </div>
-    <!-- Protestos -->
-    <div class="tablebody avoid-break">
-      <div class="tablehead bg-02">
-        <div class="tablecolumn uc s12">protestos</div>
-      </div>
-      <% if (Object.keys(data.consulta.resposta[0].protestos[0]).length === 0) { %>
-        <div class="tableline">
-          <div class="tablecolumn uc s12 tabletitle">Nada Consta</div>
-        </div>
-      <% } else { %>
-        <div class="tableline even">
-          <div class="tablecolumn uc s2 tabletitle">Cartório</div>
-          <div class="tablecolumn uc s2 tabletitle">Tipo</div>
-          <div class="tablecolumn uc s2 tabletitle">Valor</div>
-          <div class="tablecolumn uc s2 tabletitle">Praça</div>
-          <div class="tablecolumn uc s2 tabletitle">Data</div>
-        </div>
-          <% data.consulta.resposta[0].protestos[0].registro.forEach(function(res,index) { %>
-            <div class="tableline <%= index % 2 === 0 ? '' : 'even' %>">
-              <div class="tablecolumn uc s2 tabletitle"><%= res.cartorio[0] %></div>
-              <div class="tablecolumn uc s2 tabletitle"><%= res.tipo[0] %></div>
-              <div class="tablecolumn uc s2 tabletitle"><%= res.moeda[0] %> <%= res.valor[0] %></div>
-              <div class="tablecolumn uc s2 tabletitle"><%= res.praca[0] %>/<%= res.estado[0] %></div>
-              <div class="tablecolumn uc s2 tabletitle"><%= res.data[0] %></div>
-            </div>
-          <% }); %>
-      <% } %>
-    </div>
-    <!-- Consultas Realizadas por segmento -->
-    <div class="tablebody">
-      <div class="tablehead">
-        <div class="tablecolumn uc s12">consultas Realizadas por segmento</div>
-      </div>
-      <% if (Object.keys(data.consulta.resposta[0].consultas_por_segmento[0]).length === 0) { %>
-        <div class="tableline">
-          <div class="tablecolumn uc s12 tabletitle">Não contam informações na base consultada</div>
-        </div>
-      <% } else { %>
-        <div class="tableline">
-          <div class="tablecolumn uc s3 tabletitle">Data</div>
-          <div class="tablecolumn uc s3 tabletitle">Documento</div>
-          <div class="tablecolumn uc s3 tabletitle">Valor</div>
-          <div class="tablecolumn uc s3 tabletitle">Informante</div>
-          <div class="tablecolumn uc s3 tabletitle">Ocorrência</div>
-        </div>
-        <% data.consulta.resposta[0].consultas_por_segmento[0].registro.forEach(function(res,index) { %>
-          <div class="tableline <%= index % 2 === 0 ? 'even' : '' %>">
-            <div class="tablecolumn uc s3"><%= res.data[0] %></div>
-            <div class="tablecolumn uc s3">
+        <% if (Object.keys(data.consulta.resposta[0].identificacao[0]).length === 0) { %>
+          <div class="tableline">
+            <div class="tablecolumn uc s12 tabletitle">Não contam informações na base consultada</div>
+          </div>
+        <% } else { %>
+          <div class="tableline">
+            <div class="tablecolumn uc s2 tabletitle">Nome</div>
+            <div class="tablecolumn uc s2"><%= data.consulta.resposta[0].identificacao[0].nome[0] || "Não informado" %></div>
+            <div class="tablecolumn uc s2 tabletitle">Nascimento</div>
+            <div class="tablecolumn uc s2"><%= data.consulta.resposta[0].identificacao[0].data_nascimento[0] || "Não informado" %></div>
+            <div class="tablecolumn uc s2 tabletitle">Nome da mãe</div>
+            <div class="tablecolumn uc s2"><%= data.consulta.resposta[0].identificacao[0].nome_mae[0] || "Não informado" %></div>
+          </div>
+          <div class="tableline even">
+            <div class="tablecolumn uc s2 tabletitle">Documento</div>
+            <div class="tablecolumn uc s2">
               <script>
-                document.write(formatCPF("<%= res.documento[0] %>"));
+                document.write(formatCPF("<%= data.consulta.resposta[0].identificacao[0].documento[0] %>", "<%= data.consulta.resposta[0].identificacao[0].pessoa[0] %>"));
               </script>
             </div>
-            <div class="tablecolumn uc s3"><%= res.moeda[0] %> <%= res.valor[0] %></div>
-            <div class="tablecolumn uc s3"><%= res.informante[0] %></div>
-            <div class="tablecolumn uc s3"><%= res.ocorrencia[0] %></div>
+            <div class="tablecolumn uc s2 tabletitle">Região do cpf</div>
+            <div class="tablecolumn uc s2"><%= data.consulta.resposta[0].identificacao[0].regiao_cpf[0] || "Não informado" %></div>
+            <div class="tablecolumn uc s2 tabletitle">Situação da receita</div>
+            <div class="tablecolumn uc s2"><%= data.consulta.resposta[0].identificacao[0].situacao_receita[0] || "Não informado" %></div>
           </div>
-        <% }); %>
-      <% } %>
-    </div>
-    <!-- Confirmação de telefone -->
-    <div class="tablebody avoid-break">
-      <div class="tablehead bg-02">
-        <div class="tablecolumn uc s12">Confirmação de telefone</div>
+          <div class="tableline">
+            <div class="tablecolumn uc s2 tabletitle">Sexo</div>
+            <div class="tablecolumn uc s2"><%= data.consulta.resposta[0].identificacao[0].sexo[0] || "Não informado" %></div>
+            <div class="tablecolumn uc s2 tabletitle">Estado civil</div>
+            <div class="tablecolumn uc s2"><%= data.consulta.resposta[0].identificacao[0].estado_civil[0] || "Não informado" %></div>
+            <div class="tablecolumn uc s2 tabletitle">Numero de dependentes</div>
+            <div class="tablecolumn uc s2"><%= data.consulta.resposta[0].identificacao[0].numero_dependentes[0] || "Não informado" %></div>
+          </div>
+          <div class="tableline even">
+            <div class="tablecolumn uc s2 tabletitle">Escolaridade</div>
+            <div class="tablecolumn uc s2"><%= data.consulta.resposta[0].identificacao[0].escolaridade[0] || "Não informado" %></div>
+            <div class="tablecolumn uc s2 tabletitle">Data de atualização</div>
+            <div class="tablecolumn uc s2"><%= data.consulta.resposta[0].identificacao[0].data_atualizacao[0] || "Não informado" %></div>
+            <div class="tablecolumn uc s2 tabletitle">Nacionalidade</div>
+            <div class="tablecolumn uc s2"><%= data.consulta.resposta[0].identificacao[0].nacionalidade[0] || "Não informado" %></div>
+          </div>
+          <div class="tableline">
+            <div class="tablecolumn uc s2 tabletitle">Título de eleitor</div>
+            <div class="tablecolumn uc s2"><%= data.consulta.resposta[0].identificacao[0].titulo_eleitor[0] || "Não informado" %></div>
+            <div class="tablecolumn uc s2 tabletitle">Óbito</div>
+            <div class="tablecolumn uc s2"><%= data.consulta.resposta[0].identificacao[0].obito[0] || "Não informado" %></div>
+          </div>
+        <% } %>
       </div>
-      <% if (Object.keys(data.consulta.resposta[0].telefones[0]).length === 0) { %>
-        <div class="tableline">
-          <div class="tablecolumn uc s12 tabletitle">Nada Consta</div>
+      <!-- Localização -->
+      <div class="tablebody avoid-break">
+        <div class="tablehead">
+          <div class="tablecolumn uc s12">Localização</div>
         </div>
-      <% } else { %>
-        <div class="tableline even">
-          <div class="tablecolumn uc s2 tabletitle">nome</div>
-          <div class="tablecolumn uc s2 tabletitle">documento</div>
-          <div class="tablecolumn uc s2 tabletitle">endereco</div>
-          <div class="tablecolumn uc s2 tabletitle">cep</div>
-          <div class="tablecolumn uc s2 tabletitle">Cidade</div>
-          <div class="tablecolumn uc s2 tabletitle">telefone</div>
-        </div>
-          <% data.consulta.resposta[0].telefones[0].registro.forEach(function(res,index) { %>
-            <div class="tableline <%= index % 2 === 0 ? '' : 'even' %>">
-              <div class="tablecolumn uc s2 tabletitle"><%= res.nome[0] %></div>
-              <div class="tablecolumn uc s2">
-                <script>
-                  document.write(formatCPF("<%= res.documento[0] %>"));
-                </script>
-              </div>
-              <div class="tablecolumn uc s2 tabletitle"><%= res.endereco[0] %> <%= res.bairro[0] %></div>
-              <div class="tablecolumn uc s2 tabletitle"><%= res.cep[0] %></div>
-              <div class="tablecolumn uc s2 tabletitle"><%= res.cidade[0] %>/<%= res.uf[0] %></div>
-              <div class="tablecolumn uc s2">
-                <script>
-                  document.write(formatarTelefone("<%= res.ddd[0] %>", "<%= res.telefone[0] %>"));
-                </script> 
-              </div>
+        <% if (Object.keys(data.consulta.resposta[0].localizacao[0]).length === 0) { %>
+          <div class="tableline">
+            <div class="tablecolumn uc s12 tabletitle">Nada Consta</div>
+          </div>
+        <% } else { %>
+          <div class="tableline even">
+            <div class="tablecolumn uc s3 tabletitle">Endereço</div>
+            <div class="tablecolumn uc s2 tabletitle">Bairro</div>
+            <div class="tablecolumn uc s2 tabletitle">Cidade</div>
+            <div class="tablecolumn uc s1 tabletitle">UF</div>
+            <div class="tablecolumn uc s2 tabletitle">CEP</div>
+            <div class="tablecolumn uc s3 tabletitle">Telefones</div>
+          </div>
+          <div class="tableline">
+            <div class="tablecolumn uc s3"><%= data.consulta.resposta[0].localizacao[0].tipo[0] %> <%= data.consulta.resposta[0].localizacao[0].endereco[0] %> <%= data.consulta.resposta[0].localizacao[0].numero[0] %> <%= data.consulta.resposta[0].localizacao[0].complemento[0] %></div>
+            <div class="tablecolumn uc s2"><%= data.consulta.resposta[0].localizacao[0].bairro[0] %></div>
+            <div class="tablecolumn uc s2"><%= data.consulta.resposta[0].localizacao[0].cidade[0] %></div>
+            <div class="tablecolumn uc s1"><%= data.consulta.resposta[0].localizacao[0].uf[0] %></div>
+            <div class="tablecolumn uc s2"><%= data.consulta.resposta[0].localizacao[0].cep[0] %></div>
+            <div class="tablecolumn uc s3">
+              <script>
+                document.write(formatarTelefone("<%= data.consulta.resposta[0].localizacao.ddd1 %>", "<%= data.consulta.resposta[0].localizacao.telefone1 %>"));
+              </script>
+              / 
+              <script>
+                document.write(formatarTelefone("<%= data.consulta.resposta[0].localizacao.ddd2 %>", "<%= data.consulta.resposta[0].localizacao.telefone2 %>"));
+              </script>
+              / 
+              <script>
+                document.write(formatarTelefone("<%= data.consulta.resposta[0].localizacao.ddd3 %>", "<%= data.consulta.resposta[0].localizacao.telefone3 %>"));
+              </script> 
             </div>
-          <% }); %>
-      <% } %>
-    </div>
-    <!-- Telefones Vinculados -->
-    <div class="tablebody">
-      <div class="tablehead">
-        <div class="tablecolumn uc s12">Telefones Vinculados</div>
+          </div>
+        <% } %>
       </div>
-      <% if (Object.keys(data.consulta.resposta[0].telefones_vinculados[0]).length === 0) { %>
-        <div class="tableline">
-          <div class="tablecolumn uc s12 tabletitle">Não contam informações na base consultada</div>
+      <div class="page-break"></div>
+      <!-- Ações -->
+      <div class="tablebody avoid-break">
+        <div class="tablehead <%= (Object.keys(data.consulta.resposta[0].acoes[0]).length === 0) ? 'bg-02' : 'bg-03' %>">
+          <div class="tablecolumn uc s12">Ações</div>
         </div>
-      <% } else { %>
-        <div class="tableline even">
-          <div class="tablecolumn uc s3 tabletitle">Endereço</div>
-          <div class="tablecolumn uc s2 tabletitle">Bairro</div>
-          <div class="tablecolumn uc s2 tabletitle">Cidade</div>
-          <div class="tablecolumn uc s2 tabletitle">CEP</div>
-          <div class="tablecolumn uc s3 tabletitle">Telefone</div>
+        <% if (Object.keys(data.consulta.resposta[0].acoes[0]).length === 0) { %>
+          <div class="tableline">
+            <div class="tablecolumn uc s12 tabletitle">Nada Consta</div>
+          </div>
+        <% } else { %>
+          <div class="tableline even">
+            <div class="tablecolumn uc s1 tabletitle">Processo</div>
+            <div class="tablecolumn uc s2 tabletitle">Tipo</div>
+            <div class="tablecolumn uc s3 tabletitle">Autor</div>
+            <div class="tablecolumn uc s2 tabletitle">Valor</div>
+            <div class="tablecolumn uc s2 tabletitle">Praça</div>
+            <div class="tablecolumn uc s2 tabletitle">Data</div>
+          </div>
+            <% data.consulta.resposta[0].acoes[0].registro.forEach(function(res,index) { %>
+              <div class="tableline <%= index % 2 === 0 ? '' : 'even' %>">
+                <div class="tablecolumn uc s1 tabletitle"><%= res.processo[0] %></div>
+                <div class="tablecolumn uc s2 tabletitle"><%= res.acao[0] %></div>
+                <div class="tablecolumn uc s3 tabletitle"><%= res.autor[0] %></div>
+                <div class="tablecolumn uc s2 tabletitle"><%= res.valor[0] %></div>
+                <div class="tablecolumn uc s2 tabletitle"><%= res.praca[0] %>/<%= res.uf[0] %></div>
+                <div class="tablecolumn uc s2 tabletitle"><%= res.data[0] %></div>
+              </div>
+            <% }); %>
+        <% } %>
+      </div>
+      <!-- Alertas -->
+      <div class="tablebody avoid-break">
+        <div class="tablehead">
+          <div class="tablecolumn uc s12">Alertas</div>
         </div>
-          <% data.consulta.resposta[0].telefones_vinculados[0].registro.forEach(function(res,index) { %>
-            <div class="tableline <%= index % 2 === 0 ? '' : 'even' %>">
-              <div class="tablecolumn uc s3"><%= res.endereco[0] %></div>
-              <div class="tablecolumn uc s2"><%= res.bairro[0] %></div>
-              <div class="tablecolumn uc s2"><%= res.cidade[0] %>/<%= res.uf[0] %></div>
-              <div class="tablecolumn uc s2"><%= res.cep[0] %></div>
+        <% if (Object.keys(data.consulta.resposta[0].alertas[0]).length === 0) { %>
+          <div class="tableline">
+            <div class="tablecolumn uc s12 tabletitle">Nada Consta</div>
+          </div>
+        <% } else { %>
+          <div class="tableline even">
+            <div class="tablecolumn uc s1 tabletitle">Tipo</div>
+            <div class="tablecolumn uc s2 tabletitle">Origem</div>
+            <div class="tablecolumn uc s3 tabletitle">mensagem</div>
+          </div>
+            <% data.consulta.resposta[0].alertas[0].registro.forEach(function(res,index) { %>
+              <div class="tableline <%= index % 2 === 0 ? '' : 'even' %>">
+                <div class="tablecolumn uc s1 tabletitle"><%= res.tipo[0] %></div>
+                <div class="tablecolumn uc s2 tabletitle"><%= res.origem[0] %></div>
+                <div class="tablecolumn uc s3 tabletitle"><%= res.mensagem[0] %></div>
+              </div>
+            <% }); %>
+        <% } %>
+      </div>
+      <!-- Débitos -->
+      <div class="tablebody avoid-break">
+        <div class="tablehead <%= (Object.keys(data.consulta.resposta[0].debitos[0]).length === 0) ? 'bg-02' : 'bg-03' %>">
+          <div class="tablecolumn uc s12">Débitos no scpc</div>
+        </div>
+        <% if (Object.keys(data.consulta.resposta[0].debitos[0]).length === 0) { %>
+          <div class="tableline">
+            <div class="tablecolumn uc s12 tabletitle">Nada Consta</div>
+          </div>
+        <% } else { %>
+          <div class="tableline even">
+            <div class="tablecolumn uc s4 tabletitle">Contrato</div>
+            <div class="tablecolumn uc s2 tabletitle">Valor</div>
+            <div class="tablecolumn uc s4 tabletitle">informante</div>
+            <div class="tablecolumn uc s2 tabletitle">Local</div>
+            <div class="tablecolumn uc s2 tabletitle">Data da ocorrência</div>
+            <div class="tablecolumn uc s2 tabletitle">Data da exibição</div>
+          </div>
+            <% data.consulta.resposta[0].debitos[0].registro.forEach(function(res,index) { %>
+              <div class="tableline <%= index % 2 === 0 ? '' : 'even' %>">
+                <div class="tablecolumn uc s4 tabletitle"><%= res.contrato[0] %></div>
+                <div class="tablecolumn uc s2 tabletitle"><%= res.moeda[0] %> <%= res.valor %></div>
+                <div class="tablecolumn uc s4 tabletitle"><%= res.informante[0] %></div>
+                <div class="tablecolumn uc s2 tabletitle"><%= res.cidade[0] %>/<%= res.uf %></div>
+                <div class="tablecolumn uc s2 tabletitle"><%= res.data_ocorrencia[0] %></div>
+                <div class="tablecolumn uc s2 tabletitle"><%= res.data_exibicao[0] %></div>
+              </div>
+            <% }); %>
+        <% } %>
+      </div>
+      <!-- Protestos -->
+      <div class="tablebody avoid-break">
+        <div class="tablehead <%= (Object.keys(data.consulta.resposta[0].protestos[0]).length === 0) ? 'bg-02' : 'bg-03' %>">
+          <div class="tablecolumn uc s12">protestos</div>
+        </div>
+        <% if (Object.keys(data.consulta.resposta[0].protestos[0]).length === 0) { %>
+          <div class="tableline">
+            <div class="tablecolumn uc s12 tabletitle">Nada Consta</div>
+          </div>
+        <% } else { %>
+          <div class="tableline even">
+            <div class="tablecolumn uc s2 tabletitle">Cartório</div>
+            <div class="tablecolumn uc s2 tabletitle">Tipo</div>
+            <div class="tablecolumn uc s2 tabletitle">Valor</div>
+            <div class="tablecolumn uc s2 tabletitle">Praça</div>
+            <div class="tablecolumn uc s2 tabletitle">Data</div>
+          </div>
+            <% data.consulta.resposta[0].protestos[0].registro.forEach(function(res,index) { %>
+              <div class="tableline <%= index % 2 === 0 ? '' : 'even' %>">
+                <div class="tablecolumn uc s2 tabletitle"><%= res.cartorio[0] %></div>
+                <div class="tablecolumn uc s2 tabletitle"><%= res.tipo[0] %></div>
+                <div class="tablecolumn uc s2 tabletitle"><%= res.moeda[0] %> <%= res.valor[0] %></div>
+                <div class="tablecolumn uc s2 tabletitle"><%= res.praca[0] %>/<%= res.estado[0] %></div>
+                <div class="tablecolumn uc s2 tabletitle"><%= res.data[0] %></div>
+              </div>
+            <% }); %>
+        <% } %>
+      </div>
+      <!-- Consultas Realizadas por segmento -->
+      <div class="tablebody">
+        <div class="tablehead">
+          <div class="tablecolumn uc s12">consultas Realizadas por segmento</div>
+        </div>
+        <% if (Object.keys(data.consulta.resposta[0].consultas_por_segmento[0]).length === 0) { %>
+          <div class="tableline">
+            <div class="tablecolumn uc s12 tabletitle">Não contam informações na base consultada</div>
+          </div>
+        <% } else { %>
+          <div class="tableline">
+            <div class="tablecolumn uc s3 tabletitle">Data</div>
+            <div class="tablecolumn uc s3 tabletitle">Documento</div>
+            <div class="tablecolumn uc s3 tabletitle">Valor</div>
+            <div class="tablecolumn uc s3 tabletitle">Informante</div>
+            <div class="tablecolumn uc s3 tabletitle">Ocorrência</div>
+          </div>
+          <% data.consulta.resposta[0].consultas_por_segmento[0].registro.forEach(function(res,index) { %>
+            <div class="tableline <%= index % 2 === 0 ? 'even' : '' %>">
+              <div class="tablecolumn uc s3"><%= res.data[0] %></div>
               <div class="tablecolumn uc s3">
                 <script>
-                  document.write(formatarTelefone("<%= res.ddd[0] %>", "<%= res.telefone[0] %>"));
-                </script> 
+                  document.write(formatCPF("<%= res.documento[0] %>"));
+                </script>
               </div>
+              <div class="tablecolumn uc s3"><%= res.moeda[0] %> <%= res.valor[0] %></div>
+              <div class="tablecolumn uc s3"><%= res.informante[0] %></div>
+              <div class="tablecolumn uc s3"><%= res.ocorrencia[0] %></div>
             </div>
           <% }); %>
-      <% } %>
-    </div>
-    <!-- Confirmação de CEP -->
-    <div class="tablebody">
-      <div class="tablehead">
-        <div class="tablecolumn uc s12">Confirmação de CEP</div>
+        <% } %>
       </div>
-      <% if (Object.keys(data.consulta.resposta[0].confirmacao_cep[0]).length === 0) { %>
-        <div class="tableline">
-          <div class="tablecolumn uc s12 tabletitle">Não contam informações na base consultada</div>
+      <!-- Confirmação de telefone -->
+      <div class="tablebody avoid-break">
+        <div class="tablehead <%= (Object.keys(data.consulta.resposta[0].telefones[0]).length === 0) ? 'bg-02' : 'bg-03' %>">
+          <div class="tablecolumn uc s12">Confirmação de telefone</div>
         </div>
-      <% } else { %>
-        <div class="tableline even">
-          <div class="tablecolumn uc s2 tabletitle">CEP</div>
-          <div class="tablecolumn uc s4 tabletitle">Endereço</div>
-          <div class="tablecolumn uc s2 tabletitle">Bairro</div>
-          <div class="tablecolumn uc s2 tabletitle">Cidade</div>
-          <div class="tablecolumn uc s2 tabletitle">UF</div>
-        </div>
-          <% data.consulta.resposta[0].confirmacao_cep[0].registro.forEach(function(res,index) { %>
-            <div class="tableline <%= index % 2 === 0 ? '' : 'even' %>">
-              <div class="tablecolumn uc s2"><%= res.cep[0] %></div>
-              <div class="tablecolumn uc s4"><%= res.endereco[0] %></div>
-              <div class="tablecolumn uc s2"><%= res.bairro[0] %></div>
-              <div class="tablecolumn uc s2"><%= res.cidade[0] %></div>
-              <div class="tablecolumn uc s2"><%= res.uf[0] %></div>
-            </div>
-          <% }); %>
-      <% } %>
-    </div>
-    <!-- Cheques sem fundo - CCF -->
-    <div class="tablebody">
-      <div class="tablehead bg-02">
-        <div class="tablecolumn uc s12">Cheques sem fundo - CCF</div>
+        <% if (Object.keys(data.consulta.resposta[0].telefones[0]).length === 0) { %>
+          <div class="tableline">
+            <div class="tablecolumn uc s12 tabletitle">Nada Consta</div>
+          </div>
+        <% } else { %>
+          <div class="tableline even">
+            <div class="tablecolumn uc s2 tabletitle">nome</div>
+            <div class="tablecolumn uc s2 tabletitle">documento</div>
+            <div class="tablecolumn uc s2 tabletitle">endereco</div>
+            <div class="tablecolumn uc s2 tabletitle">cep</div>
+            <div class="tablecolumn uc s2 tabletitle">Cidade</div>
+            <div class="tablecolumn uc s2 tabletitle">telefone</div>
+          </div>
+            <% data.consulta.resposta[0].telefones[0].registro.forEach(function(res,index) { %>
+              <div class="tableline <%= index % 2 === 0 ? '' : 'even' %>">
+                <div class="tablecolumn uc s2 tabletitle"><%= res.nome[0] %></div>
+                <div class="tablecolumn uc s2">
+                  <script>
+                    document.write(formatCPF("<%= res.documento[0] %>"));
+                  </script>
+                </div>
+                <div class="tablecolumn uc s2 tabletitle"><%= res.endereco[0] %> <%= res.bairro[0] %></div>
+                <div class="tablecolumn uc s2 tabletitle"><%= res.cep[0] %></div>
+                <div class="tablecolumn uc s2 tabletitle"><%= res.cidade[0] %>/<%= res.uf[0] %></div>
+                <div class="tablecolumn uc s2">
+                  <script>
+                    document.write(formatarTelefone("<%= res.ddd[0] %>", "<%= res.telefone[0] %>"));
+                  </script> 
+                </div>
+              </div>
+            <% }); %>
+        <% } %>
       </div>
-      <% if (Object.keys(data.consulta.resposta[0].ccf[0]).length === 0) { %>
-        <div class="tableline">
-          <div class="tablecolumn uc s12 tabletitle">Não contam informações na base consultada</div>
+      <!-- Telefones Vinculados -->
+      <div class="tablebody">
+        <div class="tablehead">
+          <div class="tablecolumn uc s12">Telefones Vinculados</div>
         </div>
-      <% } else { %>
-          <% data.consulta.resposta[0].ccf[0].registro.forEach(function(res,index) { %>
+        <% if (Object.keys(data.consulta.resposta[0].telefones_vinculados[0]).length === 0) { %>
+          <div class="tableline">
+            <div class="tablecolumn uc s12 tabletitle">Não contam informações na base consultada</div>
+          </div>
+        <% } else { %>
+          <div class="tableline even">
+            <div class="tablecolumn uc s3 tabletitle">Endereço</div>
+            <div class="tablecolumn uc s2 tabletitle">Bairro</div>
+            <div class="tablecolumn uc s2 tabletitle">Cidade</div>
+            <div class="tablecolumn uc s2 tabletitle">CEP</div>
+            <div class="tablecolumn uc s3 tabletitle">Telefone</div>
+          </div>
+            <% data.consulta.resposta[0].telefones_vinculados[0].registro.forEach(function(res,index) { %>
+              <div class="tableline <%= index % 2 === 0 ? '' : 'even' %>">
+                <div class="tablecolumn uc s3"><%= res.endereco[0] %></div>
+                <div class="tablecolumn uc s2"><%= res.bairro[0] %></div>
+                <div class="tablecolumn uc s2"><%= res.cidade[0] %>/<%= res.uf[0] %></div>
+                <div class="tablecolumn uc s2"><%= res.cep[0] %></div>
+                <div class="tablecolumn uc s3">
+                  <script>
+                    document.write(formatarTelefone("<%= res.ddd[0] %>", "<%= res.telefone[0] %>"));
+                  </script> 
+                </div>
+              </div>
+            <% }); %>
+        <% } %>
+      </div>
+      <!-- Confirmação de CEP -->
+      <div class="tablebody">
+        <div class="tablehead">
+          <div class="tablecolumn uc s12">Confirmação de CEP</div>
+        </div>
+        <% if (Object.keys(data.consulta.resposta[0].confirmacao_cep[0]).length === 0) { %>
+          <div class="tableline">
+            <div class="tablecolumn uc s12 tabletitle">Não contam informações na base consultada</div>
+          </div>
+        <% } else { %>
+          <div class="tableline even">
+            <div class="tablecolumn uc s2 tabletitle">CEP</div>
+            <div class="tablecolumn uc s4 tabletitle">Endereço</div>
+            <div class="tablecolumn uc s2 tabletitle">Bairro</div>
+            <div class="tablecolumn uc s2 tabletitle">Cidade</div>
+            <div class="tablecolumn uc s2 tabletitle">UF</div>
+          </div>
+            <% data.consulta.resposta[0].confirmacao_cep[0].registro.forEach(function(res,index) { %>
+              <div class="tableline <%= index % 2 === 0 ? '' : 'even' %>">
+                <div class="tablecolumn uc s2"><%= res.cep[0] %></div>
+                <div class="tablecolumn uc s4"><%= res.endereco[0] %></div>
+                <div class="tablecolumn uc s2"><%= res.bairro[0] %></div>
+                <div class="tablecolumn uc s2"><%= res.cidade[0] %></div>
+                <div class="tablecolumn uc s2"><%= res.uf[0] %></div>
+              </div>
+            <% }); %>
+        <% } %>
+      </div>
+      <!-- Cheques sem fundo - CCF -->
+      <div class="tablebody">
+        <div class="tablehead <%= (Object.keys(data.consulta.resposta[0].ccf[0]).length === 0) ? 'bg-02' : 'bg-03' %>">
+          <div class="tablecolumn uc s12">Cheques sem fundo - CCF</div>
+        </div>
+        <% if (Object.keys(data.consulta.resposta[0].ccf[0]).length === 0) { %>
+          <div class="tableline">
+            <div class="tablecolumn uc s12 tabletitle">Não contam informações na base consultada</div>
+          </div>
+        <% } else { %>
+            <% data.consulta.resposta[0].ccf[0].registro.forEach(function(res,index) { %>
+              <div class="tableline even">
+                <div class="tablecolumn uc s2 tabletitle">nome</div>
+                <div class="tablecolumn uc s2"><%= res.nome[0] %></div>
+                <div class="tablecolumn uc s2 tabletitle">documento</div>
+                <div class="tablecolumn uc s2">
+                  <script>
+                    document.write(formatCPF("<%= res.documento[0] %>"));
+                  </script>
+                </div>
+                <div class="tablecolumn uc s2 tabletitle">tipo</div>
+                <div class="tablecolumn uc s2"><%= res.tipo[0] %></div>
+              </div>
+              <div class="tableline">
+                <div class="tablecolumn uc s2 tabletitle">banco</div>
+                <div class="tablecolumn uc s2"><%= res.banco[0] %></div>
+                <div class="tablecolumn uc s2 tabletitle">agência</div>
+                <div class="tablecolumn uc s2"><%= res.agencia[0] || "não informado" %></div>
+                <div class="tablecolumn uc s2 tabletitle">mensagem</div>
+                <div class="tablecolumn uc s2"><%= res.mensagem[0] %></div>
+              </div>
+              <div class="tableline even">
+                <div class="tablecolumn uc s12 tabletitle">Motivo</div>
+              </div>
+              <% Object.keys(res).forEach(function(key,k) { %>
+                <% if (key.startsWith('motivo_')) { %>
+                  <% res[key].forEach(function(motivo) { %>
+                    <div class="tableline <%= k % 2 === 0 ? 'even' : '' %>">
+                      <div class="tablecolumn uc s2">Total</div>
+                      <div class="tablecolumn uc s2"><%= motivo.total[0] %></div>
+                      <div class="tablecolumn uc s2">Data Último</div>
+                      <div class="tablecolumn uc s2"><%= motivo.data_ultimo[0] %></div>
+                      <div class="tablecolumn uc s2">Alinea</div>
+                      <div class="tablecolumn uc s2"><%= motivo.alinea[0] %></div>
+                    </div>
+                  <% }); %>
+                <% } %>
+              <% }); %>
+            <% }); %>
+        <% } %>
+      </div>
+      <!-- cheque_motivo_21 -->
+      <div class="tablebody avoid-break">
+        <div class="tablehead">
+          <div class="tablecolumn uc s12">Cheque Motivo 21</div>
+        </div>
+        <% if (Object.keys(data.consulta.resposta[0].cheque_motivo_21[0]).length === 0) { %>
+          <div class="tableline">
+            <div class="tablecolumn uc s12 tabletitle">Nada Consta</div>
+          </div>
+        <% } else { %>
+          <% data.consulta.resposta[0].cheque_motivo_21[0].registro.forEach(function(res, index) { %>
             <div class="tableline even">
-              <div class="tablecolumn uc s2 tabletitle">nome</div>
-              <div class="tablecolumn uc s2"><%= res.nome[0] %></div>
-              <div class="tablecolumn uc s2 tabletitle">documento</div>
+              <div class="tablecolumn uc s2 tabletitle">Tipo</div>
+              <div class="tablecolumn uc s2"><%= res.tipo[0] %></div>
+              <div class="tablecolumn uc s2 tabletitle">Documento</div>
               <div class="tablecolumn uc s2">
                 <script>
                   document.write(formatCPF("<%= res.documento[0] %>"));
                 </script>
               </div>
-              <div class="tablecolumn uc s2 tabletitle">tipo</div>
-              <div class="tablecolumn uc s2"><%= res.tipo[0] %></div>
+              <div class="tablecolumn uc s2 tabletitle">Informante</div>
+              <div class="tablecolumn uc s2"><%= res.informante[0] %></div>
             </div>
             <div class="tableline">
-              <div class="tablecolumn uc s2 tabletitle">banco</div>
+              <div class="tablecolumn uc s2 tabletitle">Banco</div>
               <div class="tablecolumn uc s2"><%= res.banco[0] %></div>
-              <div class="tablecolumn uc s2 tabletitle">agência</div>
-              <div class="tablecolumn uc s2"><%= res.agencia[0] || "não informado" %></div>
-              <div class="tablecolumn uc s2 tabletitle">mensagem</div>
+              <div class="tablecolumn uc s2 tabletitle">Agência</div>
+              <div class="tablecolumn uc s2"><%= res.agencia[0] %></div>
+              <div class="tablecolumn uc s2 tabletitle">Conta</div>
+              <div class="tablecolumn uc s2"><%= res.conta[0] %></div>
+            </div>
+            <div class="tableline even">
+              <div class="tablecolumn uc s2 tabletitle">Cheque Inicial</div>
+              <div class="tablecolumn uc s2"><%= res.cheque_inicial[0] %></div>
+              <div class="tablecolumn uc s2 tabletitle">Cheque Final</div>
+              <div class="tablecolumn uc s2"><%= res.cheque_final[0] %></div>
+              <div class="tablecolumn uc s2 tabletitle">Alinea Número</div>
+              <div class="tablecolumn uc s2"><%= res.alinea_numero[0] %></div>
+            </div>
+            <div class="tableline">
+              <div class="tablecolumn uc s2 tabletitle">Alinea Descrição</div>
+              <div class="tablecolumn uc s2"><%= res.alinea_descricao[0] %></div>
+              <div class="tablecolumn uc s2 tabletitle">Data Registro</div>
+              <div class="tablecolumn uc s2"><%= res.data_registro[0] %></div>
+              <div class="tablecolumn uc s2 tabletitle">Data Disponível</div>
+              <div class="tablecolumn uc s2"><%= res.data_disponivel[0] %></div>
+            </div>
+            <div class="tableline even">
+              <div class="tablecolumn uc s2 tabletitle">Moeda</div>
+              <div class="tablecolumn uc s2"><%= res.moeda[0] %></div>
+              <div class="tablecolumn uc s2 tabletitle">Valor</div>
+              <div class="tablecolumn uc s2"><%= res.valor[0] %></div>
+              <div class="tablecolumn uc s2 tabletitle">ValorN</div>
+              <div class="tablecolumn uc s2"><%= res.valorn[0] %></div>
+            </div>
+          <% }); %>
+        <% } %>
+      </div>
+      <!-- devolucao_informada_pelo_usuario -->
+      <div class="tablebody avoid-break">
+        <div class="tablehead">
+          <div class="tablecolumn uc s12">Devolução Informada pelo Usuário</div>
+        </div>
+        <% if (Object.keys(data.consulta.resposta[0].devolucao_informada_pelo_usuario[0]).length === 0) { %>
+          <div class="tableline">
+            <div class="tablecolumn uc s12 tabletitle">Nada Consta</div>
+          </div>
+        <% } else { %>
+          <% data.consulta.resposta[0].devolucao_informada_pelo_usuario[0].registro.forEach(function(res, index) { %>
+            <div class="tableline even">
+              <div class="tablecolumn uc s2 tabletitle">Tipo</div>
+              <div class="tablecolumn uc s2"><%= res.tipo[0] %></div>
+              <div class="tablecolumn uc s2 tabletitle">Documento</div>
+              <div class="tablecolumn uc s2">
+                <script>
+                  document.write(formatCPF("<%= res.documento[0] %>"));
+                </script>
+              </div>
+              <div class="tablecolumn uc s2 tabletitle">Informante</div>
+              <div class="tablecolumn uc s2"><%= res.informante[0] %></div>
+            </div>
+            <div class="tableline">
+              <div class="tablecolumn uc s1 tabletitle">Banco</div>
+              <div class="tablecolumn uc s1"><%= res.banco[0] %></div>
+              <div class="tablecolumn uc s1 tabletitle">Agência</div>
+              <div class="tablecolumn uc s1"><%= res.agencia[0] || "não informado" %></div>
+              <div class="tablecolumn uc s2 tabletitle">Conta</div>
+              <div class="tablecolumn uc s2"><%= res.conta[0] %></div>
+              <div class="tablecolumn uc s2 tabletitle">Mensagem</div>
               <div class="tablecolumn uc s2"><%= res.mensagem[0] %></div>
             </div>
             <div class="tableline even">
-              <div class="tablecolumn uc s12 tabletitle">Motivo</div>
+              <div class="tablecolumn uc s1 tabletitle">Cheque Inicial</div>
+              <div class="tablecolumn uc s1"><%= res.cheque_inicial[0] %></div>
+              <div class="tablecolumn uc s1 tabletitle">Cheque Final</div>
+              <div class="tablecolumn uc s1"><%= res.cheque_final[0] %></div>
+              <div class="tablecolumn uc s1 tabletitle">Alinea Número</div>
+              <div class="tablecolumn uc s1"><%= res.alinea_numero[0] %></div>
+              <div class="tablecolumn uc s2 tabletitle">Alinea Descrição</div>
+              <div class="tablecolumn uc s4"><%= res.alinea_descricao[0] %></div>
             </div>
-            <% Object.keys(res).forEach(function(key,k) { %>
-              <% if (key.startsWith('motivo_')) { %>
-                <% res[key].forEach(function(motivo) { %>
-                  <div class="tableline <%= k % 2 === 0 ? 'even' : '' %>">
-                    <div class="tablecolumn uc s2">Total</div>
-                    <div class="tablecolumn uc s2"><%= motivo.total[0] %></div>
-                    <div class="tablecolumn uc s2">Data Último</div>
-                    <div class="tablecolumn uc s2"><%= motivo.data_ultimo[0] %></div>
-                    <div class="tablecolumn uc s2">Alinea</div>
-                    <div class="tablecolumn uc s2"><%= motivo.alinea[0] %></div>
+            <div class="tableline">
+              <div class="tablecolumn uc s2 tabletitle">Data Registro</div>
+              <div class="tablecolumn uc s2"><%= res.data_registro[0] %></div>
+              <div class="tablecolumn uc s2 tabletitle">Data Disponível</div>
+              <div class="tablecolumn uc s2"><%= res.data_disponivel[0] %></div>
+              <div class="tablecolumn uc s2 tabletitle">Cidade</div>
+              <div class="tablecolumn uc s2"><%= res.cidade[0] %>/<%= res.uf[0] %></div>
+            </div>
+            <div class="tableline even">
+              <div class="tablecolumn uc s2 tabletitle">Moeda</div>
+              <div class="tablecolumn uc s2"><%= res.moeda[0] %></div>
+              <div class="tablecolumn uc s2 tabletitle">Valor</div>
+              <div class="tablecolumn uc s2"><%= res.valor[0] %></div>
+              <div class="tablecolumn uc s2 tabletitle">ValorN</div>
+              <div class="tablecolumn uc s2"><%= res.valorn[0] %></div>
+            </div>
+          <% }); %>
+        <% } %>
+      </div>
+      <!-- cheque_talao_sustado -->
+      <div class="tablebody avoid-break">
+        <div class="tablehead">
+          <div class="tablecolumn uc s12">Cheque Talão Sustado</div>
+        </div>
+        <% if (Object.keys(data.consulta.resposta[0].cheque_talao_sustado[0]).length === 0) { %>
+          <div class="tableline">
+            <div class="tablecolumn uc s12 tabletitle">Nada Consta</div>
+          </div>
+        <% } else { %>
+          <% data.consulta.resposta[0].cheque_talao_sustado[0].registro.forEach(function(res, index) { %>
+            <div class="tableline even">
+              <div class="tablecolumn uc s2 tabletitle">Ocorrência</div>
+              <div class="tablecolumn uc s2"><%= res.ocorrencia[0] %></div>
+              <div class="tablecolumn uc s2 tabletitle">Documento</div>
+              <div class="tablecolumn uc s2">
+                <script>
+                  document.write(formatCPF("<%= res.numero_documento[0] %>"));
+                </script>
+              </div>
+              <div class="tablecolumn uc s2 tabletitle">Informante</div>
+              <div class="tablecolumn uc s2"><%= res.descricao_informante[0] %></div>
+            </div>
+            <div class="tableline">
+              <div class="tablecolumn uc s2 tabletitle">Banco</div>
+              <div class="tablecolumn uc s2"><%= res.banco[0] %></div>
+              <div class="tablecolumn uc s2 tabletitle">Agência</div>
+              <div class="tablecolumn uc s2"><%= res.agencia[0] || "não informado" %></div>
+              <div class="tablecolumn uc s2 tabletitle">Conta</div>
+              <div class="tablecolumn uc s2"><%= res.conta[0] %></div>
+            </div>
+            <div class="tableline even">
+              <div class="tablecolumn uc s2 tabletitle">Cheque</div>
+              <div class="tablecolumn uc s2"><%= res.cheque[0] %></div>
+              <div class="tablecolumn uc s2 tabletitle">Alinea Número</div>
+              <div class="tablecolumn uc s2"><%= res.alinea_numero[0] %></div>
+              <div class="tablecolumn uc s2 tabletitle">Alinea Descrição</div>
+              <div class="tablecolumn uc s2"><%= res.alinea_descricao[0] %></div>
+            </div>
+            <div class="tableline">
+              <div class="tablecolumn uc s2 tabletitle">Data Ocorrência</div>
+              <div class="tablecolumn uc s2"><%= res.data_ocorrencia[0] %></div>
+              <div class="tablecolumn uc s2 tabletitle">Data Disponibilização</div>
+              <div class="tablecolumn uc s2"><%= res.data_disponibilizacao[0] %></div>
+              <div class="tablecolumn uc s2 tabletitle">Indicador Cheque Talão</div>
+              <div class="tablecolumn uc s2"><%= res.numero_indicador_cheque_talao[0] %></div>
+            </div>
+            <div class="tableline even">
+              <div class="tablecolumn uc s2 tabletitle">Descrição Indicador</div>
+              <div class="tablecolumn uc s2"><%= res.descricao_indicador_cheque_talao[0] %></div>
+              <div class="tablecolumn uc s4 tabletitle">Mensagem</div>
+              <div class="tablecolumn uc s4"><%= res.mensagem[0] %></div>
+            </div>
+          <% }); %>
+        <% } %>
+      </div>
+      <!-- resumo_devolucoes_informadas_pelo_ccf -->
+      <div class="tablebody avoid-break">
+        <div class="tablehead">
+          <div class="tablecolumn uc s12">Resumo Devoluções Informadas pelo CCF</div>
+        </div>
+        <% if (Object.keys(data.consulta.resposta[0].resumo_devolucoes_informadas_pelo_ccf[0]).length === 0) { %>
+          <div class="tableline">
+            <div class="tablecolumn uc s12 tabletitle">Nada Consta</div>
+          </div>
+        <% } else { %>
+          <% data.consulta.resposta[0].resumo_devolucoes_informadas_pelo_ccf[0].registro.forEach(function(res, index) { %>
+            <div class="tableline even">
+              <div class="tablecolumn uc s2 tabletitle">Documento</div>
+              <div class="tablecolumn uc s2">
+                <script>
+                  document.write(formatCPF("<%= res.numero_documento[0] %>"));
+                </script>
+              </div>
+              <div class="tablecolumn uc s4 tabletitle">Nome</div>
+              <div class="tablecolumn uc s4"><%= res.nome[0] %></div>
+              <div class="tablecolumn uc s2 tabletitle">Mensagem</div>
+              <div class="tablecolumn uc s2"><%= res.mensagem[0] %></div>
+            </div>
+            <div class="tableline">
+              <div class="tablecolumn uc s2 tabletitle">Totalizador</div>
+              <div class="tablecolumn uc s2"><%= res.totalizador[0] %></div>
+              <div class="tablecolumn uc s2 tabletitle">Total Devolvidos</div>
+              <div class="tablecolumn uc s2"><%= res.total_devolvidos[0] %></div>
+              <div class="tablecolumn uc s2 tabletitle">Motivo 12</div>
+              <div class="tablecolumn uc s2"><%= res.total_devolvidos_motivo_12[0] %></div>
+            </div>
+            <div class="tableline even">
+              <div class="tablecolumn uc s2 tabletitle">Motivo 13</div>
+              <div class="tablecolumn uc s2"><%= res.total_devolvidos_motivo_13[0] %></div>
+              <div class="tablecolumn uc s2 tabletitle">Motivo 14</div>
+              <div class="tablecolumn uc s2"><%= res.total_devolvidos_motivo_14[0] %></div>
+              <div class="tablecolumn uc s2 tabletitle">Motivo 99</div>
+              <div class="tablecolumn uc s2"><%= res.total_devolvidos_motivo_99[0] %></div>
+            </div>
+          <% }); %>
+        <% } %>
+      </div>
+      <!-- resumo_consultas_anteriores_cheque -->
+      <div class="tablebody avoid-break">
+        <div class="tablehead">
+          <div class="tablecolumn uc s12">Resumo Consultas Anteriores Cheque</div>
+        </div>
+        <% if (Object.keys(data.consulta.resposta[0].resumo_consultas_anteriores_cheque[0]).length === 0) { %>
+          <div class="tableline">
+            <div class="tablecolumn uc s12 tabletitle">Nada Consta</div>
+          </div>
+        <% } else { %>
+          <% data.consulta.resposta[0].resumo_consultas_anteriores_cheque[0].registro.forEach(function(res, index) { %>
+            <div class="tableline even">
+              <div class="tablecolumn uc s2 tabletitle">Documento</div>
+              <div class="tablecolumn uc s2">
+                <script>
+                  document.write(formatCPF("<%= res.documento[0] %>"));
+                </script>
+              </div>
+              <div class="tablecolumn uc s2 tabletitle">Total de Consultas</div>
+              <div class="tablecolumn uc s2"><%= res.total_de_consultas[0] %></div>
+              <div class="tablecolumn uc s2 tabletitle">Mensagem</div>
+              <div class="tablecolumn uc s2"><%= res.mensagem[0] %></div>
+            </div>
+            <div class="tableline">
+              <div class="tablecolumn uc s2 tabletitle">Data Primeira Consulta</div>
+              <div class="tablecolumn uc s2"><%= res.data_primeira_consulta[0] %></div>
+              <div class="tablecolumn uc s2 tabletitle">Data Última Consulta</div>
+              <div class="tablecolumn uc s2"><%= res.data_ultima_consulta[0] %></div>
+            </div>
+          <% }); %>
+        <% } %>
+      </div>
+      <!-- historico_cheque_informado -->
+      <div class="tablebody avoid-break">
+        <div class="tablehead">
+          <div class="tablecolumn uc s12">Histórico de Cheque Informado</div>
+        </div>
+        <% if (Object.keys(data.consulta.resposta[0].historico_cheque_informado[0]).length === 0) { %>
+          <div class="tableline">
+            <div class="tablecolumn uc s12 tabletitle">Nada Consta</div>
+          </div>
+        <% } else { %>
+          <% data.consulta.resposta[0].historico_cheque_informado[0].registro.forEach(function(res, index) { %>
+            <div class="tableline even">
+              <div class="tablecolumn uc s2 tabletitle">Documento</div>
+              <div class="tablecolumn uc s2">
+                <script>
+                  document.write(formatCPF("<%= res.documento[0] %>"));
+                </script>
+              </div>
+              <div class="tablecolumn uc s2 tabletitle">Número do Cheque</div>
+              <div class="tablecolumn uc s2"><%= res.numero_do_cheque[0] %></div>
+              <div class="tablecolumn uc s2 tabletitle">Mensagem</div>
+              <div class="tablecolumn uc s2"><%= res.mensagem[0] %></div>
+            </div>
+            <div class="tableline">
+              <div class="tablecolumn uc s2 tabletitle">Banco</div>
+              <div class="tablecolumn uc s2"><%= res.banco[0] %></div>
+              <div class="tablecolumn uc s2 tabletitle">Agência</div>
+              <div class="tablecolumn uc s2"><%= res.agencia[0] %></div>
+              <div class="tablecolumn uc s2 tabletitle">Conta</div>
+              <div class="tablecolumn uc s2"><%= res.conta[0] %></div>
+            </div>
+            <div class="tableline even">
+              <div class="tablecolumn uc s2 tabletitle">Data da Consulta</div>
+              <div class="tablecolumn uc s2"><%= res.dados_da_consulta_data[0] %></div>
+              <div class="tablecolumn uc s2 tabletitle">Hora da Consulta</div>
+              <div class="tablecolumn uc s2"><%= res.dados_da_consulta_hora[0] %></div>
+              <div class="tablecolumn uc s2 tabletitle">Rede/Loja</div>
+              <div class="tablecolumn uc s2"><%= res.dados_da_consulta_rede_loja[0] %></div>
+            </div>
+          <% }); %>
+        <% } %>
+      </div>
+      <!-- consultas_anteriores_cheque -->
+      <div class="tablebody avoid-break">
+        <div class="tablehead">
+          <div class="tablecolumn uc s12">Consultas Anteriores de Cheque</div>
+        </div>
+        <% if (Object.keys(data.consulta.resposta[0].consultas_anteriores_cheque[0]).length === 0) { %>
+          <div class="tableline">
+            <div class="tablecolumn uc s12 tabletitle">Nada Consta</div>
+          </div>
+        <% } else { %>
+          <% data.consulta.resposta[0].consultas_anteriores_cheque[0].registro.forEach(function(res, index) { %>
+            <div class="tableline even">
+              <div class="tablecolumn uc s2 tabletitle">Documento</div>
+              <div class="tablecolumn uc s2">
+                <script>
+                  document.write(formatCPF("<%= res.documento[0] %>"));
+                </script>
+              </div>
+              <div class="tablecolumn uc s2 tabletitle">Data da Consulta</div>
+              <div class="tablecolumn uc s2"><%= res.consulta_data[0] %></div>
+              <div class="tablecolumn uc s2 tabletitle">Mensagem</div>
+              <div class="tablecolumn uc s2"><%= res.mensagem[0] %></div>
+            </div>
+            <div class="tableline">
+              <div class="tablecolumn uc s2 tabletitle">Hora da Consulta</div>
+              <div class="tablecolumn uc s2"><%= res.consulta_hora[0] %></div>
+              <div class="tablecolumn uc s2 tabletitle">Moeda</div>
+              <div class="tablecolumn uc s2"><%= res.consulta_moeda[0] %></div>
+              <div class="tablecolumn uc s2 tabletitle">Valor</div>
+              <div class="tablecolumn uc s2"><%= res.consulta_valor[0] %></div>
+            </div>
+            <div class="tableline even">
+              <div class="tablecolumn uc s2 tabletitle">Informante</div>
+              <div class="tablecolumn uc s10"><%= res.consulta_informante[0] %></div>
+            </div>
+          <% }); %>
+        <% } %>
+      </div>
+      <!-- resumo_devolucoes_informadas_pelo_usuario -->
+      <div class="tablebody avoid-break">
+        <div class="tablehead">
+          <div class="tablecolumn uc s12">Resumo de Devoluções Informadas pelo Usuário</div>
+        </div>
+        <% if (Object.keys(data.consulta.resposta[0].resumo_devolucoes_informadas_pelo_usuario[0]).length === 0) { %>
+          <div class="tableline">
+            <div class="tablecolumn uc s12 tabletitle">Nada Consta</div>
+          </div>
+        <% } else { %>
+          <% data.consulta.resposta[0].resumo_devolucoes_informadas_pelo_usuario[0].registro.forEach(function(res, index) { %>
+            <div class="tableline even">
+              <div class="tablecolumn uc s2 tabletitle">Documento</div>
+              <div class="tablecolumn uc s2">
+                <script>
+                  document.write(formatCPF("<%= res.documento[0] %>"));
+                </script>
+              </div>
+              <div class="tablecolumn uc s2 tabletitle">Total de Devoluções</div>
+              <div class="tablecolumn uc s2"><%= res.total_de_devolucoes[0] %></div>
+              <div class="tablecolumn uc s2 tabletitle">Mensagem</div>
+              <div class="tablecolumn uc s2"><%= res.mensagem[0] %></div>
+            </div>
+            <div class="tableline">
+              <div class="tablecolumn uc s2 tabletitle">Data Primeira Devolução</div>
+              <div class="tablecolumn uc s2"><%= res.data_primeira_devolucao[0] %></div>
+              <div class="tablecolumn uc s2 tabletitle">Data Última Devolução</div>
+              <div class="tablecolumn uc s2"><%= res.data_ultima_devolucao[0] %></div>
+            </div>
+          <% }); %>
+        <% } %>
+      </div>
+      
+      <!-- grafias -->
+      <div class="tablebody">
+        <div class="tablehead">
+          <div class="tablecolumn uc s12">resumo das devolucoes informadas pelo usuário</div>
+        </div>
+        <% if (Object.keys(data.consulta.resposta[0].grafias[0]).length === 0) { %>
+          <div class="tableline">
+            <div class="tablecolumn uc s12 tabletitle">Não contam informações na base consultada</div>
+          </div>
+        <% } else { %>
+          <% data.consulta.resposta[0].grafias[0].registro.forEach(function(grafia,index) { %>
+            <div class="tableline even" style="border-top: 5px #cccccc solid;">
+              <div class="tablecolumn uc s2 tabletitle">Nome</div>
+              <div class="tablecolumn uc s3"><%= grafia.nome %></div>
+              <div class="tablecolumn uc s2 tabletitle">Documento</div>
+              <div class="tablecolumn uc s3">
+                <script>
+                  document.write(formatCPF("<%= grafia.documento %>"));
+                </script>
+              </div>
+              <div class="tablecolumn uc s2 tabletitle">Nascimento</div>
+              <div class="tablecolumn uc s3"><%= grafia.data_nascimento %></div>
+            </div>
+            <div class="tableline ">
+              <div class="tablecolumn uc s2 tabletitle">Endereço</div>
+              <div class="tablecolumn uc s3"><%= grafia.tipo %> <%= grafia.endereco %> <%= grafia.numero %></div>
+              <div class="tablecolumn uc s2 tabletitle">complemento</div>
+              <div class="tablecolumn uc s3"><%= grafia.complemento %></div>
+              <div class="tablecolumn uc s2 tabletitle">Bairro</div>
+              <div class="tablecolumn uc s3"><%= grafia.bairro %></div>
+            </div>
+            <div class="tableline even">
+              <div class="tablecolumn uc s2 tabletitle">Cidade</div>
+              <div class="tablecolumn uc s3"><%= grafia.cidade %></div>
+              <div class="tablecolumn uc s2 tabletitle">uf</div>
+              <div class="tablecolumn uc s3"><%= grafia.uf %></div>
+              <div class="tablecolumn uc s2 tabletitle">CEP</div>
+              <div class="tablecolumn uc s3"><%= grafia.cep %></div>
+            </div>
+            <div class="tableline ">
+              <div class="tablecolumn uc s2 tabletitle">Telefone 1</div>
+              <div class="tablecolumn uc s3">
+                <script>
+                  document.write(formatarTelefone("<%= grafia.ddd1 %>", "<%= grafia.telefone1 %>"));
+                </script> 
+              </div>
+              <div class="tablecolumn uc s2 tabletitle">Telefone 2</div>
+              <div class="tablecolumn uc s3">
+                <script>
+                  document.write(formatarTelefone("<%= grafia.ddd2 %>", "<%= grafia.telefone2 %>"));
+                </script> 
+              </div>
+              <div class="tablecolumn uc s2 tabletitle">Telefone 3</div>
+              <div class="tablecolumn uc s3">
+                <script>
+                  document.write(formatarTelefone("<%= grafia.ddd3 %>", "<%= grafia.telefone3 %>"));
+                </script> 
+              </div>
+            </div>
+          <% }); %>
+        <% } %>
+      </div>
+      <!-- participacoes -->
+      <div class="tablebody">
+        <div class="tablehead">
+          <div class="tablecolumn uc s12">Participações</div>
+        </div>
+        <% if (Object.keys(data.consulta.resposta[0].participacoes[0]).length === 0) { %>
+          <div class="tableline">
+            <div class="tablecolumn uc s12 tabletitle">Não contam informações na base consultada</div>
+          </div>
+        <% } else { %>
+          <% data.consulta.resposta[0].participacoes[0].registro.forEach(function(participacao,index) { %>
+            <div class="tableline even" style="border-top: 5px #cccccc solid;">
+              <div class="tablecolumn uc s2 tabletitle">Razão Social</div>
+              <div class="tablecolumn uc s5"><%= participacao.razao_social %></div>
+              <div class="tablecolumn uc s2 tabletitle">Documento</div>
+              <div class="tablecolumn uc s3">
+                <script>
+                  document.write(formatCPF("<%= participacao.documento %>"));
+                </script>
+              </div>
+              <div class="tablecolumn uc s2 tabletitle">Data de entrada</div>
+              <div class="tablecolumn uc s2"><%= participacao.data_entrada %></div>
+            </div>
+            <div class="tableline">
+              <div class="tablecolumn uc s2 tabletitle">observação</div>
+              <div class="tablecolumn uc s5"><%= participacao.observacao %></div>
+              <div class="tablecolumn uc s2 tabletitle">Percentual</div>
+              <div class="tablecolumn uc s3">
+                <script>
+                  document.write(formatPercentual("<%= participacao.percentual %>"));
+                </script>
+              </div>
+              <div class="tablecolumn uc s2 tabletitle">Valor</div>
+              <div class="tablecolumn uc s2"><%= participacao.moeda %> <%= participacao.valor %></div>
+            </div>
+            <div class="tableline even">
+              <div class="tablecolumn uc s2 tabletitle">Função</div>
+              <div class="tablecolumn uc s5"><%= participacao.funcao_socio %></div>
+              <div class="tablecolumn uc s2 tabletitle">Documeno Sócio</div>
+              <div class="tablecolumn uc s3">
+                <script>
+                  document.write(formatCPF("<%= participacao.documento_socio %>"));
+                </script>
+              </div>
+              <div class="tablecolumn uc s2 tabletitle">Tipo de sócio</div>
+              <div class="tablecolumn uc s2"><%= participacao.tipo_socio %></div>
+            </div>
+          <% }); %>
+        <% } %>
+      </div>
+      <!-- Falencias -->
+      <div class="tablebody">
+        <div class="tablehead <%= (Object.keys(data.consulta.resposta[0].falencias[0]).length === 0) ? 'bg-02' : 'bg-03' %>">
+          <div class="tablecolumn uc s12">Falências</div>
+        </div>
+        <% if (Object.keys(data.consulta.resposta[0].falencias[0]).length === 0) { %>
+          <div class="tableline">
+            <div class="tablecolumn uc s12 tabletitle">Não há registros de falências</div>
+          </div>
+        <% } else { %>
+          <div class="tableline">
+            <div class="tablecolumn uc s2 tabletitle">Vara</div>
+            <div class="tablecolumn uc s2 tabletitle">Data</div>
+            <div class="tablecolumn uc s2 tabletitle">Praça</div>
+            <div class="tablecolumn uc s2 tabletitle">UF</div>
+            <div class="tablecolumn uc s2 tabletitle">Código</div>
+          </div>
+          <% data.consulta.resposta[0].falencias[0].registro.forEach(function(res) { %>
+            <div class="tableline">
+              <div class="tablecolumn uc s2"><%= res.vara[0] %></div>
+              <div class="tablecolumn uc s2"><%= res.data[0] %></div>
+              <div class="tablecolumn uc s2"><%= res.praca[0] %></div>
+              <div class="tablecolumn uc s2"><%= res.uf[0] %></div>
+              <div class="tablecolumn uc s2"><%= res.codigo[0] %></div>
+            </div>
+          <% }); %>
+        <% } %>
+      </div>
+    <% } else { %>
+      <!-- DEFINE NEGOCIO -->
+      <div class="tablebody" style="border-right: 0;">
+        <div class="tablehead">
+          <div class="tablecolumn uc s12" style="min-height: 36px; font-size: 20px; box-shadow: 0px 0px 0px 1000px #ffffff inset; color: #143491; border-left: 0;border-right: 0;border-top: 1px solid #143491;">DEFINE NEGÓCIO</div>
+        </div>
+      </div>
+      <div class="tablebody avoid-break">
+        <div class="tablehead">
+          <div class="tablecolumn uc s12">Status da Consulta</div>
+        </div>
+        <div class="tableline ">
+          <div class="tablecolumn uc s4" style="display: flex; justify-content: center; height: 160px; flex-direction: column; margin-bottom: -26px;">
+            <svg xmlns="http://www.w3.org/2000/svg" style="transform: scale(4.4); padding:24px 0 30px 0;" width="365" height="365" viewbox="0 0 365 365" style="shape-rendering:geometricPrecision;text-rendering:geometricPrecision;image-rendering:optimizeQuality;fill-rule:evenodd;clip-rule:evenodd">
+              <% if (Object.keys(data.consulta.resposta[0].debitos[0]).length === 0 || data.consulta.resposta[0].debitos[0].total_debitos[0] == 0 || Object.keys(data.consulta.resposta[0].protestos[0]).length === 0 || data.consulta.resposta[0].protestos[0].total_protestos[0] == 0 || Object.keys(data.consulta.resposta[0].ccf[0]).length === 0 || data.consulta.resposta[0].ccf[0].total_ccf[0] == 0 || Object.keys(data.consulta.resposta[0].cheque_motivo_21[0]).length === 0 || data.consulta.resposta[0].cheque_motivo_21[0].total[0] == 0 || Object.keys(data.consulta.resposta[0].devolucao_informada_pelo_usuario[0]).length === 0 || data.consulta.resposta[0].devolucao_informada_pelo_usuario[0].total[0] == 0 || Object.keys(data.consulta.resposta[0].acoes_civeis[0]).length === 0 || data.consulta.resposta[0].acoes_civeis[0].total_acoes[0] == 0 || Object.keys(data.consulta.resposta[0].alerta_fraudes[0]).length === 0) { %>
+                <path style="opacity:.999" fill="#4fc041" d="M356.5 181.5q-34.071-33.573-68-67-11.594-15.768-29-6.5L157 210.5 103.5 159q-20.563-8.652-29.5 11.5-1.743 9.085 3 17a1568 1568 0 0 0 70.5 70 11244 11244 0 0 0 89 89.5q-1.374.417-2 1.5-104.913 29.074-181.5-48-71.04-84.19-32-188Q76.174 1.76 200.5 8 305.22 23.254 346 120.5q11.033 29.475 10.5 61"/>
+                <path style="opacity:1" fill="#fdfefd" d="M288.5 114.5q5.244 13.095-3.5 24A9514 9514 0 0 0 169.5 255q-10.322 7.282-22 2.5a1568 1568 0 0 1-70.5-70q-4.743-7.915-3-17 8.937-20.152 29.5-11.5l53.5 51.5L259.5 108q17.406-9.268 29 6.5"/>
+                <path style="opacity:.998" fill="#3d9f30" d="M288.5 114.5q33.929 33.427 68 67-1.413 92.085-76 145.5-21.309 14.405-46 21.5.626-1.083 2-1.5a11244 11244 0 0 1-89-89.5q11.678 4.782 22-2.5A9514 9514 0 0 1 285 138.5q8.744-10.905 3.5-24"/>
+              <% } else { %>
+                <path style="opacity:.998" fill="#fe5953" d="M356.5 184.5a9659 9659 0 0 1-83-82.5 2.43 2.43 0 0 0-2-.5q-10.077-16.773-28-8.5a2628 2628 0 0 0-61.5 60.5L123.5 95q-21.37-12.78-32.5 9.5-2.193 10.396 4 19l58.5 58.5A2628 2628 0 0 0 93 243.5q-8.21 17.96 8.5 28a2.43 2.43 0 0 0 .5 2 9650 9650 0 0 1 82.5 83q-99.301-.798-152.5-84-41.183-72.638-14-152Q58.793 23.239 163.5 8 266.382 1.08 327 83.5q30.328 45.735 29.5 101"/>
+                <path style="opacity:1" fill="#fefcfc" d="M271.5 101.5q5.113 12.459-3.5 23L210.5 182l58.5 58.5q12.226 21.815-10.5 32.5-7.902 1.602-15-2a2628 2628 0 0 1-61.5-60.5L123.5 269q-10.428 7.242-22 2.5-16.71-10.04-8.5-28a2628 2628 0 0 1 60.5-61.5L95 123.5q-6.193-8.604-4-19 11.13-22.28 32.5-9.5l58.5 58.5A2628 2628 0 0 1 243.5 93q17.923-8.273 28 8.5"/>
+                <path style="opacity:.999" fill="#da3a3c" d="M271.5 101.5a2.43 2.43 0 0 1 2 .5 9659 9659 0 0 0 83 82.5q-5.376 110.51-105 158.5-32.106 13.651-67 13.5a9650 9650 0 0 0-82.5-83 2.43 2.43 0 0 1-.5-2q11.572 4.742 22-2.5l58.5-58.5a2628 2628 0 0 0 61.5 60.5q7.098 3.602 15 2 22.726-10.685 10.5-32.5L210.5 182l57.5-57.5q8.613-10.541 3.5-23"/>
+              <% } %>
+            </svg>
+            <div class="tablecolumn uc s12 tabletitle" style="display: flex; align-items: center; text-align: center; font-size: 18px; width: fit-content;">
+              <% if (Object.keys(data.consulta.resposta[0].debitos[0]).length === 0 || data.consulta.resposta[0].debitos[0].total_debitos[0] == 0 || Object.keys(data.consulta.resposta[0].protestos[0]).length === 0 || data.consulta.resposta[0].protestos[0].total_protestos[0] == 0 || Object.keys(data.consulta.resposta[0].ccf[0]).length === 0 || data.consulta.resposta[0].ccf[0].total_ccf[0] == 0 || Object.keys(data.consulta.resposta[0].cheque_motivo_21[0]).length === 0 || data.consulta.resposta[0].cheque_motivo_21[0].total[0] == 0 || Object.keys(data.consulta.resposta[0].devolucao_informada_pelo_usuario[0]).length === 0 || data.consulta.resposta[0].devolucao_informada_pelo_usuario[0].total[0] == 0 || Object.keys(data.consulta.resposta[0].acoes_civeis[0]).length === 0 || data.consulta.resposta[0].acoes_civeis[0].total_acoes[0] == 0 || Object.keys(data.consulta.resposta[0].alerta_fraudes[0]).length === 0) { %>
+                Nada consta
+              <% } else { %>
+                Constam Restrições
+              <% } %>
+            </div>
+          </div>
+          <div class="tablecolumn uc s6 tabletitle" style="line-height: 13px;font-size: 10px;">
+            Débitos:<br>
+            Protestos:<br>
+            Cheques sem fundos - ccf:<br>
+            Cheques sustados motivo 21:<br>
+            Devoluções informadas pelo usuário:<br>
+            Ações Cíveis:<br>
+          </div>
+          <div class="tablecolumn uc s6 tabletitle" style="line-height: 13px;font-size: 10px;">
+            <% if (Object.keys(data.consulta.resposta[0].debitos[0]).length === 0 || data.consulta.resposta[0].debitos[0].total_debitos[0] == 0) { %>
+              Nada consta
+            <% } else { %>
+              <%= data.consulta.resposta[0].debitos[0].total_debitos[0] %>
+            <% } %>
+            <br>
+            <% if (Object.keys(data.consulta.resposta[0].protestos[0]).length === 0 || data.consulta.resposta[0].protestos[0].total_protestos[0] == 0) { %>
+              Não constam informações na base consultada
+            <% } else { %>
+              <%= data.consulta.resposta[0].protestos[0].total_protestos[0] %>
+            <% } %>
+            <br>
+            <% if (Object.keys(data.consulta.resposta[0].ccf[0]).length === 0 || data.consulta.resposta[0].ccf[0].total_ccf[0] == 0) { %>
+              Nada consta
+            <% } else { %>
+              <%= data.consulta.resposta[0].ccf[0].total_ccf[0] %>
+            <% } %>
+            <br>
+            <% if (Object.keys(data.consulta.resposta[0].cheque_motivo_21[0]).length === 0 || data.consulta.resposta[0].cheque_motivo_21[0].total[0] == 0) { %>
+              Nada consta
+            <% } else { %>
+              <%= data.consulta.resposta[0].cheque_motivo_21[0].total[0] %>
+            <% } %>
+            <br>
+            <% if (Object.keys(data.consulta.resposta[0].devolucao_informada_pelo_usuario[0]).length === 0 || data.consulta.resposta[0].devolucao_informada_pelo_usuario[0].total[0] == 0) { %>
+              Nada consta
+            <% } else { %>
+              <%= data.consulta.resposta[0].devolucao_informada_pelo_usuario[0].total[0] %>
+            <% } %>
+            <br>
+            <% if (Object.keys(data.consulta.resposta[0].acoes_civeis[0]).length === 0 || data.consulta.resposta[0].acoes_civeis[0].total_acoes[0] == 0) { %>
+              Nada consta
+            <% } else { %>
+              <%= data.consulta.resposta[0].acoes_civeis[0].total_acoes[0] %>
+            <% } %>
+          </div>
+        </div>
+        <div class="tableline even">
+          <div class="tablecolumn uc s4 tabletitle">Data Consulta</div>
+          <div class="tablecolumn uc s12"><%= data.consulta.cabecalho[0].data_consulta[0] %></div>
+        </div>
+        <!-- <div class="tableline ">
+          <div class="tablecolumn uc s4 tabletitle">Protocolo</div>
+          <div class="tablecolumn uc s12"><%= data.consulta.cabecalho[0].ip_solicitante[0] %></div>
+        </div> -->
+        <div class="tableline even">
+          <div class="tablecolumn uc s4 tabletitle">Parâmetro de busca</div>
+          <div class="tablecolumn uc s12"><%= data.consulta.cabecalho[0].documento_consultado[0] %></div>
+        </div>
+        <%
+          const score = parseInt(data.consulta.resposta[0].score[0].registro[0].score[0], 10);
+          let scoreClass = '';
+  
+          if (score >= 0 && score <= 200) {
+            scoreClass = 'score-red';
+          } else if (score >= 201 && score <= 400) {
+            scoreClass = 'score-orange';
+          } else if (score >= 401 && score <= 600) {
+            scoreClass = 'score-yellow';
+          } else if (score >= 601 && score <= 800) {
+            scoreClass = 'score-light-green';
+          } else if (score >= 801 && score <= 1000) {
+            scoreClass = 'score-dark-green';
+          }
+        %>
+        <div class="tableline">
+          <div class="tablecolumn uc s12 tabletitle" style="padding: 14px;">
+            <div class="scoreSquare <%= scoreClass %>">
+              Score<br>
+              <%= score %>
+              <div class="scoreSquareDetail"></div>
+            </div>
+            <div class="scoreSquareText">
+              <%= data.consulta.resposta[0].score[0].registro[0].texto[0] %>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Decisão -->
+      <div class="tablebody avoid-break">
+        <div class="tablehead">
+          <div class="tablecolumn uc s12">Decisão</div>
+        </div>
+        <% if (Object.keys(data.consulta.resposta[0].decisao[0]).length === 0) { %>
+          <div class="tableline">
+            <div class="tablecolumn uc s12 tabletitle">Não contam informações na base consultada</div>
+          </div>
+        <% } else { %>
+          <div class="tableline even">
+            <div class="tablecolumn uc s2 tabletitle">Descrição</div>
+            <div class="tablecolumn uc s10"><%= data.consulta.resposta[0].decisao[0].flag_descricao[0] %>: <%= data.consulta.resposta[0].decisao[0].descricao[0] %></div>
+          </div>
+          <div class="tableline even">
+            <div class="tablecolumn s12">AVISO: Esta análise foi baseada na validação de informações existentes no Bureau de Crédito e é de inteira responsabilidade do usuário e da empresa a decisão de aprovar/reprovar a negociação. As informações são confidenciais e é proibida a sua reprodução total ou parcial, bem como quaquer forma de divulgação.</div>
+          </div> 
+        <% } %>
+      </div>
+      <!-- Síntese Cadastral -->
+      <div class="tablebody avoid-break">
+        <div class="tablehead">
+          <div class="tablecolumn uc s12">Síntese Cadastral</div>
+        </div>
+        <% if (Object.keys(data.consulta.resposta[0].identificacao[0]).length === 0) { %>
+          <div class="tableline">
+            <div class="tablecolumn uc s12 tabletitle">Nada Consta</div>
+          </div>
+        <% } else { %>
+          <% data.consulta.resposta[0].identificacao.forEach(function(res, index) { %>
+            <div class="tableline even">
+              <div class="tablecolumn uc s2 tabletitle">Mensagem</div>
+              <div class="tablecolumn uc s10"><%= res.mensagem[0] %></div>
+            </div>
+            <div class="tableline">
+              <div class="tablecolumn uc s2 tabletitle">CNPJ</div>
+              <div class="tablecolumn uc s2">
+                <script>
+                  document.write(formatCPF("<%= res.cnpj[0] %>"));
+                </script>
+              </div>
+              <div class="tablecolumn uc s2 tabletitle">Situação CNPJ</div>
+              <div class="tablecolumn uc s2"><%= res.situacao_cnpj[0] %></div>
+              <div class="tablecolumn uc s2 tabletitle">Data Situação</div>
+              <div class="tablecolumn uc s2"><%= res.data_situacao[0] %></div>
+            </div>
+            <div class="tableline even">
+              <div class="tablecolumn uc s2 tabletitle">Data Consulta Receita Federal</div>
+              <div class="tablecolumn uc s2"><%= res.data_consulta_receita_federal[0] %></div>
+              <div class="tablecolumn uc s2 tabletitle">Razão Social</div>
+              <div class="tablecolumn uc s2"><%= res.razao_social[0] %></div>
+              <div class="tablecolumn uc s2 tabletitle">Razão Social Anterior</div>
+              <div class="tablecolumn uc s2"><%= res.razao_social_anterior[0] %></div>
+            </div>
+            <div class="tableline">
+              <div class="tablecolumn uc s2 tabletitle">Nome Fantasia</div>
+              <div class="tablecolumn uc s2"><%= res.nome_fantasia[0] %></div>
+              <div class="tablecolumn uc s2 tabletitle">Data Alteração Razão Social</div>
+              <div class="tablecolumn uc s2"><%= res.data_alteracao_razao_social[0] %></div>
+              <div class="tablecolumn uc s2 tabletitle">Data Registro</div>
+              <div class="tablecolumn uc s2"><%= res.data_registro[0] %></div>
+            </div>
+            <div class="tableline even">
+              <div class="tablecolumn uc s2 tabletitle">Órgão</div>
+              <div class="tablecolumn uc s2"><%= res.orgao[0] %></div>
+              <div class="tablecolumn uc s2 tabletitle">Órgão Atual</div>
+              <div class="tablecolumn uc s2"><%= res.orgao_atual[0] %></div>
+              <div class="tablecolumn uc s2 tabletitle">Inscrição Estadual</div>
+              <div class="tablecolumn uc s2"><%= res.inscricao_estadual[0] %></div>
+            </div>
+            <div class="tableline">
+              <div class="tablecolumn uc s2 tabletitle">Inscrição Estadual UF</div>
+              <div class="tablecolumn uc s2"><%= res.inscricao_estadual_uf[0] %></div>
+              <div class="tablecolumn uc s2 tabletitle">Data Fundação</div>
+              <div class="tablecolumn uc s2"><%= res.data_fundacao[0] %></div>
+              <div class="tablecolumn uc s2 tabletitle">Data Encerramento</div>
+              <div class="tablecolumn uc s2"><%= res.data_encerramento[0] %></div>
+            </div>
+            <div class="tableline even">
+              <div class="tablecolumn uc s2 tabletitle">Situação Sintegra</div>
+              <div class="tablecolumn uc s2"><%= res.situacao_sintegra[0] %></div>
+              <div class="tablecolumn uc s2 tabletitle">Data Situação Sintegra</div>
+              <div class="tablecolumn uc s2"><%= res.data_situacao_sintegra[0] %></div>
+              <div class="tablecolumn uc s2 tabletitle">Data Consulta Sintegra</div>
+              <div class="tablecolumn uc s2"><%= res.data_consulta_sintegra[0] %></div>
+            </div>
+            <div class="tableline">
+              <div class="tablecolumn uc s2 tabletitle">CNAE</div>
+              <div class="tablecolumn uc s2"><%= res.cnae[0] %></div>
+              <div class="tablecolumn uc s2 tabletitle">CNAE Descrição</div>
+              <div class="tablecolumn uc s2"><%= res.cnae_descricao[0] %></div>
+              <div class="tablecolumn uc s2 tabletitle">CNAE Secundário</div>
+              <div class="tablecolumn uc s2"><%= res.cnae_secundario[0] %></div>
+            </div>
+            <div class="tableline even">
+              <div class="tablecolumn uc s2 tabletitle">CNAE Secundário Descrição</div>
+              <div class="tablecolumn uc s2"><%= res.cnae_secundario_descricao[0] %></div>
+              <div class="tablecolumn uc s2 tabletitle">NIRE</div>
+              <div class="tablecolumn uc s2"><%= res.nire[0] %></div>
+              <div class="tablecolumn uc s2 tabletitle">NIRE UF</div>
+              <div class="tablecolumn uc s2"><%= res.nire_uf[0] %></div>
+            </div>
+            <div class="tableline">
+              <div class="tablecolumn uc s2 tabletitle">Código Natureza Jurídica</div>
+              <div class="tablecolumn uc s2"><%= res.codigo_natureza_juridica[0] %></div>
+              <div class="tablecolumn uc s2 tabletitle">Natureza Jurídica</div>
+              <div class="tablecolumn uc s2"><%= res.natureza_juridica[0] %></div>
+              <div class="tablecolumn uc s2 tabletitle">Segmento</div>
+              <div class="tablecolumn uc s2"><%= res.segmento[0] %></div>
+            </div>
+            <div class="tableline even">
+              <div class="tablecolumn uc s2 tabletitle">Quantidade Filiais</div>
+              <div class="tablecolumn uc s2"><%= res.quantidade_filiais[0] %></div>
+              <div class="tablecolumn uc s2 tabletitle">Moeda Capital Inicial</div>
+              <div class="tablecolumn uc s2"><%= res.moeda_capital_inicial[0] %></div>
+              <div class="tablecolumn uc s2 tabletitle">Capital Inicial</div>
+              <div class="tablecolumn uc s2"><%= res.capital_inicial[0] %></div>
+            </div>
+            <div class="tableline">
+              <div class="tablecolumn uc s2 tabletitle">Moeda Capital Atual</div>
+              <div class="tablecolumn uc s2"><%= res.moeda_capital_atual[0] %></div>
+              <div class="tablecolumn uc s2 tabletitle">Capital Atual</div>
+              <div class="tablecolumn uc s2"><%= res.capital_atual[0] %></div>
+              <div class="tablecolumn uc s2 tabletitle">Data Alteração Capital</div>
+              <div class="tablecolumn uc s2"><%= res.data_alteracao_capital[0] %></div>
+            </div>
+          <% }); %>
+        <% } %>
+      </div>
+      <!-- Demais ramos de attividades -->
+      <div class="tablebody avoid-break">
+        <div class="tablehead">
+          <div class="tablecolumn uc s12">Demais ramos de attividades</div>
+        </div>
+        <% if (Object.keys(data.consulta.resposta[0].identificacao[0].outros_cnaes[0].registro).length === 0) { %>
+          <div class="tableline">
+            <div class="tablecolumn uc s12 tabletitle">Não constam informações na base consultada</div>
+          </div>
+        <% } else { %>
+          <% data.consulta.resposta[0].identificacao[0].outros_cnaes[0].registro.forEach(function(cnae, index) { %>
+            <div class="tableline <%= index % 2 === 0 ? 'even' : '' %>">
+              <div class="tablecolumn uc s1 tabletitle">CNAE</div>
+              <div class="tablecolumn uc s5"><%= cnae.cnae[0] %></div>
+              <div class="tablecolumn uc s2 tabletitle">Descrição</div>
+              <div class="tablecolumn uc s4"><%= cnae.cnae_descricao[0] %></div>
+            </div>
+          <% }); %>
+        <% } %>
+      </div>
+      <!-- Resumo das filiais -->
+      <div class="tablebody avoid-break">
+        <div class="tablehead">
+          <div class="tablecolumn uc s12">Resumo das filiais</div>
+        </div>
+        <% if (Object.keys(data.consulta.resposta[0].identificacao[0].filiais[0].registro).length === 0) { %>
+          <div class="tableline">
+            <div class="tablecolumn uc s12 tabletitle">Não constam informações na base consultada</div>
+          </div>
+        <% } else { %>
+          <% data.consulta.resposta[0].identificacao[0].filiais[0].registro.forEach(function(filial, index) { %>
+            <div class="tableline <%= index % 2 === 0 ? 'even' : '' %>">
+              <div class="tablecolumn uc s2 tabletitle">Filial</div>
+              <div class="tablecolumn uc s10"><%= filial.filial[0] %></div>
+            </div>
+          <% }); %>
+        <% } %>
+      </div>
+      <!-- MATRIZ -->
+      <div class="tablebody avoid-break">
+        <div class="tablehead">
+          <div class="tablecolumn uc s12">Matriz</div>
+        </div>
+        <% if (data.consulta.resposta[0].localizacao_completa[0].matrizes[0].registro.length === 0) { %>
+          <div class="tableline">
+            <div class="tablecolumn uc s12 tabletitle">Não constam informações na base consultada</div>
+          </div>
+        <% } else { %>
+          <div class="tableline">
+            <div class="tablecolumn uc s4 tabletitle">Endereço</div>
+            <div class="tablecolumn uc s2 tabletitle">Complemento</div>
+            <div class="tablecolumn uc s1 tabletitle">Bairro</div>
+            <div class="tablecolumn uc s2 tabletitle">Cidade</div>
+            <div class="tablecolumn uc s1 tabletitle">UF</div>
+            <div class="tablecolumn uc s1 tabletitle">CEP</div>
+            <div class="tablecolumn uc s2 tabletitle">Código IBGE</div>
+          </div>
+          <% data.consulta.resposta[0].localizacao_completa[0].matrizes[0].registro.forEach(function(matriz, index) { %>
+            <div class="tableline <%= index % 2 === 0 ? 'even' : '' %>">
+              <div class="tablecolumn uc s4"><%= matriz.endereco[0] %></div>
+              <div class="tablecolumn uc s2"><%= matriz.complemento[0] %></div>
+              <div class="tablecolumn uc s1"><%= matriz.bairro[0] %></div>
+              <div class="tablecolumn uc s2"><%= matriz.cidade[0] %></div>
+              <div class="tablecolumn uc s1"><%= matriz.uf[0] %></div>
+              <div class="tablecolumn uc s1"><%= matriz.cep[0] %></div>
+              <div class="tablecolumn uc s2"><%= matriz.codigo_ibge[0] %></div>
+            </div>
+            <!-- <div class="tableline">
+              <div class="tablecolumn uc s2 tabletitle">Telefone 1</div>
+              <div class="tablecolumn uc s2 tabletitle">Telefone 2</div>
+            </div>
+            <div class="tableline <%= (index + 1) % 2 === 0 ? 'even' : '' %>">
+              <div class="tablecolumn uc s2"><%= matriz.telefones[0].registro[0].telefone[0] %></div>
+              <div class="tablecolumn uc s2"><%= matriz.telefones[0].registro[1].telefone[0] %></div>
+            </div> -->
+          <% }); %>
+        <% } %>
+      </div>
+      <!-- Filiais -->
+      <div class="tablebody avoid-break">
+        <div class="tablehead">
+          <div class="tablecolumn uc s12">Filiais</div>
+        </div>
+        <% if (data.consulta.resposta[0].localizacao_completa[0].filiais[0].registro.length === 0) { %>
+          <div class="tableline">
+            <div class="tablecolumn uc s12 tabletitle">Não constam informações na base consultada</div>
+          </div>
+        <% } else { %>
+          <div class="tableline">
+            <div class="tablecolumn uc s4 tabletitle">Endereço</div>
+            <div class="tablecolumn uc s2 tabletitle">Complemento</div>
+            <div class="tablecolumn uc s1 tabletitle">Bairro</div>
+            <div class="tablecolumn uc s2 tabletitle">Cidade</div>
+            <div class="tablecolumn uc s1 tabletitle">UF</div>
+            <div class="tablecolumn uc s1 tabletitle">CEP</div>
+            <div class="tablecolumn uc s2 tabletitle">Código IBGE</div>
+          </div>
+          <% data.consulta.resposta[0].localizacao_completa[0].filiais[0].registro.forEach(function(filial, index) { %>
+            <div class="tableline <%= index % 2 === 0 ? 'even' : '' %>">
+              <div class="tablecolumn uc s4"><%= filial.endereco[0] %></div>
+              <div class="tablecolumn uc s2"><%= filial.complemento[0] %></div>
+              <div class="tablecolumn uc s1"><%= filial.bairro[0] %></div>
+              <div class="tablecolumn uc s2"><%= filial.cidade[0] %></div>
+              <div class="tablecolumn uc s1"><%= filial.uf[0] %></div>
+              <div class="tablecolumn uc s1"><%= filial.cep[0] %></div>
+              <div class="tablecolumn uc s2"><%= filial.codigo_ibge[0] %></div>
+            </div>
+            <!-- <div class="tableline">
+              <div class="tablecolumn uc s2 tabletitle">Telefone 1</div>
+              <div class="tablecolumn uc s2 tabletitle">Telefone 2</div>
+            </div>
+            <div class="tableline <%= (index + 1) % 2 === 0 ? 'even' : '' %>">
+              <div class="tablecolumn uc s2"><%= filial.telefones[0].registro[0].telefone[0] %></div>
+              <div class="tablecolumn uc s2"><%= filial.telefones[0].registro[1].telefone[0] %></div>
+            </div> -->
+          <% }); %>
+        <% } %>
+      </div>
+      <!-- telefones matrizes -->
+      <div class="tablebody avoid-break">
+        <div class="tablehead">
+          <div class="tablecolumn uc s12">Telefones das matrizes</div>
+        </div>
+        <% if (data.consulta.resposta[0].localizacao_completa[0].matrizes[0].registro.length === 0) { %>
+          <div class="tableline">
+            <div class="tablecolumn uc s12 tabletitle">Não constam informações na base consultada</div>
+          </div>
+        <% } else { %>
+          <% data.consulta.resposta[0].localizacao_completa[0].matrizes[0].registro.forEach(function(matriz, index) { %>
+            <div class="tableline <%= index % 2 === 0 ? 'even' : '' %>">
+              <div class="tablecolumn uc s2 tabletitle">Telefone 1</div>
+              <div class="tablecolumn uc s4"><%= matriz.telefones[0].registro[0].telefone[0] %></div>
+              <div class="tablecolumn uc s2 tabletitle">Telefone 2</div>
+              <div class="tablecolumn uc s4"><%= matriz.telefones[0].registro[1].telefone[0] %></div>
+            </div>
+          <% }); %>
+        <% } %>
+      </div>   
+      <!-- telefones filiais -->
+      <div class="tablebody avoid-break">
+        <div class="tablehead">
+          <div class="tablecolumn uc s12">Telefones das Filiais</div>
+        </div>
+        <% if (data.consulta.resposta[0].localizacao_completa[0].filiais[0].registro.length === 0) { %>
+          <div class="tableline">
+            <div class="tablecolumn uc s12 tabletitle">Não constam informações na base consultada</div>
+          </div>
+        <% } else { %>
+          <% data.consulta.resposta[0].localizacao_completa[0].filiais[0].registro.forEach(function(filial, index) { %>
+            <div class="tableline <%= index % 2 === 0 ? 'even' : '' %>">
+              <div class="tablecolumn uc s2 tabletitle">Telefone 1</div>
+              <div class="tablecolumn uc s4"><%= filial.telefones[0].registro[0].telefone[0] %></div>
+              <div class="tablecolumn uc s2 tabletitle">Telefone 2</div>
+              <div class="tablecolumn uc s4"><%= filial.telefones[0].registro[1].telefone[0] %></div>
+            </div>
+          <% }); %>
+        <% } %>
+      </div>
+      <!-- Alertas -->
+      <div class="tablebody avoid-break">
+        <div class="tablehead">
+          <div class="tablecolumn uc s12">Alerta de Fraudes</div>
+        </div>
+        <% if (data.consulta.resposta[0].alerta_fraudes[0].registro.length === 0) { %>
+          <div class="tableline">
+            <div class="tablecolumn uc s12 tabletitle">Não constam informações na base consultada</div>
+          </div>
+        <% } else { %>
+          <% data.consulta.resposta[0].alerta_fraudes[0].registro.forEach(function(res, index) { %>
+            <div class="tableline <%= index % 2 === 0 ? 'even' : '' %>">
+              <div class="tablecolumn uc s2 tabletitle">Mensagem</div>
+              <div class="tablecolumn uc s6"><%= res.mensagem[0] %></div>
+              <div class="tablecolumn uc s2 tabletitle">Data de Entrada</div>
+              <div class="tablecolumn uc s2"><%= res.data_entrada[0] %></div>
+            </div>
+          <% }); %>
+        <% } %>
+      </div>
+      <!-- Débitos -->
+      <div class="tablebody avoid-break">
+        <div class="tablehead <%= (data.consulta.resposta[0].debitos.length === 0) ? 'bg-02' : 'bg-03' %>">
+          <div class="tablecolumn uc s12">Débitos</div>
+        </div>
+        <% if (data.consulta.resposta[0].debitos.length === 0) { %>
+          <div class="tableline">
+            <div class="tablecolumn uc s12 tabletitle">Nada Consta</div>
+          </div>
+        <% } else { %>
+          <% var debitos = data.consulta.resposta[0].debitos[0]; %>
+          <div class="tableline">
+            <div class="tablecolumn uc s2 tabletitle">Total de Débitos</div>
+            <div class="tablecolumn uc s2"><%= debitos.total_debitos[0] %></div>
+            <div class="tablecolumn uc s2 tabletitle">Total de Credores</div>
+            <div class="tablecolumn uc s2"><%= debitos.total_credores[0] %></div>
+            <div class="tablecolumn uc s2 tabletitle">Valor Total</div>
+            <div class="tablecolumn uc s2">
+              <script>
+                document.write(formatCurrency("<%= debitos.valor[0] %>"));
+              </script>
+            </div>
+          </div>
+          <div class="tableline even">
+            <div class="tablecolumn uc s2 tabletitle">Valor do Primeiro Débito</div>
+            <div class="tablecolumn uc s2"><%= debitos.valor_primeiro[0] %></div>
+            <div class="tablecolumn uc s2 tabletitle">Valor do Maior Débito</div>
+            <div class="tablecolumn uc s2"><%= debitos.valor_maior[0] %></div>
+            <div class="tablecolumn uc s2 tabletitle">Data do Primeiro Débito</div>
+            <div class="tablecolumn uc s2"><%= debitos.data_primeiro[0] %></div>
+          </div>
+          <div class="tableline">
+            <div class="tablecolumn uc s2 tabletitle">Data do Maior Débito</div>
+            <div class="tablecolumn uc s2"><%= debitos.data_maior[0] %></div>
+            <div class="tablecolumn uc s2 tabletitle">Período Inicial</div>
+            <div class="tablecolumn uc s2"><%= debitos.periodo_inicial[0] %></div>
+            <div class="tablecolumn uc s2 tabletitle">Período Final</div>
+            <div class="tablecolumn uc s2"><%= debitos.periodo_final[0] %></div>
+          </div>
+          <div class="tableline even">
+            <div class="tablecolumn uc s2 tabletitle">Existem Mais Ocorrências</div>
+            <div class="tablecolumn uc s10"><%= debitos.existem_mais_ocorrencias[0] %></div>
+          </div>
+          <% debitos.registro.forEach(function(reg, index) { %>
+            <div class="tableline <%= index % 2 === 0 ? 'even' : '' %>">
+              <div class="tablecolumn uc s2 tabletitle">Contrato</div>
+              <div class="tablecolumn uc s4"><%= reg.contrato[0] %></div>
+              <div class="tablecolumn uc s2 tabletitle">Data da Ocorrência</div>
+              <div class="tablecolumn uc s2"><%= reg.data_ocorrencia[0] %></div>
+              <div class="tablecolumn uc s1 tabletitle">Tipo de Débito</div>
+              <div class="tablecolumn uc s1"><%= reg.tipo_debito[0] %></div>
+            </div>
+            <div class="tableline <%= (index + 1) % 2 === 0 ? 'even' : '' %>">
+              <div class="tablecolumn uc s2 tabletitle">Informante</div>
+              <div class="tablecolumn uc s4"><%= reg.informante[0] %></div>
+              <div class="tablecolumn uc s2 tabletitle">Cidade</div>
+              <div class="tablecolumn uc s2"><%= reg.cidade[0] %></div>
+              <div class="tablecolumn uc s1 tabletitle">UF</div>
+              <div class="tablecolumn uc s1"><%= reg.uf[0] %></div>
+            </div>
+            <div class="tableline <%= index % 2 === 0 ? 'even' : '' %>">
+              <div class="tablecolumn uc s2 tabletitle">Data de Exibição</div>
+              <div class="tablecolumn uc s4"><%= reg.data_exibicao[0] %></div>
+              <div class="tablecolumn uc s2 tabletitle">Valor</div>
+              <div class="tablecolumn uc s2">
+                <script>
+                  document.write(formatCurrency("<%= reg.valor[0] %>"));
+                </script>
+              </div>
+            </div>
+          <% }); %>
+        <% } %>
+      </div>
+      <!-- Protestos -->
+      <div class="tablebody avoid-break">
+        <div class="tablehead <%= (data.consulta.resposta[0].protestos.length === 0) ? 'bg-02' : 'bg-03' %>">
+          <div class="tablecolumn uc s12">Protestos</div>
+        </div>
+        <% if (data.consulta.resposta[0].protestos.length === 0) { %>
+          <div class="tableline">
+            <div class="tablecolumn uc s12 tabletitle">Não constam informações na base consultadaw</div>
+          </div>
+        <% } else { %>
+          <% var protestos = data.consulta.resposta[0].protestos[0]; %>
+          <div class="tableline">
+            <div class="tablecolumn uc s2 tabletitle">Total de Protestos</div>
+            <div class="tablecolumn uc s2"><%= protestos.total_protestos[0] %></div>
+            <div class="tablecolumn uc s2 tabletitle">Valor Total</div>
+            <div class="tablecolumn uc s2">
+              <script>
+                document.write(formatCurrency("<%= protestos.valor_total[0] %>"));
+              </script>
+            </div>
+            <div class="tablecolumn uc s2 tabletitle">Valor do Primeiro Protesto</div>
+            <div class="tablecolumn uc s2">
+              <script>
+                document.write(formatCurrency("<%= protestos.valor_primeiro[0] %>"));
+              </script>
+            </div>
+          </div>
+          <div class="tableline even">
+            <div class="tablecolumn uc s2 tabletitle">Valor do Maior Protesto</div>
+            <div class="tablecolumn uc s2">
+              <script>
+                document.write(formatCurrency("<%= protestos.valor_maior[0] %>"));
+              </script>
+            </div>
+            <div class="tablecolumn uc s2 tabletitle">Data do Primeiro Protesto</div>
+            <div class="tablecolumn uc s2"><%= protestos.data_primeiro[0] %></div>
+            <div class="tablecolumn uc s2 tabletitle">Data do Maior Protesto</div>
+            <div class="tablecolumn uc s2"><%= protestos.data_maior[0] %></div>
+          </div>
+          <div class="tableline">
+            <div class="tablecolumn uc s2 tabletitle">Existem Mais Ocorrências</div>
+            <div class="tablecolumn uc s10"><%= protestos.existem_mais_ocorrencias[0] %></div>
+          </div>
+          <% protestos.registro.forEach(function(reg, index) { %>
+            <div class="tableline <%= index % 2 === 0 ? 'even' : '' %>">
+              <div class="tablecolumn uc s2 tabletitle">Cartório</div>
+              <div class="tablecolumn uc s2"><%= reg.cartorio[0] %></div>
+              <div class="tablecolumn uc s2 tabletitle">Data</div>
+              <div class="tablecolumn uc s2"><%= reg.data[0] %></div>
+              <div class="tablecolumn uc s2 tabletitle">Vencimento</div>
+              <div class="tablecolumn uc s2"><%= reg.vencimento[0] %></div>
+            </div>
+            <div class="tableline <%= (index + 1) % 2 === 0 ? 'even' : '' %>">
+              <div class="tablecolumn uc s2 tabletitle">Valor</div>
+              <div class="tablecolumn uc s2">
+                <script>
+                  document.write(formatCurrency("<%= reg.valor[0] %>"));
+                </script>
+              </div>
+              <div class="tablecolumn uc s2 tabletitle">Cidade</div>
+              <div class="tablecolumn uc s2"><%= reg.cidade[0] %></div>
+              <div class="tablecolumn uc s2 tabletitle">Estado</div>
+              <div class="tablecolumn uc s2"><%= reg.estado[0] %></div>
+            </div>
+          <% }); %>
+        <% } %>
+      </div>
+      <!-- CCF -->
+      <div class="tablebody avoid-break">
+        <div class="tablehead <%= (data.consulta.resposta[0].ccf.length === 0) ? 'bg-02' : 'bg-03' %>">
+          <div class="tablecolumn uc s12">Cheques sem fundo - CCF</div>
+        </div>
+        <% if (data.consulta.resposta[0].ccf.length === 0) { %>
+          <div class="tableline">
+            <div class="tablecolumn uc s12 tabletitle">Nada Consta</div>
+          </div>
+        <% } else { %>
+          <% var ccf = data.consulta.resposta[0].ccf[0]; %>
+          <div class="tableline">
+            <div class="tablecolumn uc s2 tabletitle">Total de CCF</div>
+            <div class="tablecolumn uc s2"><%= ccf.total_ccf[0] %></div>
+            <div class="tablecolumn uc s2 tabletitle">Total de Nomes Relacionados</div>
+            <div class="tablecolumn uc s2"><%= ccf.total_nomes_relacionados[0] %></div>
+            <div class="tablecolumn uc s2 tabletitle">Valor Total</div>
+            <div class="tablecolumn uc s2">
+              <script>
+                document.write(formatCurrency("<%= ccf.valor[0] %>"));
+              </script>
+            </div>
+          </div>
+          <div class="tableline even">
+            <div class="tablecolumn uc s2 tabletitle">Valor do Primeiro CCF</div>
+            <div class="tablecolumn uc s2">
+              <script>
+                document.write(formatCurrency("<%= ccf.valor_primeiro[0] %>"));
+              </script>
+            </div>
+            <div class="tablecolumn uc s2 tabletitle">Valor do Maior CCF</div>
+            <div class="tablecolumn uc s2">
+              <script>
+                document.write(formatCurrency("<%= ccf.valor_maior[0] %>"));
+              </script>
+            </div>
+            <div class="tablecolumn uc s2 tabletitle">Data do Primeiro CCF</div>
+            <div class="tablecolumn uc s2"><%= ccf.data_primeiro[0] %></div>
+          </div>
+          <div class="tableline">
+            <div class="tablecolumn uc s2 tabletitle">Data do Maior CCF</div>
+            <div class="tablecolumn uc s2"><%= ccf.data_maior[0] %></div>
+            <div class="tablecolumn uc s2 tabletitle">Período Inicial</div>
+            <div class="tablecolumn uc s2"><%= ccf.periodo_inicial[0] %></div>
+            <div class="tablecolumn uc s2 tabletitle">Período Final</div>
+            <div class="tablecolumn uc s2"><%= ccf.periodo_final[0] %></div>
+          </div>
+          <div class="tableline even">
+            <div class="tablecolumn uc s2 tabletitle">Existem Mais Ocorrências</div>
+            <div class="tablecolumn uc s10"><%= ccf.existem_mais_ocorrencias[0] %></div>
+          </div>
+          <% ccf.registro.forEach(function(reg, index) { %>
+            <div class="tableline <%= index % 2 === 0 ? 'even' : '' %>">
+              <div class="tablecolumn uc s2 tabletitle">Quantidade</div>
+              <div class="tablecolumn uc s2"><%= reg.quantidade[0] %></div>
+              <div class="tablecolumn uc s2 tabletitle">Motivo</div>
+              <div class="tablecolumn uc s2"><%= reg.motivo[0] %></div>
+              <div class="tablecolumn uc s2 tabletitle">Data Último</div>
+              <div class="tablecolumn uc s2"><%= reg.data_ultimo[0] %></div>
+            </div>
+            <div class="tableline <%= (index + 1) % 2 === 0 ? 'even' : '' %>">
+              <div class="tablecolumn uc s2 tabletitle">Nome</div>
+              <div class="tablecolumn uc s2"><%= reg.nome[0] %></div>
+              <div class="tablecolumn uc s1 tabletitle">Banco</div>
+              <div class="tablecolumn uc s1"><%= reg.banco[0] %></div>
+              <div class="tablecolumn uc s2 tabletitle">Nome do Banco</div>
+              <div class="tablecolumn uc s2"><%= reg.nome_banco[0] %></div>
+              <div class="tablecolumn uc s1 tabletitle">Agência</div>
+              <div class="tablecolumn uc s1"><%= reg.agencia[0] %></div>
+            </div>
+          <% }); %>
+        <% } %>
+      </div>
+      <!-- Cheque Motivo 21 -->
+      <div class="tablebody avoid-break">
+        <div class="tablehead <%= (data.consulta.resposta[0].cheque_motivo_21.length === 0) ? 'bg-02' : 'bg-03' %>">
+          <div class="tablecolumn uc s12">Cheque Motivo 21</div>
+        </div>
+        <% if (data.consulta.resposta[0].cheque_motivo_21.length === 0) { %>
+          <div class="tableline">
+            <div class="tablecolumn uc s12 tabletitle">Nada Consta</div>
+          </div>
+        <% } else { %>
+          <% var cheque_motivo_21 = data.consulta.resposta[0].cheque_motivo_21[0]; %>
+          <div class="tableline">
+            <div class="tablecolumn uc s2 tabletitle">Total</div>
+            <div class="tablecolumn uc s2"><%= cheque_motivo_21.total[0] %></div>
+            <div class="tablecolumn uc s2 tabletitle">Período Inicial</div>
+            <div class="tablecolumn uc s2"><%= cheque_motivo_21.periodo_inicial[0] %></div>
+            <div class="tablecolumn uc s2 tabletitle">Período Final</div>
+            <div class="tablecolumn uc s2"><%= cheque_motivo_21.periodo_final[0] %></div>
+          </div>
+          <div class="tableline even">
+            <div class="tablecolumn uc s2 tabletitle">Existem Mais Ocorrências</div>
+            <div class="tablecolumn uc s10"><%= cheque_motivo_21.existem_mais_ocorrencias[0] %></div>
+          </div>
+          <% cheque_motivo_21.registro.forEach(function(reg, index) { %>
+            <div class="tableline <%= index % 2 === 0 ? 'even' : '' %>">
+              <div class="tablecolumn uc s2 tabletitle">Banco</div>
+              <div class="tablecolumn uc s2"><%= reg.banco[0] %></div>
+              <div class="tablecolumn uc s2 tabletitle">Agência</div>
+              <div class="tablecolumn uc s2"><%= reg.agencia[0] %></div>
+              <div class="tablecolumn uc s2 tabletitle">Cheque Inicial</div>
+              <div class="tablecolumn uc s2"><%= reg.cheque_inicial[0].trim() %></div>
+            </div>
+            <div class="tableline <%= (index + 1) % 2 === 0 ? 'even' : '' %>">
+              <div class="tablecolumn uc s2 tabletitle">Data Registro</div>
+              <div class="tablecolumn uc s2"><%= reg.data_registro[0] %></div>
+              <div class="tablecolumn uc s2 tabletitle">Data Disponível</div>
+              <div class="tablecolumn uc s2"><%= reg.data_disponivel[0] %></div>
+              <div class="tablecolumn uc s2 tabletitle">Cheque Final</div>
+              <div class="tablecolumn uc s2"><%= reg.cheque_final[0].trim() %></div>
+            </div>
+          <% }); %>
+        <% } %>
+      </div>
+      <!-- Devolução Informada pelo Usuário -->
+      <div class="tablebody avoid-break">
+        <div class="tablehead <%= (data.consulta.resposta[0].devolucao_informada_pelo_usuario.length === 0) ? 'bg-02' : 'bg-03' %>">
+          <div class="tablecolumn uc s12">Devolução Informada pelo Usuário</div>
+        </div>
+        <% if (data.consulta.resposta[0].devolucao_informada_pelo_usuario.length === 0) { %>
+          <div class="tableline">
+            <div class="tablecolumn uc s12 tabletitle">Nada Consta</div>
+          </div>
+        <% } else { %>
+          <% var devolucao = data.consulta.resposta[0].devolucao_informada_pelo_usuario[0]; %>
+          <div class="tableline">
+            <div class="tablecolumn uc s2 tabletitle">Total</div>
+            <div class="tablecolumn uc s2"><%= devolucao.total[0] %></div>
+            <div class="tablecolumn uc s2 tabletitle">Período Inicial</div>
+            <div class="tablecolumn uc s2"><%= devolucao.periodo_inicial[0] %></div>
+            <div class="tablecolumn uc s2 tabletitle">Período Final</div>
+            <div class="tablecolumn uc s2"><%= devolucao.periodo_final[0] %></div>
+          </div>
+          <div class="tableline even">
+            <div class="tablecolumn uc s2 tabletitle">Existem Mais Ocorrências</div>
+            <div class="tablecolumn uc s10"><%= devolucao.existem_mais_ocorrencias[0] %></div>
+          </div>
+          <% devolucao.registro.forEach(function(reg, index) { %>
+            <div class="tableline <%= index % 2 === 0 ? 'even' : '' %>">
+              <div class="tablecolumn uc s2 tabletitle">Banco</div>
+              <div class="tablecolumn uc s4"><%= reg.banco[0] %></div>
+              <div class="tablecolumn uc s2 tabletitle">Agência</div>
+              <div class="tablecolumn uc s4"><%= reg.agencia[0] %></div>
+            </div>
+            <div class="tableline <%= (index + 1) % 2 === 0 ? 'even' : '' %>">
+              <div class="tablecolumn uc s2 tabletitle">Cheque Inicial</div>
+              <div class="tablecolumn uc s4"><%= reg.cheque_inicial[0].trim() %></div>
+              <div class="tablecolumn uc s2 tabletitle">Cheque Final</div>
+              <div class="tablecolumn uc s4"><%= reg.cheque_final[0].trim() %></div>
+            </div>
+            <div class="tableline <%= index % 2 === 0 ? 'even' : '' %>">
+              <div class="tablecolumn uc s2 tabletitle">Data Registro</div>
+              <div class="tablecolumn uc s2"><%= reg.data_registro[0] %></div>
+              <div class="tablecolumn uc s2 tabletitle">Data Ocorrência</div>
+              <div class="tablecolumn uc s2"><%= reg.data_ocorrencia[0] %></div>
+              <div class="tablecolumn uc s2 tabletitle">Motivo</div>
+              <div class="tablecolumn uc s2"><%= reg.motivo[0] %></div>
+            </div>
+            <div class="tableline <%= (index + 1) % 2 === 0 ? 'even' : '' %>">
+              <div class="tablecolumn uc s2 tabletitle">Informante</div>
+              <div class="tablecolumn uc s2"><%= reg.informante[0] %></div>
+              <div class="tablecolumn uc s2 tabletitle">Cidade</div>
+              <div class="tablecolumn uc s2"><%= reg.cidade[0] %></div>
+              <div class="tablecolumn uc s2 tabletitle">UF</div>
+              <div class="tablecolumn uc s2"><%= reg.uf[0] %></div>
+            </div>
+          <% }); %>
+        <% } %>
+      </div>
+      <!-- Consultas realizadas -->
+      <div class="tablebody avoid-break">
+        <div class="tablehead">
+          <div class="tablecolumn uc s12">Consultas Realizadas</div>
+        </div>
+        <% if (data.consulta.resposta[0].consultas.length === 0) { %>
+          <div class="tableline">
+            <div class="tablecolumn uc s12 tabletitle">Não constam informações na base consultada</div>
+          </div>
+        <% } else { %>
+          <% var consultas = data.consulta.resposta[0].consultas[0]; %>
+          <div class="tableline">
+            <div class="tablecolumn uc s2 tabletitle">Total Consultas</div>
+            <div class="tablecolumn uc s2"><%= consultas.total_consultas[0] %></div>
+            <div class="tablecolumn uc s2 tabletitle">Período Inicial</div>
+            <div class="tablecolumn uc s2"><%= consultas.periodo_inicial[0] %></div>
+            <div class="tablecolumn uc s2 tabletitle">Período Final</div>
+            <div class="tablecolumn uc s2"><%= consultas.periodo_final[0] %></div>
+          </div>
+          <div class="tableline even">
+            <div class="tablecolumn uc s2 tabletitle">Existem Mais Ocorrências</div>
+            <div class="tablecolumn uc s10"><%= consultas.existem_mais_ocorrencias[0] %></div>
+          </div>
+          <div class="tablehead">
+            <div class="tablecolumn uc s12">Detalhes das Consultas</div>
+          </div>
+          <% consultas.registro.forEach(function(reg, index) { %>
+            <div class="tableline <%= index % 2 === 0 ? 'even' : '' %>">
+              <div class="tablecolumn uc s2 tabletitle">Razão Social</div>
+              <div class="tablecolumn uc s2"><%= reg.razao_social[0] %></div>
+              <div class="tablecolumn uc s2 tabletitle">CNPJ</div>
+              <div class="tablecolumn uc s2"><%= reg.cnpj[0] %></div>
+              <div class="tablecolumn uc s2 tabletitle">Data</div>
+              <div class="tablecolumn uc s2"><%= reg.data[0] %></div>
+            </div>
+          <% }); %>
+        <% } %>
+      </div>
+      <!-- Resumo de Consultas realizadas por Meses -->
+      <div class="tablebody avoid-break">
+        <div class="tablehead">
+          <div class="tablecolumn uc s12">Resumo de Consultas realizadas por Meses</div>
+        </div>
+        <% if (data.consulta.resposta[0].consultas[0].consultas_mes.length === 0) { %>
+          <div class="tableline">
+            <div class="tablecolumn uc s12 tabletitle">Nada Consta</div>
+          </div>
+        <% } else { %>
+          <% data.consulta.resposta[0].consultas[0].consultas_mes[0].registro.forEach(function(reg, index) { %>
+            <div class="tableline <%= index % 2 === 0 ? 'even' : '' %>">
+              <div class="tablecolumn uc s2 tabletitle">Mês/Ano</div>
+              <div class="tablecolumn uc s4"><%= reg.mes_ano[0] %></div>
+              <div class="tablecolumn uc s2 tabletitle">Quantidade</div>
+              <div class="tablecolumn uc s4"><%= reg.quantidade[0] %></div>
+            </div>
+          <% }); %>
+        <% } %>
+      </div>
+      <!-- Sócios -->
+      <div class="tablebody avoid-break">
+        <div class="tablehead">
+          <div class="tablecolumn uc s12 tabletitle">Sócios</div>
+        </div>
+        <% if (data.consulta.resposta[0].socios[0].registro.length === 0) { %>
+          <div class="tableline">
+            <div class="tablecolumn uc s12">Nada Consta</div>
+          </div>
+        <% } else { %>
+          <div class="tableline">
+            <div class="tablecolumn uc s2 tabletitle">Nome</div>
+            <div class="tablecolumn uc s2 tabletitle">Documento</div>
+            <div class="tablecolumn uc s2 tabletitle">Situação Documento</div>
+            <div class="tablecolumn uc s4 tabletitle">Porcentagem de Participação</div>
+            <div class="tablecolumn uc s2 tabletitle">Data de Entrada</div>
+            <div class="tablecolumn uc s2 tabletitle">Assina pela Empresa</div>
+            <div class="tablecolumn uc s4 tabletitle">Existe Débito</div>
+            <div class="tablecolumn uc s2 tabletitle">Alerta de Fraude</div>
+          </div>
+          <% data.consulta.resposta[0].socios[0].registro.forEach(function(socio, index) { %>
+            <div class="tableline <%= index % 2 === 0 ? 'even' : '' %>">
+              <div class="tablecolumn uc s2"><%= socio.nome[0] %></div>
+              <div class="tablecolumn uc s4"><%= socio.documento[0] %></div>
+              <div class="tablecolumn uc s4"><%= socio.situacao_documento[0] %></div>
+              <div class="tablecolumn uc s4"><%= socio.porcentagem_participacao[0] %>%</div>
+              <div class="tablecolumn uc s2"><%= socio.data_entrada[0] %></div>
+              <div class="tablecolumn uc s2"><%= socio.assina_pela_empresa[0] %></div>
+              <div class="tablecolumn uc s4"><%= socio.existe_debito[0] %></div>
+              <div class="tablecolumn uc s2"><%= socio.alerta_fraude[0] %></div>
+            </div>
+          <% }); %>
+        <% } %>
+      </div>
+      <!-- administradoeres -->
+      <div class="tablebody avoid-break">
+        <div class="tablehead">
+          <div class="tablecolumn uc s12 tabletitle">Informações sobre Administradores</div>
+        </div>
+        <% if (data.consulta.resposta[0].administradores[0].registro.length === 0) { %>
+          <div class="tableline">
+            <div class="tablecolumn uc s12">Nada Consta</div>
+          </div>
+        <% } else { %>
+          <div class="tableline">
+            <div class="tablecolumn uc s2 tabletitle">Nome</div>
+            <div class="tablecolumn uc s2 tabletitle">CPF</div>
+            <div class="tablecolumn uc s2 tabletitle">Situação CPF</div>
+            <div class="tablecolumn uc s2 tabletitle">Data de Entrada</div>
+            <div class="tablecolumn uc s2 tabletitle">Tempo de Mandato</div>
+            <div class="tablecolumn uc s2 tabletitle">Cargo</div>
+            <div class="tablecolumn uc s2 tabletitle">Existe Débito</div>
+            <div class="tablecolumn uc s2 tabletitle">Alerta de Fraude</div>
+          </div>
+          <% data.consulta.resposta[0].administradores[0].registro.forEach(function(administrador, index) { %>
+            <div class="tableline <%= index % 2 === 0 ? 'even' : '' %>">
+              <div class="tablecolumn uc s2"><%= administrador.nome[0] %></div>
+              <div class="tablecolumn uc s2">
+                <script>
+                  document.write(formatCPF("<%= administrador.cpf[0] %>"));
+                </script>
+              </div>
+              <div class="tablecolumn uc s2"><%= administrador.situacao_cpf[0] %></div>
+              <div class="tablecolumn uc s2"><%= administrador.data_entrada[0] %></div>
+              <div class="tablecolumn uc s2"><%= administrador.tempo_mandato[0] %> anos</div>
+              <div class="tablecolumn uc s2"><%= administrador.cargo[0] %></div>
+              <div class="tablecolumn uc s2"><%= administrador.existe_debito[0] %></div>
+              <div class="tablecolumn uc s2"><%= administrador.alerta_fraude[0] %></div>
+            </div>
+          <% }); %>
+        <% } %>
+      </div>
+      <!-- Informações sobre Participações de Sócios/Administradores em Outras Empresas -->
+      <div class="tablebody avoid-break">
+        <div class="tablehead">
+          <div class="tablecolumn uc s12 tabletitle">Participações de Sócios E Administradores em Outras Empresas</div>
+        </div>
+        <% if (data.consulta.resposta[0].participacoes_socios_adm_outras_empresas[0].registro.length === 0) { %>
+          <div class="tableline">
+            <div class="tablecolumn uc s12">Nada Consta</div>
+          </div>
+        <% } else { %>
+          <% data.consulta.resposta[0].participacoes_socios_adm_outras_empresas.forEach(function(item) { %>
+            <% item.registro.forEach(function(reg) { %>
+              <div class="tableline">
+                <div class="tablecolumn uc s4 tabletitle">Nome do Sócio/Administrador</div>
+                <div class="tablecolumn uc s4 tabletitle">Documento</div>
+                <div class="tablecolumn uc s4 tabletitle">Tipo de Documento</div>
+              </div>
+              <div class="tableline">
+                <div class="tablecolumn uc s4"><%= reg.nome_socio[0] %></div>
+                <div class="tablecolumn uc s4">
+                  <script>
+                    document.write(formatCPF("<%= reg.documento[0] %>"));
+                  </script>
+                </div>
+                <div class="tablecolumn uc s4"><%= reg.tipo_documento[0] %></div>
+              </div>
+              <% reg.socios_participantes.forEach(function(empresa) { %>
+                <div class="tableline even">
+                  <div class="tablecolumn uc s2 tabletitle">Razão Social</div>
+                  <div class="tablecolumn uc s2 tabletitle">CNPJ</div>
+                  <div class="tablecolumn uc s2 tabletitle">Situação CNPJ</div>
+                  <div class="tablecolumn uc s2 tabletitle">Data de Entrada</div>
+                  <div class="tablecolumn uc s2 tabletitle">Porcentagem de Participação</div>
+                  <div class="tablecolumn uc s1 tabletitle">Existe Débito</div>
+                  <div class="tablecolumn uc s1 tabletitle">Alerta de Fraude</div>
+                </div>
+                <div class="tableline">
+                  <div class="tablecolumn uc s2"><%= empresa.razao_social[0] %></div>
+                  <div class="tablecolumn uc s2">
+                    <script>
+                      document.write(formatCPF("<%= empresa.cnpj[0] %>"));
+                    </script>
+                  </div>
+                  <div class="tablecolumn uc s2"><%= empresa.situacao_cnpj[0] %></div>
+                  <div class="tablecolumn uc s2"><%= empresa.data_entrada[0] %></div>
+                  <div class="tablecolumn uc s2"><%= empresa.porcentagem_participacao[0] %></div>
+                  <div class="tablecolumn uc s1"><%= empresa.existe_debito[0] %></div>
+                  <div class="tablecolumn uc s1"><%= empresa.alerta_fraude[0] %></div>
+                </div>
+                <div class="tableline even">
+                  <div class="tablecolumn uc s12 tabletitle">Restrições do Documento</div>
+                </div>
+                <% empresa.restricoes_documento.forEach(function(restricao) { %>
+                  <div class="tableline">
+                    <div class="tablecolumn uc s3 tabletitle">Débitos</div>
+                    <div class="tablecolumn uc s3"><%= restricao.debitos[0].quantidade[0] %></div>
+                    <div class="tablecolumn uc s3"><%= restricao.debitos[0].ultima[0] %></div>
+                    <div class="tablecolumn uc s3">
+                      <script>
+                        document.write(formatCurrency("<%= restricao.debitos[0].valor[0] %>"));
+                      </script>
+                    </div>
+                  </div>
+                  <div class="tableline even">
+                    <div class="tablecolumn uc s3 tabletitle">CCF</div>
+                    <div class="tablecolumn uc s3"><%= restricao.ccf[0].quantidade[0] %></div>
+                    <div class="tablecolumn uc s3"><%= restricao.ccf[0].ultima[0] %></div>
+                    <div class="tablecolumn uc s3">
+                      <script>
+                        document.write(formatCurrency("<%= restricao.ccf[0].valor[0] %>"));
+                      </script>
+                    </div>
+                  </div>
+                  <div class="tableline">
+                    <div class="tablecolumn uc s3 tabletitle">Protestos</div>
+                    <div class="tablecolumn uc s3"><%= restricao.protestos[0].quantidade[0] %></div>
+                    <div class="tablecolumn uc s3"><%= restricao.protestos[0].ultima[0] %></div>
+                    <div class="tablecolumn uc s3">
+                      <script>
+                        document.write(formatCurrency("<%= restricao.protestos[0].valor[0] %>"));
+                      </script>
+                    </div>
+                  </div>
+                  <div class="tableline even">
+                    <div class="tablecolumn uc s3 tabletitle">Ações Judiciais</div>
+                    <div class="tablecolumn uc s3"><%= restricao.acoes_judiciais[0].quantidade[0] %></div>
+                    <div class="tablecolumn uc s3"><%= restricao.acoes_judiciais[0].ultima[0] %></div>
+                    <div class="tablecolumn uc s3">
+                      <script>
+                        document.write(formatCurrency("<%= restricao.acoes_judiciais[0].valor[0] %>"));
+                      </script>
+                    </div>
+                  </div>
+                  <div class="tableline">
+                    <div class="tablecolumn uc s3 tabletitle">Falências</div>
+                    <div class="tablecolumn uc s3"><%= restricao.falencias[0].quantidade[0] %></div>
+                    <div class="tablecolumn uc s3"><%= restricao.falencias[0].ultima[0] %></div>
+                    <div class="tablecolumn uc s3">
+                      <script>
+                        document.write(formatCurrency("<%= restricao.falencias[0].valor[0] %>"));
+                      </script>
+                    </div>
+                  </div>
+                  <div class="tableline even">
+                    <div class="tablecolumn uc s3 tabletitle">Consultas</div>
+                    <div class="tablecolumn uc s3"><%= restricao.consultas[0].quantidade[0] %></div>
+                    <div class="tablecolumn uc s3"><%= restricao.consultas[0].ultima[0] %></div>
+                    <div class="tablecolumn uc s3">
+                      <script>
+                        document.write(formatCurrency("<%= restricao.consultas[0].valor[0] %>"));
+                      </script>
+                    </div>
+                  </div>
+                  <div class="tableline">
+                    <div class="tablecolumn uc s3 tabletitle">Títulos a Vencer</div>
+                    <div class="tablecolumn uc s3"><%= restricao.titulos_a_vencer[0].quantidade[0] %></div>
+                    <div class="tablecolumn uc s3"><%= restricao.titulos_a_vencer[0].ultima[0] %></div>
+                    <div class="tablecolumn uc s3">
+                      <script>
+                        document.write(formatCurrency("<%= restricao.titulos_a_vencer[0].valor[0] %>"));
+                      </script>
+                    </div>
+                  </div>
+                  <div class="tableline even">
+                    <div class="tablecolumn uc s3 tabletitle">Pagamentos</div>
+                    <div class="tablecolumn uc s3"><%= restricao.pagamentos[0].quantidade[0] %></div>
+                    <div class="tablecolumn uc s3"><%= restricao.pagamentos[0].ultima[0] %></div>
+                    <div class="tablecolumn uc s3">
+                      <script>
+                        document.write(formatCurrency("<%= restricao.pagamentos[0].valor[0] %>"));
+                      </script>
+                    </div>
                   </div>
                 <% }); %>
-              <% } %>
+              <% }); %>
             <% }); %>
           <% }); %>
-      <% } %>
-    </div>
-    <!-- cheque_motivo_21 -->
-    <div class="tablebody avoid-break">
-      <div class="tablehead">
-        <div class="tablecolumn uc s12">Cheque Motivo 21</div>
+        <% } %>
       </div>
-      <% if (Object.keys(data.consulta.resposta[0].cheque_motivo_21[0]).length === 0) { %>
-        <div class="tableline">
-          <div class="tablecolumn uc s12 tabletitle">Nada Consta</div>
+      <!-- Participações em Empresas Consultadas -->
+      <div class="tablebody avoid-break">
+        <div class="tablehead">
+          <div class="tablecolumn uc s12 tabletitle">Participações em Empresas Consultadas</div>
         </div>
-      <% } else { %>
-        <% data.consulta.resposta[0].cheque_motivo_21[0].registro.forEach(function(res, index) { %>
+        <% if (data.consulta.resposta[0].participacoes_empresas_consultadas[0].registro.length === 0) { %>
+          <div class="tableline">
+            <div class="tablecolumn uc s12">Nada Consta</div>
+          </div>
+        <% } else { %>
+          <% data.consulta.resposta[0].participacoes_empresas_consultadas.forEach(function(empresa) { %>
+            <% empresa.registro.forEach(function(reg) { %>
+              <div class="tableline even">
+                <div class="tablecolumn uc s2 tabletitle">Razão Social</div>
+                <div class="tablecolumn uc s2 tabletitle">CNPJ</div>
+                <div class="tablecolumn uc s2 tabletitle">Situação CNPJ</div>
+                <div class="tablecolumn uc s2 tabletitle">Data de Entrada</div>
+                <div class="tablecolumn uc s2 tabletitle">Porcentagem de Participação</div>
+                <div class="tablecolumn uc s1 tabletitle">Existe Débito</div>
+                <div class="tablecolumn uc s1 tabletitle">Alerta de Fraude</div>
+              </div>
+              <div class="tableline">
+                <div class="tablecolumn uc s2"><%= reg.razao_social[0] %></div>
+                <div class="tablecolumn uc s2">
+                  <script>
+                    document.write(formatCPF("<%= reg.cnpj[0] %>"));
+                  </script>
+                </div>
+                <div class="tablecolumn uc s2"><%= reg.situacao_cnpj[0] %></div>
+                <div class="tablecolumn uc s2"><%= reg.data_entrada[0] %></div>
+                <div class="tablecolumn uc s2"><%= reg.porcentagem_participacao[0] %></div>
+                <div class="tablecolumn uc s1"><%= reg.existe_debito[0] %></div>
+                <div class="tablecolumn uc s1"><%= reg.alerta_fraude[0] %></div>
+              </div>
+              <div class="tableline even">
+                <div class="tablecolumn uc s12 tabletitle">Restrições do Documento</div>
+              </div>
+              <% reg.restricoes_documento.forEach(function(restricao) { %>
+                <div class="tableline">
+                  <div class="tablecolumn uc s3 tabletitle">Débitos</div>
+                  <div class="tablecolumn uc s3"><%= restricao.debitos[0].quantidade[0] %></div>
+                  <div class="tablecolumn uc s3"><%= restricao.debitos[0].ultima[0] %></div>
+                  <div class="tablecolumn uc s3">
+                    <script>
+                      document.write(formatCurrency("<%= restricao.debitos[0].valor[0] %>"));
+                    </script>
+                  </div>
+                </div>
+                <div class="tableline even">
+                  <div class="tablecolumn uc s3 tabletitle">CCF</div>
+                  <div class="tablecolumn uc s3"><%= restricao.ccf[0].quantidade[0] %></div>
+                  <div class="tablecolumn uc s3"><%= restricao.ccf[0].ultima[0] %></div>
+                  <div class="tablecolumn uc s3">
+                    <script>
+                      document.write(formatCurrency("<%= restricao.ccf[0].valor[0] %>"));
+                    </script>
+                  </div>
+                </div>
+                <div class="tableline">
+                  <div class="tablecolumn uc s3 tabletitle">Protestos</div>
+                  <div class="tablecolumn uc s3"><%= restricao.protestos[0].quantidade[0] %></div>
+                  <div class="tablecolumn uc s3"><%= restricao.protestos[0].ultima[0] %></div>
+                  <div class="tablecolumn uc s3">
+                    <script>
+                      document.write(formatCurrency("<%= restricao.protestos[0].valor[0] %>"));
+                    </script>
+                  </div>
+                </div>
+                <div class="tableline even">
+                  <div class="tablecolumn uc s3 tabletitle">Ações Judiciais</div>
+                  <div class="tablecolumn uc s3"><%= restricao.acoes_judiciais[0].quantidade[0] %></div>
+                  <div class="tablecolumn uc s3"><%= restricao.acoes_judiciais[0].ultima[0] %></div>
+                  <div class="tablecolumn uc s3">
+                    <script>
+                      document.write(formatCurrency("<%= restricao.acoes_judiciais[0].valor[0] %>"));
+                    </script>
+                  </div>
+                </div>
+                <div class="tableline">
+                  <div class="tablecolumn uc s3 tabletitle">Falências</div>
+                  <div class="tablecolumn uc s3"><%= restricao.falencias[0].quantidade[0] %></div>
+                  <div class="tablecolumn uc s3"><%= restricao.falencias[0].ultima[0] %></div>
+                  <div class="tablecolumn uc s3">
+                    <script>
+                      document.write(formatCurrency("<%= restricao.falencias[0].valor[0] %>"));
+                    </script>
+                  </div>
+                </div>
+                <div class="tableline even">
+                  <div class="tablecolumn uc s3 tabletitle">Consultas</div>
+                  <div class="tablecolumn uc s3"><%= restricao.consultas[0].quantidade[0] %></div>
+                  <div class="tablecolumn uc s3"><%= restricao.consultas[0].ultima[0] %></div>
+                  <div class="tablecolumn uc s3">
+                    <script>
+                      document.write(formatCurrency("<%= restricao.consultas[0].valor[0] %>"));
+                    </script>
+                  </div>
+                </div>
+                <div class="tableline">
+                  <div class="tablecolumn uc s3 tabletitle">Títulos a Vencer</div>
+                  <div class="tablecolumn uc s3"><%= restricao.titulos_a_vencer[0].quantidade[0] %></div>
+                  <div class="tablecolumn uc s3"><%= restricao.titulos_a_vencer[0].ultima[0] %></div>
+                  <div class="tablecolumn uc s3">
+                    <script>
+                      document.write(formatCurrency("<%= restricao.titulos_a_vencer[0].valor[0] %>"));
+                    </script>
+                  </div>
+                </div>
+                <div class="tableline even">
+                  <div class="tablecolumn uc s3 tabletitle">Pagamentos</div>
+                  <div class="tablecolumn uc s3"><%= restricao.pagamentos[0].quantidade[0] %></div>
+                  <div class="tablecolumn uc s3"><%= restricao.pagamentos[0].ultima[0] %></div>
+                  <div class="tablecolumn uc s3">
+                    <script>
+                      document.write(formatCurrency("<%= restricao.pagamentos[0].valor[0] %>"));
+                    </script>
+                  </div>
+                </div>
+              <% }); %>
+            <% }); %>
+          <% }); %>
+        <% } %>
+      </div>
+      <!-- Ações -->
+      <div class="tablebody avoid-break">
+        <div class="tablehead">
+          <div class="tablecolumn uc s12 tabletitle">Ações Cíveis</div>
+        </div>
+        <% if (data.consulta.resposta[0].acoes_civeis[0].registro.length === 0) { %>
+          <div class="tableline">
+            <div class="tablecolumn uc s12">Nada Consta</div>
+          </div>
+        <% } else { %>
           <div class="tableline even">
-            <div class="tablecolumn uc s2 tabletitle">Tipo</div>
-            <div class="tablecolumn uc s2"><%= res.tipo[0] %></div>
-            <div class="tablecolumn uc s2 tabletitle">Documento</div>
+            <div class="tablecolumn uc s2 tabletitle">Total de Ações</div>
+            <div class="tablecolumn uc s2 tabletitle">Valor Total</div>
+            <div class="tablecolumn uc s2 tabletitle">Valor Primeira Ação</div>
+            <div class="tablecolumn uc s2 tabletitle">Valor Maior Ação</div>
+            <div class="tablecolumn uc s2 tabletitle">Data Primeira Ação</div>
+            <div class="tablecolumn uc s2 tabletitle">Data Maior Ação</div>
+          </div>
+          <div class="tableline">
+            <div class="tablecolumn uc s2"><%= data.consulta.resposta[0].acoes_civeis[0].total_acoes[0] %></div>
             <div class="tablecolumn uc s2">
               <script>
-                document.write(formatCPF("<%= res.documento[0] %>"));
+                document.write(formatCurrency("<%= data.consulta.resposta[0].acoes_civeis[0].valor_total[0] %>"));
               </script>
             </div>
-            <div class="tablecolumn uc s2 tabletitle">Informante</div>
-            <div class="tablecolumn uc s2"><%= res.informante[0] %></div>
-          </div>
-          <div class="tableline">
-            <div class="tablecolumn uc s2 tabletitle">Banco</div>
-            <div class="tablecolumn uc s2"><%= res.banco[0] %></div>
-            <div class="tablecolumn uc s2 tabletitle">Agência</div>
-            <div class="tablecolumn uc s2"><%= res.agencia[0] %></div>
-            <div class="tablecolumn uc s2 tabletitle">Conta</div>
-            <div class="tablecolumn uc s2"><%= res.conta[0] %></div>
-          </div>
-          <div class="tableline even">
-            <div class="tablecolumn uc s2 tabletitle">Cheque Inicial</div>
-            <div class="tablecolumn uc s2"><%= res.cheque_inicial[0] %></div>
-            <div class="tablecolumn uc s2 tabletitle">Cheque Final</div>
-            <div class="tablecolumn uc s2"><%= res.cheque_final[0] %></div>
-            <div class="tablecolumn uc s2 tabletitle">Alinea Número</div>
-            <div class="tablecolumn uc s2"><%= res.alinea_numero[0] %></div>
-          </div>
-          <div class="tableline">
-            <div class="tablecolumn uc s2 tabletitle">Alinea Descrição</div>
-            <div class="tablecolumn uc s2"><%= res.alinea_descricao[0] %></div>
-            <div class="tablecolumn uc s2 tabletitle">Data Registro</div>
-            <div class="tablecolumn uc s2"><%= res.data_registro[0] %></div>
-            <div class="tablecolumn uc s2 tabletitle">Data Disponível</div>
-            <div class="tablecolumn uc s2"><%= res.data_disponivel[0] %></div>
-          </div>
-          <div class="tableline even">
-            <div class="tablecolumn uc s2 tabletitle">Moeda</div>
-            <div class="tablecolumn uc s2"><%= res.moeda[0] %></div>
-            <div class="tablecolumn uc s2 tabletitle">Valor</div>
-            <div class="tablecolumn uc s2"><%= res.valor[0] %></div>
-            <div class="tablecolumn uc s2 tabletitle">ValorN</div>
-            <div class="tablecolumn uc s2"><%= res.valorn[0] %></div>
-          </div>
-        <% }); %>
-      <% } %>
-    </div>
-    <!-- devolucao_informada_pelo_usuario -->
-    <div class="tablebody avoid-break">
-      <div class="tablehead">
-        <div class="tablecolumn uc s12">Devolução Informada pelo Usuário</div>
-      </div>
-      <% if (Object.keys(data.consulta.resposta[0].devolucao_informada_pelo_usuario[0]).length === 0) { %>
-        <div class="tableline">
-          <div class="tablecolumn uc s12 tabletitle">Nada Consta</div>
-        </div>
-      <% } else { %>
-        <% data.consulta.resposta[0].devolucao_informada_pelo_usuario[0].registro.forEach(function(res, index) { %>
-          <div class="tableline even">
-            <div class="tablecolumn uc s2 tabletitle">Tipo</div>
-            <div class="tablecolumn uc s2"><%= res.tipo[0] %></div>
-            <div class="tablecolumn uc s2 tabletitle">Documento</div>
             <div class="tablecolumn uc s2">
               <script>
-                document.write(formatCPF("<%= res.documento[0] %>"));
+                document.write(formatCurrency("<%= data.consulta.resposta[0].acoes_civeis[0].valor_primeiro[0] %>"));
               </script>
             </div>
-            <div class="tablecolumn uc s2 tabletitle">Informante</div>
-            <div class="tablecolumn uc s2"><%= res.informante[0] %></div>
-          </div>
-          <div class="tableline">
-            <div class="tablecolumn uc s1 tabletitle">Banco</div>
-            <div class="tablecolumn uc s1"><%= res.banco[0] %></div>
-            <div class="tablecolumn uc s1 tabletitle">Agência</div>
-            <div class="tablecolumn uc s1"><%= res.agencia[0] || "não informado" %></div>
-            <div class="tablecolumn uc s2 tabletitle">Conta</div>
-            <div class="tablecolumn uc s2"><%= res.conta[0] %></div>
-            <div class="tablecolumn uc s2 tabletitle">Mensagem</div>
-            <div class="tablecolumn uc s2"><%= res.mensagem[0] %></div>
-          </div>
-          <div class="tableline even">
-            <div class="tablecolumn uc s1 tabletitle">Cheque Inicial</div>
-            <div class="tablecolumn uc s1"><%= res.cheque_inicial[0] %></div>
-            <div class="tablecolumn uc s1 tabletitle">Cheque Final</div>
-            <div class="tablecolumn uc s1"><%= res.cheque_final[0] %></div>
-            <div class="tablecolumn uc s1 tabletitle">Alinea Número</div>
-            <div class="tablecolumn uc s1"><%= res.alinea_numero[0] %></div>
-            <div class="tablecolumn uc s2 tabletitle">Alinea Descrição</div>
-            <div class="tablecolumn uc s4"><%= res.alinea_descricao[0] %></div>
-          </div>
-          <div class="tableline">
-            <div class="tablecolumn uc s2 tabletitle">Data Registro</div>
-            <div class="tablecolumn uc s2"><%= res.data_registro[0] %></div>
-            <div class="tablecolumn uc s2 tabletitle">Data Disponível</div>
-            <div class="tablecolumn uc s2"><%= res.data_disponivel[0] %></div>
-            <div class="tablecolumn uc s2 tabletitle">Cidade</div>
-            <div class="tablecolumn uc s2"><%= res.cidade[0] %>/<%= res.uf[0] %></div>
-          </div>
-          <div class="tableline even">
-            <div class="tablecolumn uc s2 tabletitle">Moeda</div>
-            <div class="tablecolumn uc s2"><%= res.moeda[0] %></div>
-            <div class="tablecolumn uc s2 tabletitle">Valor</div>
-            <div class="tablecolumn uc s2"><%= res.valor[0] %></div>
-            <div class="tablecolumn uc s2 tabletitle">ValorN</div>
-            <div class="tablecolumn uc s2"><%= res.valorn[0] %></div>
-          </div>
-        <% }); %>
-      <% } %>
-    </div>
-    <!-- cheque_talao_sustado -->
-    <div class="tablebody avoid-break">
-      <div class="tablehead">
-        <div class="tablecolumn uc s12">Cheque Talão Sustado</div>
-      </div>
-      <% if (Object.keys(data.consulta.resposta[0].cheque_talao_sustado[0]).length === 0) { %>
-        <div class="tableline">
-          <div class="tablecolumn uc s12 tabletitle">Nada Consta</div>
-        </div>
-      <% } else { %>
-        <% data.consulta.resposta[0].cheque_talao_sustado[0].registro.forEach(function(res, index) { %>
-          <div class="tableline even">
-            <div class="tablecolumn uc s2 tabletitle">Ocorrência</div>
-            <div class="tablecolumn uc s2"><%= res.ocorrencia[0] %></div>
-            <div class="tablecolumn uc s2 tabletitle">Documento</div>
             <div class="tablecolumn uc s2">
               <script>
-                document.write(formatCPF("<%= res.numero_documento[0] %>"));
+                document.write(formatCurrency("<%= data.consulta.resposta[0].acoes_civeis[0].valor_maior[0] %>"));
               </script>
             </div>
-            <div class="tablecolumn uc s2 tabletitle">Informante</div>
-            <div class="tablecolumn uc s2"><%= res.descricao_informante[0] %></div>
+            <div class="tablecolumn uc s2"><%= data.consulta.resposta[0].acoes_civeis[0].data_primeiro[0] %></div>
+            <div class="tablecolumn uc s2"><%= data.consulta.resposta[0].acoes_civeis[0].data_maior[0] %></div>
           </div>
-          <div class="tableline">
-            <div class="tablecolumn uc s2 tabletitle">Banco</div>
-            <div class="tablecolumn uc s2"><%= res.banco[0] %></div>
-            <div class="tablecolumn uc s2 tabletitle">Agência</div>
-            <div class="tablecolumn uc s2"><%= res.agencia[0] || "não informado" %></div>
-            <div class="tablecolumn uc s2 tabletitle">Conta</div>
-            <div class="tablecolumn uc s2"><%= res.conta[0] %></div>
-          </div>
-          <div class="tableline even">
-            <div class="tablecolumn uc s2 tabletitle">Cheque</div>
-            <div class="tablecolumn uc s2"><%= res.cheque[0] %></div>
-            <div class="tablecolumn uc s2 tabletitle">Alinea Número</div>
-            <div class="tablecolumn uc s2"><%= res.alinea_numero[0] %></div>
-            <div class="tablecolumn uc s2 tabletitle">Alinea Descrição</div>
-            <div class="tablecolumn uc s2"><%= res.alinea_descricao[0] %></div>
-          </div>
-          <div class="tableline">
-            <div class="tablecolumn uc s2 tabletitle">Data Ocorrência</div>
-            <div class="tablecolumn uc s2"><%= res.data_ocorrencia[0] %></div>
-            <div class="tablecolumn uc s2 tabletitle">Data Disponibilização</div>
-            <div class="tablecolumn uc s2"><%= res.data_disponibilizacao[0] %></div>
-            <div class="tablecolumn uc s2 tabletitle">Indicador Cheque Talão</div>
-            <div class="tablecolumn uc s2"><%= res.numero_indicador_cheque_talao[0] %></div>
-          </div>
-          <div class="tableline even">
-            <div class="tablecolumn uc s2 tabletitle">Descrição Indicador</div>
-            <div class="tablecolumn uc s2"><%= res.descricao_indicador_cheque_talao[0] %></div>
-            <div class="tablecolumn uc s4 tabletitle">Mensagem</div>
-            <div class="tablecolumn uc s4"><%= res.mensagem[0] %></div>
-          </div>
-        <% }); %>
-      <% } %>
-    </div>
-    <!-- resumo_devolucoes_informadas_pelo_ccf -->
-    <div class="tablebody avoid-break">
-      <div class="tablehead">
-        <div class="tablecolumn uc s12">Resumo Devoluções Informadas pelo CCF</div>
+          <% data.consulta.resposta[0].acoes_civeis[0].registro.forEach(function(registro, index) { %>
+            <div class="tableline <%= index % 2 === 0 ? 'even' : '' %>">
+              <div class="tablecolumn uc s2 tabletitle">Documento</div>
+              <div class="tablecolumn uc s2"><%= registro.documento[0] %></div>
+              <div class="tablecolumn uc s2 tabletitle">Valor</div>
+              <div class="tablecolumn uc s2">
+                <script>
+                  document.write(formatCurrency("<%= registro.valor[0] %>"));
+                </script>
+              </div>
+              <div class="tablecolumn uc s2 tabletitle">Requerido</div>
+              <div class="tablecolumn uc s2"><%= registro.requerido[0] %></div>
+            </div>
+            <div class="tableline <%= index % 2 === 0 ? '' : 'even' %>">
+              <div class="tablecolumn uc s2 tabletitle">Ação</div>
+              <div class="tablecolumn uc s2"><%= registro.acao[0] %></div>
+              <div class="tablecolumn uc s2 tabletitle">Foro</div>
+              <div class="tablecolumn uc s2"><%= registro.foro[0] %></div>
+              <div class="tablecolumn uc s2 tabletitle">Vara</div>
+              <div class="tablecolumn uc s2"><%= registro.vara[0] %></div>
+            </div>
+            <div class="tableline <%= index % 2 === 0 ? 'even' : '' %>">
+              <div class="tablecolumn uc s2 tabletitle">Autor</div>
+              <div class="tablecolumn uc s2"><%= registro.autor[0] %></div>
+              <div class="tablecolumn uc s2 tabletitle">UF</div>
+              <div class="tablecolumn uc s2"><%= registro.uf[0] %></div>
+              <div class="tablecolumn uc s2 tabletitle">Processo</div>
+              <div class="tablecolumn uc s2"><%= registro.processo[0] %></div>
+            </div>
+            <div class="tableline <%= index % 2 === 0 ? '' : 'even' %>">
+              <div class="tablecolumn uc s2 tabletitle">Distribuição</div>
+              <div class="tablecolumn uc s2"><%= registro.distribuicao[0] %></div>
+            </div>
+          <% }); %>
+        <% } %>
       </div>
-      <% if (Object.keys(data.consulta.resposta[0].resumo_devolucoes_informadas_pelo_ccf[0]).length === 0) { %>
-        <div class="tableline">
-          <div class="tablecolumn uc s12 tabletitle">Nada Consta</div>
+      <!-- Falencias -->
+      <div class="tablebody avoid-break">
+        <div class="tablehead">
+          <div class="tablecolumn uc s12 tabletitle">Falências</div>
         </div>
-      <% } else { %>
-        <% data.consulta.resposta[0].resumo_devolucoes_informadas_pelo_ccf[0].registro.forEach(function(res, index) { %>
-          <div class="tableline even">
-            <div class="tablecolumn uc s2 tabletitle">Documento</div>
-            <div class="tablecolumn uc s2">
-              <script>
-                document.write(formatCPF("<%= res.numero_documento[0] %>"));
-              </script>
-            </div>
-            <div class="tablecolumn uc s4 tabletitle">Nome</div>
-            <div class="tablecolumn uc s4"><%= res.nome[0] %></div>
-            <div class="tablecolumn uc s2 tabletitle">Mensagem</div>
-            <div class="tablecolumn uc s2"><%= res.mensagem[0] %></div>
+        <% if (data.consulta.resposta[0].falencias[0].registro.length === 0) { %>
+          <div class="tableline">
+            <div class="tablecolumn uc s12">Nada Consta</div>
+          </div>
+        <% } else { %>
+          <div class="tableline">
+            <div class="tablecolumn uc s3 tabletitle">Total de Falências</div>
+            <div class="tablecolumn uc s3 tabletitle">Período Inicial</div>
+            <div class="tablecolumn uc s3 tabletitle">Período Final</div>
           </div>
           <div class="tableline">
-            <div class="tablecolumn uc s2 tabletitle">Totalizador</div>
-            <div class="tablecolumn uc s2"><%= res.totalizador[0] %></div>
-            <div class="tablecolumn uc s2 tabletitle">Total Devolvidos</div>
-            <div class="tablecolumn uc s2"><%= res.total_devolvidos[0] %></div>
-            <div class="tablecolumn uc s2 tabletitle">Motivo 12</div>
-            <div class="tablecolumn uc s2"><%= res.total_devolvidos_motivo_12[0] %></div>
+            <div class="tablecolumn uc s3"><%= data.consulta.resposta[0].falencias[0].total_falencias[0] %></div>
+            <div class="tablecolumn uc s3"><%= data.consulta.resposta[0].falencias[0].periodo_inicial[0] %></div>
+            <div class="tablecolumn uc s3"><%= data.consulta.resposta[0].falencias[0].periodo_final[0] %></div>
           </div>
-          <div class="tableline even">
-            <div class="tablecolumn uc s2 tabletitle">Motivo 13</div>
-            <div class="tablecolumn uc s2"><%= res.total_devolvidos_motivo_13[0] %></div>
-            <div class="tablecolumn uc s2 tabletitle">Motivo 14</div>
-            <div class="tablecolumn uc s2"><%= res.total_devolvidos_motivo_14[0] %></div>
-            <div class="tablecolumn uc s2 tabletitle">Motivo 99</div>
-            <div class="tablecolumn uc s2"><%= res.total_devolvidos_motivo_99[0] %></div>
-          </div>
-        <% }); %>
-      <% } %>
-    </div>
-    <!-- resumo_consultas_anteriores_cheque -->
-    <div class="tablebody avoid-break">
-      <div class="tablehead">
-        <div class="tablecolumn uc s12">Resumo Consultas Anteriores Cheque</div>
+          <% data.consulta.resposta[0].falencias[0].registro.forEach(function(registro, index) { %>
+            <div class="tableline <%= index % 2 === 0 ? 'even' : '' %>">
+              <div class="tablecolumn uc s3 tabletitle">Tipo de Ocorrência</div>
+              <div class="tablecolumn uc s3 tabletitle">Data</div>
+              <div class="tablecolumn uc s2 tabletitle">Cidade</div>
+              <div class="tablecolumn uc s2 tabletitle">UF</div>
+              <div class="tablecolumn uc s2 tabletitle">Vara</div>
+            </div>
+            <div class="tableline <%= index % 2 === 0 ? '' : 'even' %>">
+              <div class="tablecolumn uc s3"><%= registro.tipo_ocorrencia[0] %></div>
+              <div class="tablecolumn uc s3"><%= registro.data[0] %></div>
+              <div class="tablecolumn uc s2"><%= registro.cidade[0] %></div>
+              <div class="tablecolumn uc s2"><%= registro.uf[0] %></div>
+              <div class="tablecolumn uc s2"><%= registro.vara[0] %></div>
+            </div>
+          <% }); %>
+        <% } %>
       </div>
-      <% if (Object.keys(data.consulta.resposta[0].resumo_consultas_anteriores_cheque[0]).length === 0) { %>
-        <div class="tableline">
-          <div class="tablecolumn uc s12 tabletitle">Nada Consta</div>
-        </div>
-      <% } else { %>
-        <% data.consulta.resposta[0].resumo_consultas_anteriores_cheque[0].registro.forEach(function(res, index) { %>
-          <div class="tableline even">
-            <div class="tablecolumn uc s2 tabletitle">Documento</div>
-            <div class="tablecolumn uc s2">
-              <script>
-                document.write(formatCPF("<%= res.documento[0] %>"));
-              </script>
-            </div>
-            <div class="tablecolumn uc s2 tabletitle">Total de Consultas</div>
-            <div class="tablecolumn uc s2"><%= res.total_de_consultas[0] %></div>
-            <div class="tablecolumn uc s2 tabletitle">Mensagem</div>
-            <div class="tablecolumn uc s2"><%= res.mensagem[0] %></div>
-          </div>
-          <div class="tableline">
-            <div class="tablecolumn uc s2 tabletitle">Data Primeira Consulta</div>
-            <div class="tablecolumn uc s2"><%= res.data_primeira_consulta[0] %></div>
-            <div class="tablecolumn uc s2 tabletitle">Data Última Consulta</div>
-            <div class="tablecolumn uc s2"><%= res.data_ultima_consulta[0] %></div>
-          </div>
-        <% }); %>
-      <% } %>
-    </div>
-    <!-- historico_cheque_informado -->
-    <div class="tablebody avoid-break">
-      <div class="tablehead">
-        <div class="tablecolumn uc s12">Histórico de Cheque Informado</div>
-      </div>
-      <% if (Object.keys(data.consulta.resposta[0].historico_cheque_informado[0]).length === 0) { %>
-        <div class="tableline">
-          <div class="tablecolumn uc s12 tabletitle">Nada Consta</div>
-        </div>
-      <% } else { %>
-        <% data.consulta.resposta[0].historico_cheque_informado[0].registro.forEach(function(res, index) { %>
-          <div class="tableline even">
-            <div class="tablecolumn uc s2 tabletitle">Documento</div>
-            <div class="tablecolumn uc s2">
-              <script>
-                document.write(formatCPF("<%= res.documento[0] %>"));
-              </script>
-            </div>
-            <div class="tablecolumn uc s2 tabletitle">Número do Cheque</div>
-            <div class="tablecolumn uc s2"><%= res.numero_do_cheque[0] %></div>
-            <div class="tablecolumn uc s2 tabletitle">Mensagem</div>
-            <div class="tablecolumn uc s2"><%= res.mensagem[0] %></div>
-          </div>
-          <div class="tableline">
-            <div class="tablecolumn uc s2 tabletitle">Banco</div>
-            <div class="tablecolumn uc s2"><%= res.banco[0] %></div>
-            <div class="tablecolumn uc s2 tabletitle">Agência</div>
-            <div class="tablecolumn uc s2"><%= res.agencia[0] %></div>
-            <div class="tablecolumn uc s2 tabletitle">Conta</div>
-            <div class="tablecolumn uc s2"><%= res.conta[0] %></div>
-          </div>
-          <div class="tableline even">
-            <div class="tablecolumn uc s2 tabletitle">Data da Consulta</div>
-            <div class="tablecolumn uc s2"><%= res.dados_da_consulta_data[0] %></div>
-            <div class="tablecolumn uc s2 tabletitle">Hora da Consulta</div>
-            <div class="tablecolumn uc s2"><%= res.dados_da_consulta_hora[0] %></div>
-            <div class="tablecolumn uc s2 tabletitle">Rede/Loja</div>
-            <div class="tablecolumn uc s2"><%= res.dados_da_consulta_rede_loja[0] %></div>
-          </div>
-        <% }); %>
-      <% } %>
-    </div>
-    <!-- consultas_anteriores_cheque -->
-    <div class="tablebody avoid-break">
-      <div class="tablehead">
-        <div class="tablecolumn uc s12">Consultas Anteriores de Cheque</div>
-      </div>
-      <% if (Object.keys(data.consulta.resposta[0].consultas_anteriores_cheque[0]).length === 0) { %>
-        <div class="tableline">
-          <div class="tablecolumn uc s12 tabletitle">Nada Consta</div>
-        </div>
-      <% } else { %>
-        <% data.consulta.resposta[0].consultas_anteriores_cheque[0].registro.forEach(function(res, index) { %>
-          <div class="tableline even">
-            <div class="tablecolumn uc s2 tabletitle">Documento</div>
-            <div class="tablecolumn uc s2">
-              <script>
-                document.write(formatCPF("<%= res.documento[0] %>"));
-              </script>
-            </div>
-            <div class="tablecolumn uc s2 tabletitle">Data da Consulta</div>
-            <div class="tablecolumn uc s2"><%= res.consulta_data[0] %></div>
-            <div class="tablecolumn uc s2 tabletitle">Mensagem</div>
-            <div class="tablecolumn uc s2"><%= res.mensagem[0] %></div>
-          </div>
-          <div class="tableline">
-            <div class="tablecolumn uc s2 tabletitle">Hora da Consulta</div>
-            <div class="tablecolumn uc s2"><%= res.consulta_hora[0] %></div>
-            <div class="tablecolumn uc s2 tabletitle">Moeda</div>
-            <div class="tablecolumn uc s2"><%= res.consulta_moeda[0] %></div>
-            <div class="tablecolumn uc s2 tabletitle">Valor</div>
-            <div class="tablecolumn uc s2"><%= res.consulta_valor[0] %></div>
-          </div>
-          <div class="tableline even">
-            <div class="tablecolumn uc s2 tabletitle">Informante</div>
-            <div class="tablecolumn uc s10"><%= res.consulta_informante[0] %></div>
-          </div>
-        <% }); %>
-      <% } %>
-    </div>
-    <!-- resumo_devolucoes_informadas_pelo_usuario -->
-    <div class="tablebody avoid-break">
-      <div class="tablehead">
-        <div class="tablecolumn uc s12">Resumo de Devoluções Informadas pelo Usuário</div>
-      </div>
-      <% if (Object.keys(data.consulta.resposta[0].resumo_devolucoes_informadas_pelo_usuario[0]).length === 0) { %>
-        <div class="tableline">
-          <div class="tablecolumn uc s12 tabletitle">Nada Consta</div>
-        </div>
-      <% } else { %>
-        <% data.consulta.resposta[0].resumo_devolucoes_informadas_pelo_usuario[0].registro.forEach(function(res, index) { %>
-          <div class="tableline even">
-            <div class="tablecolumn uc s2 tabletitle">Documento</div>
-            <div class="tablecolumn uc s2">
-              <script>
-                document.write(formatCPF("<%= res.documento[0] %>"));
-              </script>
-            </div>
-            <div class="tablecolumn uc s2 tabletitle">Total de Devoluções</div>
-            <div class="tablecolumn uc s2"><%= res.total_de_devolucoes[0] %></div>
-            <div class="tablecolumn uc s2 tabletitle">Mensagem</div>
-            <div class="tablecolumn uc s2"><%= res.mensagem[0] %></div>
-          </div>
-          <div class="tableline">
-            <div class="tablecolumn uc s2 tabletitle">Data Primeira Devolução</div>
-            <div class="tablecolumn uc s2"><%= res.data_primeira_devolucao[0] %></div>
-            <div class="tablecolumn uc s2 tabletitle">Data Última Devolução</div>
-            <div class="tablecolumn uc s2"><%= res.data_ultima_devolucao[0] %></div>
-          </div>
-        <% }); %>
-      <% } %>
-    </div>
-    
-    <!-- grafias -->
-    <div class="tablebody">
-      <div class="tablehead">
-        <div class="tablecolumn uc s12">resumo das devolucoes informadas pelo usuário</div>
-      </div>
-      <% if (Object.keys(data.consulta.resposta[0].grafias[0]).length === 0) { %>
-        <div class="tableline">
-          <div class="tablecolumn uc s12 tabletitle">Não contam informações na base consultada</div>
-        </div>
-      <% } else { %>
-        <% data.consulta.resposta[0].grafias[0].registro.forEach(function(grafia,index) { %>
-          <div class="tableline even" style="border-top: 5px #cccccc solid;">
-            <div class="tablecolumn uc s2 tabletitle">Nome</div>
-            <div class="tablecolumn uc s3"><%= grafia.nome %></div>
-            <div class="tablecolumn uc s2 tabletitle">Documento</div>
-            <div class="tablecolumn uc s3">
-              <script>
-                document.write(formatCPF("<%= grafia.documento %>"));
-              </script>
-            </div>
-            <div class="tablecolumn uc s2 tabletitle">Nascimento</div>
-            <div class="tablecolumn uc s3"><%= grafia.data_nascimento %></div>
-          </div>
-          <div class="tableline ">
-            <div class="tablecolumn uc s2 tabletitle">Endereço</div>
-            <div class="tablecolumn uc s3"><%= grafia.tipo %> <%= grafia.endereco %> <%= grafia.numero %></div>
-            <div class="tablecolumn uc s2 tabletitle">complemento</div>
-            <div class="tablecolumn uc s3"><%= grafia.complemento %></div>
-            <div class="tablecolumn uc s2 tabletitle">Bairro</div>
-            <div class="tablecolumn uc s3"><%= grafia.bairro %></div>
-          </div>
-          <div class="tableline even">
-            <div class="tablecolumn uc s2 tabletitle">Cidade</div>
-            <div class="tablecolumn uc s3"><%= grafia.cidade %></div>
-            <div class="tablecolumn uc s2 tabletitle">uf</div>
-            <div class="tablecolumn uc s3"><%= grafia.uf %></div>
-            <div class="tablecolumn uc s2 tabletitle">CEP</div>
-            <div class="tablecolumn uc s3"><%= grafia.cep %></div>
-          </div>
-          <div class="tableline ">
-            <div class="tablecolumn uc s2 tabletitle">Telefone 1</div>
-            <div class="tablecolumn uc s3">
-              <script>
-                document.write(formatarTelefone("<%= grafia.ddd1 %>", "<%= grafia.telefone1 %>"));
-              </script> 
-            </div>
-            <div class="tablecolumn uc s2 tabletitle">Telefone 2</div>
-            <div class="tablecolumn uc s3">
-              <script>
-                document.write(formatarTelefone("<%= grafia.ddd2 %>", "<%= grafia.telefone2 %>"));
-              </script> 
-            </div>
-            <div class="tablecolumn uc s2 tabletitle">Telefone 3</div>
-            <div class="tablecolumn uc s3">
-              <script>
-                document.write(formatarTelefone("<%= grafia.ddd3 %>", "<%= grafia.telefone3 %>"));
-              </script> 
-            </div>
-          </div>
-        <% }); %>
-      <% } %>
-    </div>
-    <!-- participacoes -->
-    <div class="tablebody">
-      <div class="tablehead">
-        <div class="tablecolumn uc s12">Participações</div>
-      </div>
-      <% if (Object.keys(data.consulta.resposta[0].participacoes[0]).length === 0) { %>
-        <div class="tableline">
-          <div class="tablecolumn uc s12 tabletitle">Não contam informações na base consultada</div>
-        </div>
-      <% } else { %>
-        <% data.consulta.resposta[0].participacoes[0].registro.forEach(function(participacao,index) { %>
-          <div class="tableline even" style="border-top: 5px #cccccc solid;">
-            <div class="tablecolumn uc s2 tabletitle">Razão Social</div>
-            <div class="tablecolumn uc s5"><%= participacao.razao_social %></div>
-            <div class="tablecolumn uc s2 tabletitle">Documento</div>
-            <div class="tablecolumn uc s3">
-              <script>
-                document.write(formatCPF("<%= participacao.documento %>"));
-              </script>
-            </div>
-            <div class="tablecolumn uc s2 tabletitle">Data de entrada</div>
-            <div class="tablecolumn uc s2"><%= participacao.data_entrada %></div>
-          </div>
-          <div class="tableline">
-            <div class="tablecolumn uc s2 tabletitle">observação</div>
-            <div class="tablecolumn uc s5"><%= participacao.observacao %></div>
-            <div class="tablecolumn uc s2 tabletitle">Percentual</div>
-            <div class="tablecolumn uc s3">
-              <script>
-                document.write(formatPercentual("<%= participacao.percentual %>"));
-              </script>
-            </div>
-            <div class="tablecolumn uc s2 tabletitle">Valor</div>
-            <div class="tablecolumn uc s2"><%= participacao.moeda %> <%= participacao.valor %></div>
-          </div>
-          <div class="tableline even">
-            <div class="tablecolumn uc s2 tabletitle">Função</div>
-            <div class="tablecolumn uc s5"><%= participacao.funcao_socio %></div>
-            <div class="tablecolumn uc s2 tabletitle">Documeno Sócio</div>
-            <div class="tablecolumn uc s3">
-              <script>
-                document.write(formatCPF("<%= participacao.documento_socio %>"));
-              </script>
-            </div>
-            <div class="tablecolumn uc s2 tabletitle">Tipo de sócio</div>
-            <div class="tablecolumn uc s2"><%= participacao.tipo_socio %></div>
-          </div>
-        <% }); %>
-      <% } %>
-    </div>
-    <!-- Falencias -->
-    <div class="tablebody">
-      <div class="tablehead bg-02">
-        <div class="tablecolumn uc s12">Falências</div>
-      </div>
-      <% if (Object.keys(data.consulta.resposta[0].falencias[0]).length === 0) { %>
-        <div class="tableline">
-          <div class="tablecolumn uc s12 tabletitle">Não há registros de falências</div>
-        </div>
-      <% } else { %>
-        <div class="tableline">
-          <div class="tablecolumn uc s2 tabletitle">Vara</div>
-          <div class="tablecolumn uc s2 tabletitle">Data</div>
-          <div class="tablecolumn uc s2 tabletitle">Praça</div>
-          <div class="tablecolumn uc s2 tabletitle">UF</div>
-          <div class="tablecolumn uc s2 tabletitle">Código</div>
-        </div>
-        <% data.consulta.resposta[0].falencias[0].registro.forEach(function(res) { %>
-          <div class="tableline">
-            <div class="tablecolumn uc s2"><%= res.vara[0] %></div>
-            <div class="tablecolumn uc s2"><%= res.data[0] %></div>
-            <div class="tablecolumn uc s2"><%= res.praca[0] %></div>
-            <div class="tablecolumn uc s2"><%= res.uf[0] %></div>
-            <div class="tablecolumn uc s2"><%= res.codigo[0] %></div>
-          </div>
-        <% }); %>
-      <% } %>
-    </div>
+    <% } %>
     <!-- FOOTER -->
     <!-- <div class="footer">
       <div class="whatsapp-number">
