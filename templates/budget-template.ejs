@@ -349,52 +349,52 @@
             Devoluções informadas pelo usuário:<br>
           </div>
           <div class="tablecolumn uc s6 tabletitle" style="line-height: 13px;font-size: 10px;">
-            <% if (!data.consulta.resposta[0].acoes[0] || !data.consulta.resposta[0].acoes[0].resumo[0] || !data.consulta.resposta[0].acoes[0].resumo[0].total[0] || Object.keys(data.consulta.resposta[0].acoes[0]).length === 0) { %>
+            <% if (!data.consulta.resposta[0].acoes[0] || !data.consulta.resposta[0].acoes[0].registro[0] || Object.keys(data.consulta.resposta[0].acoes[0].registro[0]).length === 0) { %>
               Nada consta
             <% } else { %>
-              <%= data.consulta.resposta[0].acoes[0].resumo[0].total[0] %>
+              <%= Object.keys(data.consulta.resposta[0].acoes[0].registro).length %>
             <% } %>
             <br>
             <% if (!data.consulta.resposta[0].alertas[0] || Object.keys(data.consulta.resposta[0].alertas[0]).length === 0) { %>
               Não constam informações na base consultada
             <% } else { %>
-              <%= Object.keys(data.consulta.resposta[0].alertas[0]).length %>
+              <%= Object.keys(data.consulta.resposta[0].alertas).length %>
             <% } %>
             <br>
             <% if (!data.consulta.resposta[0].debitos[0] || Object.keys(data.consulta.resposta[0].debitos[0]).length === 0) { %>
               Não constam informações na base consultada
             <% } else { %>
-              <%= Object.keys(data.consulta.resposta[0].debitos[0]).length %>
+              <%= Object.keys(data.consulta.resposta[0].debitos).length %>
             <% } %>
             <br>
             <% if (!data.consulta.resposta[0].falencias[0] || !data.consulta.resposta[0].falencias[0].registro[0] || Object.keys(data.consulta.resposta[0].falencias[0].registro[0]).length === 0) { %>
               Nada consta
             <% } else { %>
-              <%= Object.keys(data.consulta.resposta[0].falencias[0].registro[0]).length %>
+              <%= Object.keys(data.consulta.resposta[0].falencias[0].registro).length %>
             <% } %>
             <br>
             <% if (!data.consulta.resposta[0].protestos[0] || data.consulta.resposta[0].protestos[0].registro[0] || Object.keys(data.consulta.resposta[0].protestos[0].registro[0]).length === 0) { %>
               Não constam informações na base consultada
             <% } else { %>
-              <%= Object.keys(data.consulta.resposta[0].protestos[0].registro[0]).length %>
+              <%= Object.keys(data.consulta.resposta[0].protestos[0].registro).length %>
             <% } %>
             <br>
             <% if (!data.consulta.resposta[0].ccf[0] || !data.consulta.resposta[0].ccf[0].registro[0] || Object.keys(data.consulta.resposta[0].ccf[0].registro[0]).length === 0) { %>
               Nada consta
             <% } else { %>
-              <%= Object.keys(data.consulta.resposta[0].ccf[0].registro[0]).length %>
+              <%= Object.keys(data.consulta.resposta[0].ccf[0].registro).length %>
             <% } %>
             <br>
             <% if (!data.consulta.resposta[0].cheque_motivo_21[0] || !data.consulta.resposta[0].cheque_motivo_21[0].registro[0] || Object.keys(data.consulta.resposta[0].cheque_motivo_21[0].registro[0]).length === 0) { %>
               Nada consta
             <% } else { %>
-              <%= Object.keys(data.consulta.resposta[0].cheque_motivo_21[0].registro[0]).length %>
+              <%= Object.keys(data.consulta.resposta[0].cheque_motivo_21[0].registro).length %>
             <% } %>
             <br>
             <% if (!data.consulta.resposta[0].devolucao_informada_pelo_usuario[0] || !data.consulta.resposta[0].devolucao_informada_pelo_usuario[0].registro[0] || Object.keys(data.consulta.resposta[0].devolucao_informada_pelo_usuario[0].registro[0]).length === 0) { %>
               Nada consta
             <% } else { %>
-              <%= Object.keys(data.consulta.resposta[0].devolucao_informada_pelo_usuario[0].registro[0]).length %>
+              <%= Object.keys(data.consulta.resposta[0].devolucao_informada_pelo_usuario[0].registro).length %>
             <% } %>
           </div>
         </div>
@@ -609,19 +609,19 @@
           </div>
         <% } else { %>
           <div class="tableline even">
-            <div class="tablecolumn uc s1 tabletitle">Processo</div>
-            <div class="tablecolumn uc s2 tabletitle">Tipo</div>
+            <div class="tablecolumn uc s3 tabletitle">Processo</div>
+            <div class="tablecolumn uc s3 tabletitle">Tipo</div>
             <div class="tablecolumn uc s3 tabletitle">Autor</div>
-            <div class="tablecolumn uc s2 tabletitle">Valor</div>
+            <div class="tablecolumn uc s1 tabletitle">Valor</div>
             <div class="tablecolumn uc s2 tabletitle">Praça</div>
             <div class="tablecolumn uc s2 tabletitle">Data</div>
           </div>
             <% data.consulta.resposta[0].acoes[0].registro.forEach(function(res,index) { %>
               <div class="tableline <%= index % 2 === 0 ? '' : 'even' %>">
-                <div class="tablecolumn uc s1 tabletitle"><%= res.processo[0] %></div>
-                <div class="tablecolumn uc s2 tabletitle"><%= res.acao[0] %></div>
+                <div class="tablecolumn uc s3 tabletitle"><%= res.processo[0] %></div>
+                <div class="tablecolumn uc s3 tabletitle"><%= res.acao[0] %></div>
                 <div class="tablecolumn uc s3 tabletitle"><%= res.autor[0] %></div>
-                <div class="tablecolumn uc s2 tabletitle"><%= res.valor[0] %></div>
+                <div class="tablecolumn uc s1 tabletitle"><%= res.valor[0] %></div>
                 <div class="tablecolumn uc s2 tabletitle"><%= res.praca[0] %>/<%= res.uf[0] %></div>
                 <div class="tablecolumn uc s2 tabletitle"><%= res.data[0] %></div>
               </div>
