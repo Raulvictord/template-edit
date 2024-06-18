@@ -349,49 +349,49 @@
             Devoluções informadas pelo usuário:<br>
           </div>
           <div class="tablecolumn uc s6 tabletitle" style="line-height: 13px;font-size: 10px;">
-            <% if (Object.keys(data.consulta.resposta[0].acoes[0]).length === 0) { %>
+            <% if (!data.consulta.resposta[0].acoes[0] || !data.consulta.resposta[0].acoes[0].resumo[0] || !data.consulta.resposta[0].acoes[0].resumo[0].total[0] || Object.keys(data.consulta.resposta[0].acoes[0]).length === 0) { %>
               Nada consta
             <% } else { %>
               <%= data.consulta.resposta[0].acoes[0].resumo[0].total[0] %>
             <% } %>
             <br>
-            <% if (Object.keys(data.consulta.resposta[0].alertas[0]).length === 0) { %>
+            <% if (!data.consulta.resposta[0].alertas[0] || Object.keys(data.consulta.resposta[0].alertas[0]).length === 0) { %>
               Não constam informações na base consultada
             <% } else { %>
               <%= Object.keys(data.consulta.resposta[0].alertas[0]).length %>
             <% } %>
             <br>
-            <% if (Object.keys(data.consulta.resposta[0].debitos[0]).length === 0) { %>
+            <% if (!data.consulta.resposta[0].debitos[0] || Object.keys(data.consulta.resposta[0].debitos[0]).length === 0) { %>
               Não constam informações na base consultada
             <% } else { %>
               <%= Object.keys(data.consulta.resposta[0].debitos[0]).length %>
             <% } %>
             <br>
-            <% if (Object.keys(data.consulta.resposta[0].falencias[0]).length === 0) { %>
+            <% if (!data.consulta.resposta[0].falencias[0] || !data.consulta.resposta[0].falencias[0].registro[0] || Object.keys(data.consulta.resposta[0].falencias[0].registro[0]).length === 0) { %>
               Nada consta
             <% } else { %>
               <%= Object.keys(data.consulta.resposta[0].falencias[0].registro[0]).length %>
             <% } %>
             <br>
-            <% if (Object.keys(data.consulta.resposta[0].protestos[0]).length === 0) { %>
+            <% if (!data.consulta.resposta[0].protestos[0] || data.consulta.resposta[0].protestos[0].registro[0] || Object.keys(data.consulta.resposta[0].protestos[0].registro[0]).length === 0) { %>
               Não constam informações na base consultada
             <% } else { %>
               <%= Object.keys(data.consulta.resposta[0].protestos[0].registro[0]).length %>
             <% } %>
             <br>
-            <% if (Object.keys(data.consulta.resposta[0].ccf[0]).length === 0) { %>
+            <% if (!data.consulta.resposta[0].ccf[0] || !data.consulta.resposta[0].ccf[0].registro[0] || Object.keys(data.consulta.resposta[0].ccf[0].registro[0]).length === 0) { %>
               Nada consta
             <% } else { %>
               <%= Object.keys(data.consulta.resposta[0].ccf[0].registro[0]).length %>
             <% } %>
             <br>
-            <% if (Object.keys(data.consulta.resposta[0].cheque_motivo_21[0]).length === 0) { %>
+            <% if (!data.consulta.resposta[0].cheque_motivo_21[0] || !data.consulta.resposta[0].cheque_motivo_21[0].registro[0] || Object.keys(data.consulta.resposta[0].cheque_motivo_21[0].registro[0]).length === 0) { %>
               Nada consta
             <% } else { %>
               <%= Object.keys(data.consulta.resposta[0].cheque_motivo_21[0].registro[0]).length %>
             <% } %>
             <br>
-            <% if (Object.keys(data.consulta.resposta[0].devolucao_informada_pelo_usuario[0]).length === 0) { %>
+            <% if (!data.consulta.resposta[0].devolucao_informada_pelo_usuario[0] || !data.consulta.resposta[0].devolucao_informada_pelo_usuario[0].registro[0] || Object.keys(data.consulta.resposta[0].devolucao_informada_pelo_usuario[0].registro[0]).length === 0) { %>
               Nada consta
             <% } else { %>
               <%= Object.keys(data.consulta.resposta[0].devolucao_informada_pelo_usuario[0].registro[0]).length %>

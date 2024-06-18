@@ -14,8 +14,383 @@ const baseDir = `${__dirname}/dist`;
 
 // app.use(express.static(`${baseDir}`))
 
-const xml = `<?xml version="1.0"?>
-    <consulta><cabecalho><consulta>376</consulta><data_consulta>11/06/2024 09:12:12</data_consulta><ip_solicitante>18.228.23.32</ip_solicitante><documento_consultado>40558073000118</documento_consultado><consultas_mensais_restantes>48</consultas_mensais_restantes><status>0</status><mensagem>sucesso</mensagem></cabecalho><resposta><identificacao><mensagem></mensagem><cnpj>40558073000118</cnpj><situacao_cnpj>Ativo</situacao_cnpj><data_situacao>2021-01-26</data_situacao><data_consulta_receita_federal>2023-06-30</data_consulta_receita_federal><razao_social>RAUL VICTOR SANTANA RIBEIRO 43014063878</razao_social><razao_social_anterior></razao_social_anterior><nome_fantasia>DETECH</nome_fantasia><data_alteracao_razao_social></data_alteracao_razao_social><data_registro>2021-01-26</data_registro><orgao>JUCESP</orgao><orgao_atual></orgao_atual><inscricao_estadual>00686014784112</inscricao_estadual><inscricao_estadual_uf>SP</inscricao_estadual_uf><data_fundacao>2021-01-26</data_fundacao><data_encerramento></data_encerramento><situacao_sintegra>HABILITADO</situacao_sintegra><data_situacao_sintegra>2021-01-26</data_situacao_sintegra><data_consulta_sintegra>2022-08-16</data_consulta_sintegra><cnae>9511-8/00</cnae><cnae_descricao>REPAR MANUT COMPUTADORES E PERIFIERICOS</cnae_descricao><cnae_secundario>4753-9/00</cnae_secundario><cnae_secundario_descricao>COM VAREJ ESPECIALIZ ELETRODOMEST EQUIP</cnae_secundario_descricao><outros_cnaes><registro><cnae>5912-0/99</cnae><cnae_descricao>ATIV POS PROD CINEMATOGRAF VIDEOS PROGR</cnae_descricao></registro><registro><cnae>6190-6/99</cnae><cnae_descricao>OUT ATIV TELECOMUNICOES N ESPECIF ANTER</cnae_descricao></registro><registro><cnae>8599-6/03</cnae><cnae_descricao>TREINAMENTO EM INFORMATICA</cnae_descricao></registro></outros_cnaes><nire></nire><nire_uf></nire_uf><codigo_natureza_juridica>2135</codigo_natureza_juridica><natureza_juridica>EMPRESARIO (INDIVIDUAL)</natureza_juridica><segmento>COMERCIO VAREJISTA</segmento><quantidade_filiais>0</quantidade_filiais><filiais/><moeda_capital_inicial></moeda_capital_inicial><capital_inicial>0</capital_inicial><moeda_capital_atual>R$</moeda_capital_atual><capital_atual>5000</capital_atual><data_alteracao_capital></data_alteracao_capital></identificacao><localizacao_completa><mensagem></mensagem><matrizes><registro><endereco>R JOAO GOMES DOS SANTOS, 1349</endereco><complemento></complemento><bairro>JD PARAISO</bairro><cidade>TARABAI</cidade><uf>SP</uf><cep>19210000</cep><codigo_ibge>03553906</codigo_ibge><telefones/></registro></matrizes><filiais/></localizacao_completa><alerta_fraudes/><debitos/><protestos/><ccf/><cheque_motivo_21/><devolucao_informada_pelo_usuario/><score><registro><score>256</score><modelo_score>38</modelo_score><classificacao_numerico>14</classificacao_numerico><classificacao_alfabetico>E</classificacao_alfabetico><probabilidade>43.3</probabilidade><texto>De cada 100 empresas classificadas nesta classe de score, &#xE9; prov&#xE1;vel que 43 apresentem d&#xE9;bitos no mercado nos pr&#xF3;ximos 12 meses.</texto></registro></score><consultas/><socios><existem_mais_ocorrencias>SIM</existem_mais_ocorrencias><registro><nome>RAUL VICTOR SANTANA RIBEIRO</nome><documento>00043014063878</documento><tipo_documento>CPF</tipo_documento><situacao_documento>Regular</situacao_documento><data_entrada>2021-01-26</data_entrada><porcentagem_participacao>100,00</porcentagem_participacao><assina_pela_empresa>S</assina_pela_empresa><existe_debito>Sim</existe_debito><alerta_fraude>N&#xE3;o</alerta_fraude><restricoes_documento/></registro></socios><administradores/><participacoes_socios_adm_outras_empresas/><participacoes_empresas_consultadas/><decisao><flag>0003</flag><flag_descricao>N&#xC3;O RECOMENDADO</flag_descricao><descricao>Negocia&#xE7;&#xE3;o N&#xE3;o Recomendada</descricao></decisao><acoes_civeis/><falencias/></resposta></consulta>
+const xml = `<?xml version="1.0" encoding="UTF-8"?>
+<consulta>
+	<cabecalho>
+		<consulta>341</consulta>
+		<data_consulta>28/05/2024 18:13:39</data_consulta>
+		<ip_solicitante>167.250.172.159</ip_solicitante>
+		<documento_consultado>10920107850</documento_consultado>
+		<status>0</status>
+		<mensagem>sucesso</mensagem>
+		<mensagem_status>sucesso</mensagem_status>
+		<consultas_mensais_restantes>43</consultas_mensais_restantes>
+	</cabecalho>
+	<resposta>
+		<identificacao>
+			<pessoa>FISICA</pessoa>
+			<documento>10920107850</documento>
+			<nome>ALEXANDRE GUEDES NOGUEIRA</nome>
+			<nome_mae>GENI GUEDES NOGUEIRA</nome_mae>
+			<data_nascimento>02/03/1978</data_nascimento>
+			<rg></rg>
+			<emissor_rg></emissor_rg>
+			<uf_rg></uf_rg>
+			<data_emissao_rg></data_emissao_rg>
+			<sexo>MASCULINO</sexo>
+			<nacionalidade>BRASILEIRO</nacionalidade>
+			<estado_civil>NAO INFORMADO</estado_civil>
+			<numero_dependentes></numero_dependentes>
+			<escolaridade>POS GRADUACAO COMPLETA</escolaridade>
+			<situacao_receita>REGULAR</situacao_receita>
+			<data_atualizacao>18/06/2023</data_atualizacao>
+			<regiao_cpf>SP-SAO PAULO</regiao_cpf>
+			<obito></obito>
+			<titulo_eleitor>237781160167</titulo_eleitor>
+		</identificacao>
+		<localizacao>
+			<tipo>AV</tipo>
+			<endereco>PRES JOAO GOULART</endereco>
+			<numero>1</numero>
+			<complemento>AP 132 BL DAKOTA</complemento>
+			<bairro>UMUARAMA</bairro>
+			<cidade>OSASCO</cidade>
+			<uf>SP</uf>
+			<cep>6036048</cep>
+			<ddd1>21</ddd1>
+			<telefone1>982444801</telefone1>
+			<ddd2>11</ddd2>
+			<telefone2>43769912</telefone2>
+			<ddd3>55</ddd3>
+			<telefone3>32215226</telefone3>
+		</localizacao>
+		<acoes/>
+		<alertas/>
+		<debitos/>
+		<protestos/>
+		<consultas_por_segmento>
+			<registro>
+				<pessoa>FISICA</pessoa>
+				<documento>10920107850</documento>
+				<ocorrencia>OU-OUTROS</ocorrencia>
+				<data>28/05/2024</data>
+				<moeda></moeda>
+				<valor></valor>
+				<informante>SP-SPO/INFORMBANK - BANCO DE INFORMA</informante>
+				<atividade_ramo></atividade_ramo>
+				<descricao_ramo></descricao_ramo>
+				<atividade_segmento></atividade_segmento>
+				<descricao_segmento></descricao_segmento>
+				<atividade_grupo></atividade_grupo>
+				<descricao_grupo></descricao_grupo>
+			</registro>
+			<registro>
+				<pessoa>FISICA</pessoa>
+				<documento>10920107850</documento>
+				<ocorrencia>OU-OUTROS</ocorrencia>
+				<data>15/05/2024</data>
+				<moeda></moeda>
+				<valor></valor>
+				<informante>SP-SPO/INFORMBANK - BANCO DE INFORMA</informante>
+				<atividade_ramo></atividade_ramo>
+				<descricao_ramo></descricao_ramo>
+				<atividade_segmento></atividade_segmento>
+				<descricao_segmento></descricao_segmento>
+				<atividade_grupo></atividade_grupo>
+				<descricao_grupo></descricao_grupo>
+			</registro>
+			<registro>
+				<pessoa>FISICA</pessoa>
+				<documento>10920107850</documento>
+				<ocorrencia>OU-OUTROS</ocorrencia>
+				<data>06/03/2024</data>
+				<moeda></moeda>
+				<valor></valor>
+				<informante>SP-SPO/INFORMBANK - BANCO DE INFORMA</informante>
+				<atividade_ramo></atividade_ramo>
+				<descricao_ramo></descricao_ramo>
+				<atividade_segmento></atividade_segmento>
+				<descricao_segmento></descricao_segmento>
+				<atividade_grupo></atividade_grupo>
+				<descricao_grupo></descricao_grupo>
+			</registro>
+		</consultas_por_segmento>
+		<telefones/>
+		<telefones_vinculados>
+			<registro>
+				<ddd>11</ddd>
+				<telefone>43769912</telefone>
+				<endereco>AV PRES JOAO GOULART 1 BL DAKOTA APT 132</endereco>
+				<bairro>UMUARAMA</bairro>
+				<cep>6036048</cep>
+				<cidade>OSASCO</cidade>
+				<uf>SP</uf>
+			</registro>
+		</telefones_vinculados>
+		<confirmacao_cep/>
+		<ccf/>
+		<cheque_motivo_21/>
+		<devolucao_informada_pelo_usuario/>
+		<cheque_talao_sustado/>
+		<resumo_devolucoes_informadas_pelo_ccf/>
+		<resumo_consultas_anteriores_cheque/>
+		<historico_cheque_informado/>
+		<consultas_anteriores_cheque/>
+		<resumo_devolucoes_informadas_pelo_usuario/>
+		<grafias>
+			<registro>
+				<nome>ALEXANDRE GUEDES NOGUEIRA</nome>
+				<documento>10920107850</documento>
+				<data_nascimento>02/03/1978</data_nascimento>
+				<rg></rg>
+				<tipo>AV</tipo>
+				<endereco>ESTADOS UNIDOS</endereco>
+				<numero>1</numero>
+				<complemento>AP 132</complemento>
+				<bairro>JD D'ABRIL</bairro>
+				<cidade>OSASCO</cidade>
+				<uf>SP</uf>
+				<cep>6033190</cep>
+				<ddd1>55</ddd1>
+				<telefone1>32215226</telefone1>
+				<ddd2></ddd2>
+				<telefone2></telefone2>
+				<ddd3></ddd3>
+				<telefone3></telefone3>
+			</registro>
+			<registro>
+				<nome>ALEXANDRE GUEDES NOGUEIRA</nome>
+				<documento>10920107850</documento>
+				<data_nascimento>02/03/1978</data_nascimento>
+				<rg></rg>
+				<tipo>AV</tipo>
+				<endereco>PRES JOAO GOULART</endereco>
+				<numero>1</numero>
+				<complemento>AP 68 ED DAKOT</complemento>
+				<bairro>UMUARAMA</bairro>
+				<cidade>OSASCO</cidade>
+				<uf>SP</uf>
+				<cep>6036048</cep>
+				<ddd1>11</ddd1>
+				<telefone1>976082493</telefone1>
+				<ddd2></ddd2>
+				<telefone2></telefone2>
+				<ddd3></ddd3>
+				<telefone3></telefone3>
+			</registro>
+			<registro>
+				<nome>ALEXANDRE GUEDES NOGUEIRA</nome>
+				<documento>10920107850</documento>
+				<data_nascimento>02/03/1978</data_nascimento>
+				<rg></rg>
+				<tipo>AV</tipo>
+				<endereco>PRES JOAO GOULART</endereco>
+				<numero>1</numero>
+				<complemento>AP 132 ED DAKOT</complemento>
+				<bairro>UMUARAMA</bairro>
+				<cidade>OSASCO</cidade>
+				<uf>SP</uf>
+				<cep>6036048</cep>
+				<ddd1>11</ddd1>
+				<telefone1>976082493</telefone1>
+				<ddd2></ddd2>
+				<telefone2></telefone2>
+				<ddd3></ddd3>
+				<telefone3></telefone3>
+			</registro>
+			<registro>
+				<nome>ALEXANDRE GUEDES NOGUEIRA</nome>
+				<documento>10920107850</documento>
+				<data_nascimento>02/03/1978</data_nascimento>
+				<rg></rg>
+				<tipo>AV</tipo>
+				<endereco>ESTADOS UNIDOS</endereco>
+				<numero>1</numero>
+				<complemento>AP 132 ED DAKOT</complemento>
+				<bairro>JD D'ABRIL</bairro>
+				<cidade>OSASCO</cidade>
+				<uf>SP</uf>
+				<cep>6033190</cep>
+				<ddd1>11</ddd1>
+				<telefone1>976082493</telefone1>
+				<ddd2></ddd2>
+				<telefone2></telefone2>
+				<ddd3></ddd3>
+				<telefone3></telefone3>
+			</registro>
+			<registro>
+				<nome>ALEXANDRE GUEDES NOGUEIRA</nome>
+				<documento>10920107850</documento>
+				<data_nascimento>02/03/1978</data_nascimento>
+				<rg></rg>
+				<tipo>AV</tipo>
+				<endereco>NS DAS DORES</endereco>
+				<numero>305</numero>
+				<complemento>AP 1004 BLB</complemento>
+				<bairro>NOSSA SENHORA DAS DORES</bairro>
+				<cidade>SANTA MARIA</cidade>
+				<uf>RS</uf>
+				<cep>97050531</cep>
+				<ddd1>55</ddd1>
+				<telefone1>32215226</telefone1>
+				<ddd2></ddd2>
+				<telefone2></telefone2>
+				<ddd3></ddd3>
+				<telefone3></telefone3>
+			</registro>
+			<registro>
+				<nome>ALEXANDRE GUEDES NOGUEIRA</nome>
+				<documento>10920107850</documento>
+				<data_nascimento>02/03/1978</data_nascimento>
+				<rg></rg>
+				<tipo>AV</tipo>
+				<endereco>ESTADOS UNIDOS</endereco>
+				<numero>1</numero>
+				<complemento>AP 132 ED D QD</complemento>
+				<bairro>JD D'ABRIL</bairro>
+				<cidade>OSASCO</cidade>
+				<uf>SP</uf>
+				<cep>6033190</cep>
+				<ddd1>11</ddd1>
+				<telefone1>976082493</telefone1>
+				<ddd2></ddd2>
+				<telefone2></telefone2>
+				<ddd3></ddd3>
+				<telefone3></telefone3>
+			</registro>
+			<registro>
+				<nome>ALEXANDRE GUEDES NOGUEIRA</nome>
+				<documento>10920107850</documento>
+				<data_nascimento>02/03/1978</data_nascimento>
+				<rg></rg>
+				<tipo>AV</tipo>
+				<endereco>NS DAS DORES</endereco>
+				<numero>305</numero>
+				<complemento>AP 1004 BL B</complemento>
+				<bairro>NOSSA SENHORA DAS DORES</bairro>
+				<cidade>SANTA MARIA</cidade>
+				<uf>RS</uf>
+				<cep>97050531</cep>
+				<ddd1></ddd1>
+				<telefone1></telefone1>
+				<ddd2></ddd2>
+				<telefone2></telefone2>
+				<ddd3></ddd3>
+				<telefone3></telefone3>
+			</registro>
+			<registro>
+				<nome>ALEXANDRE GUEDES NOGUEIRA</nome>
+				<documento>10920107850</documento>
+				<data_nascimento>02/03/1978</data_nascimento>
+				<rg></rg>
+				<tipo>R</tipo>
+				<endereco>MTO FORTUNATO NETO</endereco>
+				<numero>161</numero>
+				<complemento></complemento>
+				<bairro>PARQUE ALVORADA</bairro>
+				<cidade>PRESIDENTE PRUDENTE</cidade>
+				<uf>SP</uf>
+				<cep>19042080</cep>
+				<ddd1></ddd1>
+				<telefone1></telefone1>
+				<ddd2></ddd2>
+				<telefone2></telefone2>
+				<ddd3></ddd3>
+				<telefone3></telefone3>
+			</registro>
+			<registro>
+				<nome>ALEXANDRE GUEDES NOGUEIRA</nome>
+				<documento>10920107850</documento>
+				<data_nascimento>02/03/1978</data_nascimento>
+				<rg></rg>
+				<tipo>AV</tipo>
+				<endereco>BRASIL</endereco>
+				<numero>2476</numero>
+				<complemento></complemento>
+				<bairro>VL INDUSTRIAL</bairro>
+				<cidade>PRESIDENTE PRUDENTE</cidade>
+				<uf>SP</uf>
+				<cep>19013002</cep>
+				<ddd1></ddd1>
+				<telefone1></telefone1>
+				<ddd2></ddd2>
+				<telefone2></telefone2>
+				<ddd3></ddd3>
+				<telefone3></telefone3>
+			</registro>
+		</grafias>
+		<participacoes>
+			<registro>
+				<razao_social>SEGUROTOTAL CORRETORA DE SEGUROS LTDA</razao_social>
+				<pessoa>CNPJ</pessoa>
+				<documento>52153156000106</documento>
+				<moeda>R$</moeda>
+				<valor>100,00</valor>
+				<observacao>NAO CONSTA ALERTA PARA O CNPJ</observacao>
+				<percentual>10000</percentual>
+				<data_entrada>12/09/2023</data_entrada>
+				<funcao_socio>SOCIO ADMINISTRADOR</funcao_socio>
+				<pessoa_socio>CPF</pessoa_socio>
+				<documento_socio>10920107850</documento_socio>
+				<tipo_socio>SOCIO</tipo_socio>
+			</registro>
+			<registro>
+				<razao_social>FORCECURE CORRETORA DE SEGUROS EIRELI</razao_social>
+				<pessoa>CNPJ</pessoa>
+				<documento>27162120000141</documento>
+				<moeda>R$</moeda>
+				<valor>200,00</valor>
+				<observacao>NAO CONSTA ALERTA PARA O CNPJ</observacao>
+				<percentual>10000</percentual>
+				<data_entrada>02/09/2019</data_entrada>
+				<funcao_socio>TITULAR PESSOA FISICA</funcao_socio>
+				<pessoa_socio>CPF</pessoa_socio>
+				<documento_socio>10920107850</documento_socio>
+				<tipo_socio>SOCIO</tipo_socio>
+			</registro>
+		</participacoes>
+		<falencias/>
+		<score>
+			<registro>
+				<pessoa>FISICA</pessoa>
+				<score>0504</score>
+				<execucao>NAO</execucao>
+				<descricao_score>63-NOVO RISCO 6 MESES</descricao_score>
+				<classificacao_numerico>7</classificacao_numerico>
+				<classificacao_alfabetico>C</classificacao_alfabetico>
+				<provavel>01600</provavel>
+				<texto>DE CADA 100 PESSOAS CLASSIFICADAS NESTA CLASSE DE SCORE, E PROVAVEL QUE 16 APRESENTEM DEBITOS NO MERCADO NOS PROXIMOS 6 MESES.</texto>
+			</registro>
+			<registro>
+				<pessoa>FISICA</pessoa>
+				<score>0006</score>
+				<execucao>NAO</execucao>
+				<descricao_score>41-RENDA PRESUM FAIXA</descricao_score>
+				<classificacao_numerico>6</classificacao_numerico>
+				<classificacao_alfabetico></classificacao_alfabetico>
+				<provavel></provavel>
+				<texto>DE R$ 3.001 ATE R$ 4.000</texto>
+			</registro>
+			<registro>
+				<pessoa>FISICA</pessoa>
+				<score>0569</score>
+				<execucao>NAO</execucao>
+				<descricao_score>39-PARCELA SEGURA PF</descricao_score>
+				<classificacao_numerico></classificacao_numerico>
+				<classificacao_alfabetico></classificacao_alfabetico>
+				<provavel></provavel>
+				<texto>VALOR DE PARCELA MENSAL SUGERIDA (EM REAIS)</texto>
+			</registro>
+		</score>
+		<decisao>
+			<pessoa>FISICA</pessoa>
+			<documento>10920107850</documento>
+			<score>0003</score>
+			<aprovacao>SIM</aprovacao>
+			<texto>NEGOCIACAO RECOMENDADA</texto>
+		</decisao>
+	</resposta>
+</consulta>
 `;
 
 const xmlDefineNegocio = `<?xml version="1.0"?>
