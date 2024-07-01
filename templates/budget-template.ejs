@@ -1764,10 +1764,20 @@
         <% } else { %>
           <% data.consulta.resposta[0].localizacao_completa[0].matrizes[0].registro.forEach(function(matriz, index) { %>
             <div class="tableline <%= index % 2 === 0 ? 'even' : '' %>">
-              <div class="tablecolumn uc s2 tabletitle">Telefone 1</div>
-              <div class="tablecolumn uc s4"><%= matriz.telefones[0].registro[0].telefone[0] %></div>
-              <div class="tablecolumn uc s2 tabletitle">Telefone 2</div>
-              <div class="tablecolumn uc s4"><%= matriz.telefones[0].registro[1].telefone[0] %></div>
+              <div class="tablecolumn uc s2 tabletitle">Telefones</div>
+              <div class="tablecolumn uc s4">
+                <% if (matriz.telefones && matriz.telefones[0] && matriz.telefones[0].registro) { %>
+                  <% if (matriz.telefones[0].registro.length === 1) { %>
+                    <div><%= matriz.telefones[0].registro[0].telefone[0] || "Não informado" %></div>
+                  <% } else { %>
+                    <% matriz.telefones[0].registro.forEach(function(telefone, telefoneIndex) { %>
+                      <div><%= telefone.telefone[0] || "Não informado" %></div>
+                    <% }); %>
+                  <% } %>
+                <% } else { %>
+                  Não informado
+                <% } %>
+              </div>
             </div>
           <% }); %>
         <% } %>
@@ -1784,10 +1794,19 @@
         <% } else { %>
           <% data.consulta.resposta[0].localizacao_completa[0].filiais[0].registro.forEach(function(filial, index) { %>
             <div class="tableline <%= index % 2 === 0 ? 'even' : '' %>">
-              <div class="tablecolumn uc s2 tabletitle">Telefone 1</div>
-              <div class="tablecolumn uc s4"><%= filial.telefones[0].registro[0].telefone[0] %></div>
-              <div class="tablecolumn uc s2 tabletitle">Telefone 2</div>
-              <div class="tablecolumn uc s4"><%= filial.telefones[0].registro[1].telefone[0] %></div>
+              <div class="tablecolumn uc s2 tabletitle">Telefones</div>
+              <div class="tablecolumn uc s4">
+                <% if (filial.telefones && filial.telefones[0] && filial.telefones[0].registro) { %>
+                  <% filial.telefones[0].registro.forEach(function(telefone, i) { %>
+                    <div><%= telefone.telefone[0] || "Não informado" %></div>
+                  <% }); %>
+                  <% if (filial.telefones[0].registro.length === 1) { %>
+                    <div><%= "Não informado" %></div>
+                  <% } %>
+                <% } else { %>
+                  Não informado
+                <% } %>
+              </div>
             </div>
           <% }); %>
         <% } %>
@@ -2302,10 +2321,137 @@
                   <div class="tablecolumn uc s1"><%= empresa.existe_debito[0] %></div>
                   <div class="tablecolumn uc s1"><%= empresa.alerta_fraude[0] %></div>
                 </div>
+                <% if (empresa.restricoes_documento && empresa.restricoes_documento[0].length > 0) { %>
+                  <div class="tableline even">
+                    <div class="tablecolumn uc s12 tabletitle">Restrições do Documento</div>
+                  </div>
+                  <% empresa.restricoes_documento.forEach(function(restricao) { %>
+                    <div class="tableline">
+                      <div class="tablecolumn uc s3 tabletitle">Débitos</div>
+                      <div class="tablecolumn uc s3"><%= restricao.debitos[0].quantidade[0] %></div>
+                      <div class="tablecolumn uc s3"><%= restricao.debitos[0].ultima[0] %></div>
+                      <div class="tablecolumn uc s3">
+                        <script>
+                          document.write(formatCurrency("<%= restricao.debitos[0].valor[0] %>"));
+                        </script>
+                      </div>
+                    </div>
+                    <div class="tableline even">
+                      <div class="tablecolumn uc s3 tabletitle">CCF</div>
+                      <div class="tablecolumn uc s3"><%= restricao.ccf[0].quantidade[0] %></div>
+                      <div class="tablecolumn uc s3"><%= restricao.ccf[0].ultima[0] %></div>
+                      <div class="tablecolumn uc s3">
+                        <script>
+                          document.write(formatCurrency("<%= restricao.ccf[0].valor[0] %>"));
+                        </script>
+                      </div>
+                    </div>
+                    <div class="tableline">
+                      <div class="tablecolumn uc s3 tabletitle">Protestos</div>
+                      <div class="tablecolumn uc s3"><%= restricao.protestos[0].quantidade[0] %></div>
+                      <div class="tablecolumn uc s3"><%= restricao.protestos[0].ultima[0] %></div>
+                      <div class="tablecolumn uc s3">
+                        <script>
+                          document.write(formatCurrency("<%= restricao.protestos[0].valor[0] %>"));
+                        </script>
+                      </div>
+                    </div>
+                    <div class="tableline even">
+                      <div class="tablecolumn uc s3 tabletitle">Ações Judiciais</div>
+                      <div class="tablecolumn uc s3"><%= restricao.acoes_judiciais[0].quantidade[0] %></div>
+                      <div class="tablecolumn uc s3"><%= restricao.acoes_judiciais[0].ultima[0] %></div>
+                      <div class="tablecolumn uc s3">
+                        <script>
+                          document.write(formatCurrency("<%= restricao.acoes_judiciais[0].valor[0] %>"));
+                        </script>
+                      </div>
+                    </div>
+                    <div class="tableline">
+                      <div class="tablecolumn uc s3 tabletitle">Falências</div>
+                      <div class="tablecolumn uc s3"><%= restricao.falencias[0].quantidade[0] %></div>
+                      <div class="tablecolumn uc s3"><%= restricao.falencias[0].ultima[0] %></div>
+                      <div class="tablecolumn uc s3">
+                        <script>
+                          document.write(formatCurrency("<%= restricao.falencias[0].valor[0] %>"));
+                        </script>
+                      </div>
+                    </div>
+                    <div class="tableline even">
+                      <div class="tablecolumn uc s3 tabletitle">Consultas</div>
+                      <div class="tablecolumn uc s3"><%= restricao.consultas[0].quantidade[0] %></div>
+                      <div class="tablecolumn uc s3"><%= restricao.consultas[0].ultima[0] %></div>
+                      <div class="tablecolumn uc s3">
+                        <script>
+                          document.write(formatCurrency("<%= restricao.consultas[0].valor[0] %>"));
+                        </script>
+                      </div>
+                    </div>
+                    <div class="tableline">
+                      <div class="tablecolumn uc s3 tabletitle">Títulos a Vencer</div>
+                      <div class="tablecolumn uc s3"><%= restricao.titulos_a_vencer[0].quantidade[0] %></div>
+                      <div class="tablecolumn uc s3"><%= restricao.titulos_a_vencer[0].ultima[0] %></div>
+                      <div class="tablecolumn uc s3">
+                        <script>
+                          document.write(formatCurrency("<%= restricao.titulos_a_vencer[0].valor[0] %>"));
+                        </script>
+                      </div>
+                    </div>
+                    <div class="tableline even">
+                      <div class="tablecolumn uc s3 tabletitle">Pagamentos</div>
+                      <div class="tablecolumn uc s3"><%= restricao.pagamentos[0].quantidade[0] %></div>
+                      <div class="tablecolumn uc s3"><%= restricao.pagamentos[0].ultima[0] %></div>
+                      <div class="tablecolumn uc s3">
+                        <script>
+                          document.write(formatCurrency("<%= restricao.pagamentos[0].valor[0] %>"));
+                        </script>
+                      </div>
+                    </div>
+                  <% }); %>
+                <% } %>
+              <% }); %>
+            <% }); %>
+          <% }); %>
+        <% } %>
+      </div>
+      <!-- Participações em Empresas Consultadas -->
+      <div class="tablebody avoid-break">
+        <div class="tablehead">
+          <div class="tablecolumn uc s12 tabletitle">Participações em Empresas Consultadas</div>
+        </div>
+        <% if (!data.consulta.resposta[0].participacoes_empresas_consultadas[0] || data.consulta.resposta[0].participacoes_empresas_consultadas[0].registro.length === 0) { %>
+          <div class="tableline">
+            <div class="tablecolumn uc s12">Nada Consta</div>
+          </div>
+        <% } else { %>
+          <% data.consulta.resposta[0].participacoes_empresas_consultadas.forEach(function(empresa) { %>
+            <% empresa.registro.forEach(function(reg) { %>
+              <div class="tableline even">
+                <div class="tablecolumn uc s2 tabletitle">Razão Social</div>
+                <div class="tablecolumn uc s2 tabletitle">CNPJ</div>
+                <div class="tablecolumn uc s2 tabletitle">Situação CNPJ</div>
+                <div class="tablecolumn uc s2 tabletitle">Data de Entrada</div>
+                <div class="tablecolumn uc s2 tabletitle">Porcentagem de Participação</div>
+                <div class="tablecolumn uc s1 tabletitle">Existe Débito</div>
+                <div class="tablecolumn uc s1 tabletitle">Alerta de Fraude</div>
+              </div>
+              <div class="tableline">
+                <div class="tablecolumn uc s2"><%= reg.razao_social[0] %></div>
+                <div class="tablecolumn uc s2">
+                  <script>
+                    document.write(formatCPF("<%= reg.cnpj[0] %>"));
+                  </script>
+                </div>
+                <div class="tablecolumn uc s2"><%= reg.situacao_cnpj[0] %></div>
+                <div class="tablecolumn uc s2"><%= reg.data_entrada[0] %></div>
+                <div class="tablecolumn uc s2"><%= reg.porcentagem_participacao[0] %></div>
+                <div class="tablecolumn uc s1"><%= reg.existe_debito[0] %></div>
+                <div class="tablecolumn uc s1"><%= reg.alerta_fraude[0] %></div>
+              </div>
+              <% if (reg.restricoes_documento && reg.restricoes_documento[0].length > 0) { %>
                 <div class="tableline even">
                   <div class="tablecolumn uc s12 tabletitle">Restrições do Documento</div>
                 </div>
-                <% empresa.restricoes_documento.forEach(function(restricao) { %>
+                <% reg.restricoes_documento.forEach(function(restricao) { %>
                   <div class="tableline">
                     <div class="tablecolumn uc s3 tabletitle">Débitos</div>
                     <div class="tablecolumn uc s3"><%= restricao.debitos[0].quantidade[0] %></div>
@@ -2387,130 +2533,7 @@
                     </div>
                   </div>
                 <% }); %>
-              <% }); %>
-            <% }); %>
-          <% }); %>
-        <% } %>
-      </div>
-      <!-- Participações em Empresas Consultadas -->
-      <div class="tablebody avoid-break">
-        <div class="tablehead">
-          <div class="tablecolumn uc s12 tabletitle">Participações em Empresas Consultadas</div>
-        </div>
-        <% if (!data.consulta.resposta[0].participacoes_empresas_consultadas[0] || data.consulta.resposta[0].participacoes_empresas_consultadas[0].registro.length === 0) { %>
-          <div class="tableline">
-            <div class="tablecolumn uc s12">Nada Consta</div>
-          </div>
-        <% } else { %>
-          <% data.consulta.resposta[0].participacoes_empresas_consultadas.forEach(function(empresa) { %>
-            <% empresa.registro.forEach(function(reg) { %>
-              <div class="tableline even">
-                <div class="tablecolumn uc s2 tabletitle">Razão Social</div>
-                <div class="tablecolumn uc s2 tabletitle">CNPJ</div>
-                <div class="tablecolumn uc s2 tabletitle">Situação CNPJ</div>
-                <div class="tablecolumn uc s2 tabletitle">Data de Entrada</div>
-                <div class="tablecolumn uc s2 tabletitle">Porcentagem de Participação</div>
-                <div class="tablecolumn uc s1 tabletitle">Existe Débito</div>
-                <div class="tablecolumn uc s1 tabletitle">Alerta de Fraude</div>
-              </div>
-              <div class="tableline">
-                <div class="tablecolumn uc s2"><%= reg.razao_social[0] %></div>
-                <div class="tablecolumn uc s2">
-                  <script>
-                    document.write(formatCPF("<%= reg.cnpj[0] %>"));
-                  </script>
-                </div>
-                <div class="tablecolumn uc s2"><%= reg.situacao_cnpj[0] %></div>
-                <div class="tablecolumn uc s2"><%= reg.data_entrada[0] %></div>
-                <div class="tablecolumn uc s2"><%= reg.porcentagem_participacao[0] %></div>
-                <div class="tablecolumn uc s1"><%= reg.existe_debito[0] %></div>
-                <div class="tablecolumn uc s1"><%= reg.alerta_fraude[0] %></div>
-              </div>
-              <div class="tableline even">
-                <div class="tablecolumn uc s12 tabletitle">Restrições do Documento</div>
-              </div>
-              <% reg.restricoes_documento.forEach(function(restricao) { %>
-                <div class="tableline">
-                  <div class="tablecolumn uc s3 tabletitle">Débitos</div>
-                  <div class="tablecolumn uc s3"><%= restricao.debitos[0].quantidade[0] %></div>
-                  <div class="tablecolumn uc s3"><%= restricao.debitos[0].ultima[0] %></div>
-                  <div class="tablecolumn uc s3">
-                    <script>
-                      document.write(formatCurrency("<%= restricao.debitos[0].valor[0] %>"));
-                    </script>
-                  </div>
-                </div>
-                <div class="tableline even">
-                  <div class="tablecolumn uc s3 tabletitle">CCF</div>
-                  <div class="tablecolumn uc s3"><%= restricao.ccf[0].quantidade[0] %></div>
-                  <div class="tablecolumn uc s3"><%= restricao.ccf[0].ultima[0] %></div>
-                  <div class="tablecolumn uc s3">
-                    <script>
-                      document.write(formatCurrency("<%= restricao.ccf[0].valor[0] %>"));
-                    </script>
-                  </div>
-                </div>
-                <div class="tableline">
-                  <div class="tablecolumn uc s3 tabletitle">Protestos</div>
-                  <div class="tablecolumn uc s3"><%= restricao.protestos[0].quantidade[0] %></div>
-                  <div class="tablecolumn uc s3"><%= restricao.protestos[0].ultima[0] %></div>
-                  <div class="tablecolumn uc s3">
-                    <script>
-                      document.write(formatCurrency("<%= restricao.protestos[0].valor[0] %>"));
-                    </script>
-                  </div>
-                </div>
-                <div class="tableline even">
-                  <div class="tablecolumn uc s3 tabletitle">Ações Judiciais</div>
-                  <div class="tablecolumn uc s3"><%= restricao.acoes_judiciais[0].quantidade[0] %></div>
-                  <div class="tablecolumn uc s3"><%= restricao.acoes_judiciais[0].ultima[0] %></div>
-                  <div class="tablecolumn uc s3">
-                    <script>
-                      document.write(formatCurrency("<%= restricao.acoes_judiciais[0].valor[0] %>"));
-                    </script>
-                  </div>
-                </div>
-                <div class="tableline">
-                  <div class="tablecolumn uc s3 tabletitle">Falências</div>
-                  <div class="tablecolumn uc s3"><%= restricao.falencias[0].quantidade[0] %></div>
-                  <div class="tablecolumn uc s3"><%= restricao.falencias[0].ultima[0] %></div>
-                  <div class="tablecolumn uc s3">
-                    <script>
-                      document.write(formatCurrency("<%= restricao.falencias[0].valor[0] %>"));
-                    </script>
-                  </div>
-                </div>
-                <div class="tableline even">
-                  <div class="tablecolumn uc s3 tabletitle">Consultas</div>
-                  <div class="tablecolumn uc s3"><%= restricao.consultas[0].quantidade[0] %></div>
-                  <div class="tablecolumn uc s3"><%= restricao.consultas[0].ultima[0] %></div>
-                  <div class="tablecolumn uc s3">
-                    <script>
-                      document.write(formatCurrency("<%= restricao.consultas[0].valor[0] %>"));
-                    </script>
-                  </div>
-                </div>
-                <div class="tableline">
-                  <div class="tablecolumn uc s3 tabletitle">Títulos a Vencer</div>
-                  <div class="tablecolumn uc s3"><%= restricao.titulos_a_vencer[0].quantidade[0] %></div>
-                  <div class="tablecolumn uc s3"><%= restricao.titulos_a_vencer[0].ultima[0] %></div>
-                  <div class="tablecolumn uc s3">
-                    <script>
-                      document.write(formatCurrency("<%= restricao.titulos_a_vencer[0].valor[0] %>"));
-                    </script>
-                  </div>
-                </div>
-                <div class="tableline even">
-                  <div class="tablecolumn uc s3 tabletitle">Pagamentos</div>
-                  <div class="tablecolumn uc s3"><%= restricao.pagamentos[0].quantidade[0] %></div>
-                  <div class="tablecolumn uc s3"><%= restricao.pagamentos[0].ultima[0] %></div>
-                  <div class="tablecolumn uc s3">
-                    <script>
-                      document.write(formatCurrency("<%= restricao.pagamentos[0].valor[0] %>"));
-                    </script>
-                  </div>
-                </div>
-              <% }); %>
+              <% } %>
             <% }); %>
           <% }); %>
         <% } %>

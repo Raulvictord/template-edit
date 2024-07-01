@@ -661,13 +661,16 @@ function convertXML(xml){
 
 app.get("*", async (req, res) => {
   const dataXML = await convertXML(xml);
-  /* try{
-    
-    res.status(200).json(data);
-  } catch(error){
-    console.error('Erro XML',error);
-    res.status(500).json({error:'Erro XML'});
-  } */
+  /* try {
+        res.json(dataXML);
+    } catch (error) {
+        // Retornar detalhes do erro
+        res.status(500).json({
+            message: 'Erro ao processar o XML',
+            error: error.message,
+            stack: error.stack
+        });
+    } */
 
   const data = {
     date: `Rio de Janeiro`,
