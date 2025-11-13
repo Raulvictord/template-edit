@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "pm2 start server.js --watch",
+    "dev": "nodemon server.js",
     "stop": "pm2 stop server.js",
     "monit": "pm2 monit server.js"
   },
@@ -13,10 +13,13 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "ejs": "^3.1.9",
-    "express": "^4.18.3",
-    "pm2": "^5.3.1",
-    "puppeteer": "^22.4.0",
+    "ejs": "^3.1.10",
+    "express": "^5.1.0",
+    "pm2": "^6.0.13",
+    "puppeteer": "^24.30.0",
     "xml2js": "^0.6.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.11"
   }
 }

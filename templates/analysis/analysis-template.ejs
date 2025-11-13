@@ -715,7 +715,10 @@
         <div class="tablehead">
           <div class="tablecolumn uc s12">consultas Realizadas por segmento</div>
         </div>
-        <% if (!data.consulta.resposta[0].consultas_por_segmento[0] || Object.keys(data.consulta.resposta[0].consultas_por_segmento[0]).length === 0) { %>
+        <%
+          const segmento = data.consulta?.resposta?.[0]?.consultas_por_segmento?.[0];
+        %>
+        <% if (!segmento || Object.keys(segmento).length === 0) { %>
           <div class="tableline">
             <div class="tablecolumn uc s12 tabletitle">Não contam informações na base consultada</div>
           </div>
@@ -2147,7 +2150,7 @@
         <div class="tablehead">
           <div class="tablecolumn uc s12">Consultas Realizadas</div>
         </div>
-        <% if (!data.consulta.resposta[0].consultas[0] || data.consulta.resposta[0].consultas.length === 0) { %>
+        <% if (!data.consulta?.resposta[0]?.consultas || data.consulta?.resposta[0]?.consultas?.length === 0) { %>
           <div class="tableline">
             <div class="tablecolumn uc s12 tabletitle">Não constam informações na base consultada</div>
           </div>
@@ -2185,7 +2188,7 @@
         <div class="tablehead">
           <div class="tablecolumn uc s12">Resumo de Consultas realizadas por Meses</div>
         </div>
-        <% if (!data.consulta.resposta[0].consultas[0] || !data.consulta.resposta[0].consultas[0].consultas_mes[0] || data.consulta.resposta[0].consultas[0].consultas_mes[0].registro.length === 0) { %>
+        <% if (!data.consulta.resposta[0].consultas || !data.consulta.resposta[0].consultas[0].consultas_mes[0] || data.consulta.resposta[0].consultas[0].consultas_mes[0].registro.length === 0) { %>
           <div class="tableline">
             <div class="tablecolumn uc s12 tabletitle">Nada Consta</div>
           </div>
